@@ -97,10 +97,10 @@ const Login = () => {
           if (data.category == "6") {
             window.location.href = "/admin/attendance";
           }
-          if (data.category == "3") {
+          else if (data.category == "3") {
             window.location.href = "/admin/coach";
           }
-          if (data.category == "2") {
+          else if (data.category == "2") {
             window.location.href = "/admin/counsellor";
           } else {
             window.location.href = "/home";

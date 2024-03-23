@@ -306,7 +306,7 @@ app.post("/counsellor/acceptAppointments", async (req, res) => {
   const appointment_id = req.body.appointment_id;
   console.log("fml");
   try {
-    const appointment = await Appointment.findById(appointment_id);
+    const appointment = await Counsellor_Appointments.findById(appointment_id);
     //  .then(console.log(appointment));
 
     if (!appointment) {
@@ -315,7 +315,7 @@ app.post("/counsellor/acceptAppointments", async (req, res) => {
         .status(404)
         .json({ success: false, message: "Appointment not found" });
     }
-    const updateAppointment = await Appointment.findByIdAndUpdate(
+    const updateAppointment = await Counsellor_Appointments.findByIdAndUpdate(
       appointment_id,
       {
         //  $inc: { max_strength: -1 }, // Decrease max_strength by 1
@@ -349,7 +349,7 @@ app.post("/counsellor/getAppointments", async (req, res) => {
   try {
     // console.log("boo");
     // const records = await Appointment.find({counsellor_user_id : '65f449fd23c3a6138c0daca3'});
-    const records = await Appointment.find({
+    const records = await Counsellor_Appointments.find({
       counsellor_user_id: counsellor_user_id,
     }).then((results) => {
       attributeList = results.map((doc) => ({

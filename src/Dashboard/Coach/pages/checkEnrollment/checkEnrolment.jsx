@@ -31,7 +31,7 @@ function CheckEnrolment() {
           <option value="Spring Camp">Spring Camp</option>
         </select>
         <button className="dropbtn">Spring Camp</button>
-        <div class="dropdown-content">
+        <div className="dropdown-content">
           <a href="#">Summer Camp</a>
           <a href="#">Winter Camp</a>
           <a href="#">Spring Camp</a>
