@@ -32,6 +32,7 @@ import History from "./user/history/History.jsx";
 //Coach Pages
 import ProtectedRoute_Coach from "./protected_routes_coach.jsx";
 import Coach_Dashboard from "./Dashboard/Coach/Coach_Dashboard.jsx";
+import Gym_Instructor from "./Dashboard/Gym_Instructor/Gym_Instructor.jsx";
 
 //Admin-Attendance Pages
 import ProtectedRoute_Admin from "./protected_routes_admin.jsx";
@@ -82,6 +83,8 @@ function App() {
           <Route element={<ProtectedRoute_Coach />}>
             <Route path="/admin/coach" element={<Coach_Dashboard />} />
           </Route>
+
+          <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
 
           <Route element={<ProtectedRoute_Counsellor />}>
             <Route
