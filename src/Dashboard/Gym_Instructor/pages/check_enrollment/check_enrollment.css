@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 .gym-check-enrollment-container {
     color: #000000;
-    font-family: Poppins;
+    font-family: "Poppins";
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -16,20 +16,23 @@
     right: 5%;
     bottom: 5%;
     position: absolute;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 .gym-check-enrollment-container .enrollment-container h3{
-    text-align: center;
+    text-align: left;
+    margin-left: 5vw;
     font-weight: bold;
     font-family: Poppins;
     margin-top: 5%;
     margin-bottom:-3%;
 }
-.gym-check-enrollment-container .enrollment-container h4{
-    text-align: center;
+.gym-check-enrollment-container .enrollment-container .enrollment_accept h4{
+    text-align: left;
+    width: 20vw;
+    margin-left: -15vw;
     font-weight: bold;
-    font-family: Poppins;
+    font-family: "Poppins";
     margin-top: 5%;
 }
 

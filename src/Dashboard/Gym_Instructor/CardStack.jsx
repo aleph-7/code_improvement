@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import move from "lodash-move";
 // import Reserve from "./pages/reserve/reserve.jsx";
-// import CheckEnrollment from "./pages/check_enrollment/check_enrollment.jsx";
+import CheckEnrollment from "./pages/check_enrollment/check_enrollment.jsx";
 import Statistics from "./pages/statistics/statistics.jsx";
 import "./CardStack.css";
 
@@ -82,6 +82,7 @@ const CardStack = () => {
                 {/* //CHANGE THE PAGES HERE */}
                 {/*
                  */}
+                {color == "1" ? <CheckEnrollment /> : null}
                 {color == "2" ? <Statistics /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>

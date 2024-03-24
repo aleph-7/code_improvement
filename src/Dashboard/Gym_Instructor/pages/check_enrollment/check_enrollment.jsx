@@ -61,15 +61,15 @@ function CheckEnrollment() {
           pending requests
         </h3>
         <Table noOfRows={pendingMessage.length} noOfColumns={3} rowEntries={pendingMessage} />
-        <h4>enter the row no. of the enrollment you wish to accept:</h4>  
         <div className="enrollment_accept">
+          <h4>enter the row no. of the enrollment you wish to accept:</h4>  
           <select onChange={(e) => {setUsername(pendingMessage[e.target.value][0]); setYear(pendingMessage[e.target.value][1]); setMonth(pendingMessage[e.target.value][2]); console.log(username);} } style={{ width: '200px'}}>
           {Array.from({ length: pendingMessage.length-1}, (_, index) => (
           <option key={index + 1} value={index + 1}>{index + 1}</option>
-        ))}
-        </select>
-        <button backgroundColor={"#22992E"} size={3} value="book" textColor={1} className="gym_instructor_page_user_button" onClick={onClickAccept}>book</button>
-      </div>
+          ))}
+          </select>
+          <button backgroundColor={"#22992E"} size={3} value="book" textColor={1} className="gym_instructor_page_user_button" onClick={onClickAccept}>book</button>
+        </div>
       </div>
     </div>
   );
