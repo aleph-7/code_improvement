@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const SportsBookings = require("../models/bookingsDB").sports_bookingsSchema;
-const time_slots_by_counsellorsSchema = require("../models/contentDB").counsellor_availabilitySchema;
+const Counsellor_availability = require("../models/contentDB").counsellor_availabilitySchema;
 const Counsellor_Appointments = require("../models/bookingsDB").counsellor_appointmentsSchema;
 
 //GET COUNSELLOR APPOINTMENTS
@@ -36,7 +36,7 @@ router.get("/get_booking_history", async (req, res) => {
 
 app.get("/counsellor_page_user", async (req, res) => {
   let attributeList;
-  await time_slots_by_counsellorsSchema.find({}).then((results) => {
+  await Counsellor_availability.find({}).then((results) => {
     attributeList = results.map((doc) => [
       doc.day_vector,
       doc.hour_vector,
@@ -113,7 +113,7 @@ router.post('/get_available_days', async (req, res) => {
   counsellor_username=req.body.counsellor_username;
   counsellor_user_id = (await User.findOne({username:counsellor_username}))._id;
   let attributeList;
-  await time_slots_by_counsellorsSchema.find({counsellor_user_id:counsellor_user_id}).then((results) => {
+  await Counsellor_availability.find({counsellor_user_id:counsellor_user_id}).then((results) => {
     attributeList = results.map((doc) => [doc.day_vector, doc.date_slot]);
   });
   let messageAttributeList = [];
@@ -152,13 +152,13 @@ if(date==="Monday") {date=0; parameter=1;}
   {
     const query = {counsellor_user_id: counsellor_user_id};
     query[`day_vector.${date}`] = 1;
-    await time_slots_by_counsellorsSchema.find(query).then(results => {
+    await Counsellor_availability.find(query).then(results => {
       attributeList = results.map(doc => [doc.hour_vector]);
     });
   }
   else 
   {
-    await time_slots_by_counsellorsSchema.find({counsellor_user_id:counsellor_user_id,date_slot:date}).then((results) => {
+    await Counsellor_availability.find({counsellor_user_id:counsellor_user_id,date_slot:date}).then((results) => {
       attributeList = results.map((doc) => [doc.date_slot_time_vector]);
     });
   }
