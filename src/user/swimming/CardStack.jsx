@@ -6,10 +6,8 @@ import tutorials from "../assets/swimming/tutorials.jpeg";
 import logo from "../assets/swimming/logo.png";
 import move from "lodash-move";
 import BookingApp from "./screens/booking/booking";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
+import Tutorial from "../components/tutorials/tutorial";
 import Equipment from "./screens/equipment/equipment";
-import Leaderboard from "./screens/leaderboard/leaderboard";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -113,9 +111,8 @@ const CardStack = () => {
                   </div>
                 ) : null}
                 {color == "2" ? <BookingApp /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "3" ? <Tutorial sport="swimming" /> : null}
                 {color == "4" ? <Equipment /> : null}
-                {color == "6" ? <Leaderboard /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );

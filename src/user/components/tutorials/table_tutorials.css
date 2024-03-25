@@ -6,20 +6,25 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 40px;
+  gap: 4vh;
   font-family: Poppins;
   margin-top: 2vh;
   align-items: center;
 }
 
-#websiteTable {
+#websiteTable-Tutorials {
   width: 90%;
   text-align: center;
-  gap: 40px;
+  gap: 4vh;
+  border-collapse: collapse;
 }
 
-#websiteTable td {
+#websiteTable-Tutorials td {
   width: 30vw;
+}
+
+#websiteTable-Tutorials td:first-child {
+  width: 50vw;
 }
 
 .websiteTableHeader {
@@ -40,57 +45,60 @@
   font-family: "Poppins";
 }
 
-.websiteTableContent-workshop {
+.websiteTableContent-Tutorials {
   overflow-y: scroll;
-  max-height: 400px;
-  margin-top: 20px;
+  max-height: 45vh;
+  margin-top: 40px;
   border: 1px solid #ff0000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   border-radius: 25px;
   text-align: center;
   justify-content: space-between;
   display: flex;
-  padding-top: 5px;
 }
-.websiteTableContent-workshop td {
+
+.websiteTableContent-Tutorials tr {
+  transition: 0.2s;
+  height: 8vh;
+}
+
+.websiteTableContent-Tutorials tr:hover {
+  background-color: rgb(242, 200, 200);
+}
+
+.websiteTableContent-Tutorials td {
   line-height: 1.6rem;
-  width: auto;
 }
 
-.websiteTableContent-workshop-bookWorkshop {
-  display: flex;
-  flex-direction: column;
-  /* position: relative; */
-  justify-content: space-between;
+.book_workshop_tableentry ul {
+  list-style: none;
 }
 
-.websiteTableContent-workshop-bookWorkshop button {
-  position: relative;
-  border: none;
-  background: #22992e;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 21px;
-  color: #ffffff;
-  width: 10vw;
+.click-button {
   height: 40px;
-  border-radius: 25px;
-  transition-duration: 0.3s;
+  width: 25vw;
+  background: rgba(237, 186, 186, 0.33);
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  transition: 0.1s;
+  font-family: "Poppins";
+  cursor: pointer;
+  transition: 0.3s;
 }
-.websiteTableContent-workshop-bookWorkshop button:hover {
-  position: relative;
-  border: none;
-  background: #8eea97;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 21px;
-  color: #000000;
-  width: 10vw;
+
+.click-button :hover {
   height: 40px;
-  border-radius: 25px;
+  width: 25vw;
+  background: rgba(255, 0, 0, 0.33);
+  color: black;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  transition: 0.1s;
+  font-family: "Poppins";
   cursor: pointer;
 }
+
+/*KS*/

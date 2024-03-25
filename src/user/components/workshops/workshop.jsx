@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import Table_Tutorial from "../../../components/tutorials/table.jsx";
-import "./tutorial.css";
-import SERVER_ROOT_PATH from "../../../../../config";
+import "./workshop.css";
+import Table_Workshop from "./table_workshop.jsx";
+import SERVER_ROOT_PATH from "../../../../config.js";
 
-function Tutorial() {
+function Workshop({ sport }) {
   const [message, setMessage] = useState("");
   const fetchInfo = async () => {
-    return await fetch(SERVER_ROOT_PATH + "/tutorials/hockey")
+    return await fetch(SERVER_ROOT_PATH + "/workshops/" + sport)
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };
 
   useEffect(() => {
     fetchInfo();
+    console.log(message);
   }, []);
 
   return (
-    <div className="tutorial">
-      <Table_Tutorial
+    <div className="workshop">
+      <Table_Workshop
+        sport={sport}
         noOfRows={message.length}
         noOfColumns={3}
         rowEntries={message}
@@ -26,4 +28,4 @@ function Tutorial() {
   );
 }
 
-export default Tutorial;
+export default Workshop;

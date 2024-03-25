@@ -1,18 +1,18 @@
-import React from "react";
-import "./table.css";
+import React, { useState } from "react";
+import "./table_tutorials.css";
+import SERVER_ROOT_PATH from "../../../../config.js";
 
-const Table_Tutorial = ({ noOfRows, noOfColumns, rowEntries }) => {
+const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
   let rowEntries_withHeader = [["topic", "author", "link"], ...rowEntries];
   const generateTableHeader = () => {
     const rows = [];
     for (let i = 0; i < 1; i++) {
       rows.push(
         <tr key={i} id="tableHeaderRow">
-          {generateColumns(i)}
+          {generateColumnsHeader(i)}
         </tr>
       );
     }
-
     return rows;
   };
   const generateRows = () => {
@@ -22,6 +22,14 @@ const Table_Tutorial = ({ noOfRows, noOfColumns, rowEntries }) => {
     }
 
     return rows;
+  };
+
+  const generateColumnsHeader = (rowIndex) => {
+    const columns = [];
+    for (let j = 0; j < noOfColumns; j++) {
+      columns.push(<td key={j}>{rowEntries_withHeader[rowIndex][j]}</td>);
+    }
+    return columns;
   };
 
   const generateColumns = (rowIndex) => {
@@ -57,18 +65,16 @@ const Table_Tutorial = ({ noOfRows, noOfColumns, rowEntries }) => {
 
   return (
     <div id="mainTableDiv">
-      <table id="websiteTable">
+      <table id="websiteTable-Tutorials">
         <div className="websiteTableHeader">
           <thead>{generateTableHeader()}</thead>
         </div>
-        <div className="websiteTableContent">
-          <tr>{generateRows()}</tr>
+        <div className="websiteTableContent-Tutorials">
+          <tbody>{generateRows()}</tbody>
         </div>
       </table>
     </div>
   );
 };
 
-export default Table_Tutorial;
-
-/*KS*/
+export default Table_Workshop;

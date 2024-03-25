@@ -5,8 +5,8 @@ import tutorials from "../assets/basketball/tutorials.jpg";
 import workshops from "../assets/basketball/workshops.jpg";
 import logo from "../assets/basketball/logo.jpg";
 import move from "lodash-move";
-import Workshop from "./screens/workshop/workshop.jsx";
-import Tutorial from "./screens/tutorial/tutorial";
+import Workshop from "../components/workshops/workshop";
+import Tutorial from "../components/tutorials/tutorial";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -115,8 +115,8 @@ const CardStack = () => {
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>
                 ) : null}
-                {color == "2" ? <Workshop /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "2" ? <Workshop sport={"basketball"} /> : null}
+                {color == "3" ? <Tutorial sport={"basketball"} /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );

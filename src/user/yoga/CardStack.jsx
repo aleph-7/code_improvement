@@ -4,8 +4,8 @@ import Yoga1 from "../assets/yoga/Yoga1.png";
 import Yoga2 from "../assets/yoga/Yoga1.png";
 import logo from "../assets/cricket/logo.jpg";
 import move from "lodash-move";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
+import Workshop from "../components/workshops/workshop";
+import Tutorial from "../components/tutorials/tutorial";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -114,8 +114,8 @@ const CardStack = () => {
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>
                 ) : null}
-                {color == "2" ? <Workshop /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "2" ? <Workshop sport="yoga" /> : null}
+                {color == "3" ? <Tutorial sport="yoga" /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );
