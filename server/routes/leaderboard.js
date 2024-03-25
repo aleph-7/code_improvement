@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/badminton", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
-  await Leaderboard_Badminton.find({}).then((results) => {
+  await Leaderboard_Badminton.find({position: {$lte: 10}}).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
@@ -39,7 +39,7 @@ router.get("/badminton", async (req, res) => {
 router.get("/tennis", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
-  await Leaderboard_Tennis.find({}).then((results) => {
+  await Leaderboard_Tennis.find({position: {$lte: 10}}).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
@@ -65,7 +65,7 @@ router.get("/tennis", async (req, res) => {
 router.get("/squash", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
-  await Leaderboard_Squash.find({}).then((results) => {
+  await Leaderboard_Squash.find({position: {$lte: 10}}).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
@@ -91,7 +91,7 @@ router.get("/squash", async (req, res) => {
 router.get("/table_tennis", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
-  await Leaderboard_TableTennis.find({}).then((results) => {
+  await Leaderboard_TableTennis.find({position: {$lte: 10}}).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
