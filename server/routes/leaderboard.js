@@ -118,7 +118,7 @@ router.get("/table_tennis", async (req, res) => {
 //LEADER BOARD IMPLEMENTATION
 
 
-app.get("/badminton/attendance" , async (req, res) => {
+router.get("/badminton/attendance" , async (req, res) => {
   let attributeList;
   await BadmintonCourt.find({}).then((results) => {
     attributeList = results.map((doc) => [doc.court_name, doc.occupancy_status]);
@@ -126,7 +126,7 @@ app.get("/badminton/attendance" , async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.get("/squash/attendance" , async (req, res) => {
+router.get("/squash/attendance" , async (req, res) => {
   let attributeList;
   await SquashCourt.find({}).then((results) => {
     attributeList = results.map((doc) => [doc.court_name, doc.occupancy_status]);
@@ -134,7 +134,7 @@ app.get("/squash/attendance" , async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.get("/table_tennis/attendance" , async (req, res) => {
+router.get("/table_tennis/attendance" , async (req, res) => {
   let attributeList;
   await TableTennisCourt.find({}).then((results) => {
     attributeList = results.map((doc) => [doc.court_name, doc.occupancy_status]);
@@ -142,7 +142,7 @@ app.get("/table_tennis/attendance" , async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.get("/tennis/attendance" , async (req, res) => {
+router.get("/tennis/attendance" , async (req, res) => {
   let attributeList;
   await TennisCourt.find({}).then((results) => {
     attributeList = results.map((doc) => [doc.court_name, doc.occupancy_status]);
@@ -151,7 +151,7 @@ app.get("/tennis/attendance" , async (req, res) => {
 });
 
 
-app.post('/court_name_entry', async (req,res) => {
+router.post('/court_name_entry', async (req,res) => {
   const { court_name, type_of_sport } = req.body;
   console.log(court_name);
   console.log(type_of_sport);
@@ -176,7 +176,7 @@ app.post('/court_name_entry', async (req,res) => {
 });
 
 
-app.post('/fill_entries', async (req,res) => {
+router.post('/fill_entries', async (req,res) => {
   const {court_name, type_of_sport} = req.body;
   let doc;
   if (type_of_sport === "badminton") {
@@ -229,7 +229,7 @@ app.post('/fill_entries', async (req,res) => {
  
 
 
-app.post('/match_metric_marking', async (req,res) => {
+router.post('/match_metric_marking', async (req,res) => {
   let user_1, user_2, user_3, user_4, attendance_1, attendance_2, attendance_3, attendance_4, position_1, position_2, position_3, position_4;
   user_1=req.body.username_1;
   user_2=req.body.username_2;

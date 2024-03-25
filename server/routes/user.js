@@ -7,7 +7,7 @@ const Counsellor_Appointments = require("../models/bookingsDB").counsellorAppoin
 
 //GET COUNSELLOR APPOINTMENTS
 // doesnt seem to be called anywhere in front end currently
-app.get("/counsellor_appointments", async (req, res) => {
+router.get("/counsellor_appointments", async (req, res) => {
   let attributeList;
   await Counsellor_Appointments.find({}).then((results) => {
     attributeList = results.map((doc) => [doc]);
@@ -34,7 +34,7 @@ router.get("/get_booking_history", async (req, res) => {
 // =================================
 // COUNSELLOR USER PAGES 1
 
-app.get("/counsellor_page_user", async (req, res) => {
+router.get("/counsellor_page_user", async (req, res) => {
   let attributeList;
   await Counsellor_availability.find({}).then((results) => {
     attributeList = results.map((doc) => [
