@@ -5,6 +5,16 @@ const router = express.Router();
 const time_slots_by_counsellorsSchema = require("../models/contentDB").counsellor_availabilitySchema;
 const Counsellor_Appointments = require("../models/bookingsDB").counsellor_appointmentsSchema;
 
+//GET COUNSELLOR APPOINTMENTS
+// doesnt seem to be called anywhere in front end currently
+app.get("/counsellor_appointments", async (req, res) => {
+  let attributeList;
+  await Counsellor_Appointments.find({}).then((results) => {
+    attributeList = results.map((doc) => [doc]);
+  });
+  res.json({ message: attributeList });
+});
+
 
 router.get("/get_booking_history", async (req, res) => {
   const { user_id } = req.body.user_id;
