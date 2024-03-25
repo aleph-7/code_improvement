@@ -1,7 +1,7 @@
 const express = require("express");
-const SportsBookings = require("../models/bookingsDB").sports_bookingsSchema;
 const router = express.Router();
 
+const SportsBookings = require("../models/bookingsDB").sports_bookingsSchema;
 const time_slots_by_counsellorsSchema = require("../models/contentDB").counsellor_availabilitySchema;
 const Counsellor_Appointments = require("../models/bookingsDB").counsellor_appointmentsSchema;
 
