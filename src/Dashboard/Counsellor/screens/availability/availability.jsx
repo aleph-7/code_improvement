@@ -219,18 +219,18 @@ const Availability = () => {
     }));
     validateInput(e);
   };
-
+  
   const validateInput = (e) => {
     let { name, value } = e.target;
     setError((prev) => {
       const stateObj = { ...prev, [name]: "" };
-    switch (name) {
-      case "date_slot":
-        if (!value) {
-          stateObj[name] = "";
-        }
-        const dateValidator = isValidDate(value);
-        if (!dateValidator.isValid) {
+      switch (name) {
+        case "date_slot":
+          if (!value) {
+            stateObj[name] = "";
+          }
+          const dateValidator = isValidDate(value);
+          if (!dateValidator.isValid) {
           stateObj[name] = dateValidator.err;
         }
         const out = DaysInFuture(value);
@@ -310,7 +310,7 @@ const Availability = () => {
 }
   const onClickButtonDate = async () => {
     // Get all the checkboxes inside the 'daypicker' div
-    console.log("date button was pressed");
+
     const checkboxes = document.querySelectorAll('#timeForDateOfWeek input[type="checkbox"]');
     // Loop through each checkbox and update the day_vector array
     checkboxes.forEach((checkbox) => {
@@ -329,10 +329,12 @@ const Availability = () => {
       ...prev,
       description: "Date is required.",
     }));
+    return;
   }
   if (!(!inputDate.date_slot_time_vector || inputDate.date_slot_time_vector.some(value => value !== 0))) {
     alert("At least one time slot is required.");
     setError((prev) => ({ ...prev, date_slot_time_vector: "At least one time slot is required." }));
+    return;
   } 
   const out = isValidDate(inputDate.date_slot);
   if (!out.isValid) {
@@ -341,6 +343,16 @@ const Availability = () => {
       ...prev,
       date_slot : out.err,
     }));
+    return;
+  }
+  const out2 = DaysInFuture(inputDate.date_slot);
+  if (out2.daysInFuture > 31) {
+    alert("The input date must be at most 30 days from today");
+    return;
+  }
+  if (out2.daysInFuture < 0 ){
+    alert("The input date must be in the future!");
+    return;
   }
   //delete date availabilty 
   deleteDateAvailability().then(() => {
