@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const SportsBookings = require("../models/bookingsDB").sports_bookingsSchema;
+const SportsBookings = require("../models/bookingsDB").sportBookingsSchema;
 const Counsellor_availability = require("../models/contentDB").counsellor_availabilitySchema;
-const Counsellor_Appointments = require("../models/bookingsDB").counsellor_appointmentsSchema;
+const Counsellor_Appointments = require("../models/bookingsDB").counsellorAppointmentsSchema;
 
 //GET COUNSELLOR APPOINTMENTS
 // doesnt seem to be called anywhere in front end currently
