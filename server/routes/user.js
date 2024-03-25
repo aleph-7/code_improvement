@@ -31,17 +31,25 @@ router.get("/get_booking_history", async (req, res) => {
   res.status(200).json({ message: attributeList });
 });
 
-// =================================  
+// =================================
 // COUNSELLOR USER PAGES 1
 
-router.get('/counsellor_page_user', async (req, res) => {
+app.get("/counsellor_page_user", async (req, res) => {
   let attributeList;
   await time_slots_by_counsellorsSchema.find({}).then((results) => {
-
-    attributeList = results.map((doc) => [doc.day_vector, doc.hour_vector, doc.counsellor_user_id, doc.date_slot, doc.date_slot_time_vector, doc.counsellor_username, doc.available_day_or_date, doc.available_time_slots_12hour]);
+    attributeList = results.map((doc) => [
+      doc.day_vector,
+      doc.hour_vector,
+      doc.counsellor_user_id,
+      doc.date_slot,
+      doc.date_slot_time_vector,
+      doc.counsellor_username,
+      doc.available_day_or_date,
+      doc.available_time_slots_12hour,
+    ]);
   });
   for (let i = 0; i < attributeList.length; i++) {
-    let username
+    let username;
     try {
       username = (await User.findOne({ _id: attributeList[i][2] })).username;
     } catch (err) {
@@ -49,31 +57,32 @@ router.get('/counsellor_page_user', async (req, res) => {
     }
     attributeList[i][6] = username;
   }
-  for (let i = 0; i<attributeList.length; i++) {
-    let available_day_or_date=""
-    let available_time_slots_12hour=""
-    if(attributeList[i][3]!=="none") 
-    {
-      available_day_or_date=attributeList[i][3];
-      for (let j=0; j<24; j++) {
-        if (attributeList[i][4][j]===1) available_time_slots_12hour+=(j<12?j:j%12).toString()+(j<12?"am":"pm")+" ";
+  for (let i = 0; i < attributeList.length; i++) {
+    let available_day_or_date = "";
+    let available_time_slots_12hour = "";
+    if (attributeList[i][3] !== "none") {
+      available_day_or_date = attributeList[i][3];
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][4][j] === 1)
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + " ";
+      }
+    } else {
+      available_day_or_date += attributeList[i][0][0] === 1 ? "M" : "";
+      available_day_or_date += attributeList[i][0][1] === 1 ? "T" : "";
+      available_day_or_date += attributeList[i][0][2] === 1 ? "W" : "";
+      available_day_or_date += attributeList[i][0][3] === 1 ? "Th" : "";
+      available_day_or_date += attributeList[i][0][4] === 1 ? "F" : "";
+      available_day_or_date += attributeList[i][0][5] === 1 ? "Sa" : "";
+      available_day_or_date += attributeList[i][0][6] === 1 ? "Su" : "";
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][1][j] === 1)
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + " ";
       }
     }
-    else 
-    {
-      available_day_or_date+=attributeList[i][0][0]===1?"M":"";
-      available_day_or_date+=attributeList[i][0][1]===1?"T":"";
-      available_day_or_date+=attributeList[i][0][2]===1?"W":"";
-      available_day_or_date+=attributeList[i][0][3]===1?"Th":"";
-      available_day_or_date+=attributeList[i][0][4]===1?"F":"";
-      available_day_or_date+=attributeList[i][0][5]===1?"Sa":"";
-      available_day_or_date+=attributeList[i][0][6]===1?"Su":"";
-      for (let j=0; j<24; j++) {
-        if (attributeList[i][1][j]===1) available_time_slots_12hour+=(j<12?j:j%12).toString()+(j<12?"am":"pm")+" ";
-      }
-    }
-    attributeList[i][7]=available_day_or_date;
-    attributeList[i][8]=available_time_slots_12hour;
+    attributeList[i][7] = available_day_or_date;
+    attributeList[i][8] = available_time_slots_12hour;
   }
 
   let messageAttributeList = [];
@@ -84,7 +93,7 @@ router.get('/counsellor_page_user', async (req, res) => {
     messageList.push(attributeList[i][8]);
     messageAttributeList.push(messageList);
   }
-    
+
   res.json({ message: messageAttributeList });
 });
 
