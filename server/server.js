@@ -732,25 +732,6 @@ app.post("/squash/active_booking", async (req, res) => {
   }
 });
 
-app.get("/checkUser/:username", async (req, res) => {
-  // console.log(req.body);
-  try {
-    const username = req.params.username;
-    const user = await User.findOne({ username }); // Assuming username is the field in your database that stores usernames
-
-    if (user) {
-      // User exists
-      res.json({ exists: true });
-    } else {
-      // User doesn't exist
-      res.json({ exists: false });
-    }
-  } catch (error) {
-    console.error("Error checking user:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
 //////Pre-booking
 
 app.post("/squash/pre_booking", async (req, res) => {
@@ -908,25 +889,6 @@ app.post("/tennis/active_booking", async (req, res) => {
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.get("/checkUser/:username", async (req, res) => {
-  // console.log(req.body);
-  try {
-    const username = req.params.username;
-    const user = await User.findOne({ username }); // Assuming username is the field in your database that stores usernames
-
-    if (user) {
-      // User exists
-      res.json({ exists: true });
-    } else {
-      // User doesn't exist
-      res.json({ exists: false });
-    }
-  } catch (error) {
-    console.error("Error checking user:", error);
-    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -1127,25 +1089,6 @@ app.post("/table_tennis/active_booking", async (req, res) => {
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.get("/checkUser/:username", async (req, res) => {
-  // console.log(req.body);
-  try {
-    const username = req.params.username;
-    const user = await User.findOne({ username }); // Assuming username is the field in your database that stores usernames
-
-    if (user) {
-      // User exists
-      res.json({ exists: true });
-    } else {
-      // User doesn't exist
-      res.json({ exists: false });
-    }
-  } catch (error) {
-    console.error("Error checking user:", error);
-    res.status(500).json({ message: "Internal server error" });
   }
 });
 
