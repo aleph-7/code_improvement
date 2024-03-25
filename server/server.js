@@ -22,6 +22,7 @@ const Availability = require("./models/contentDB").counsellor_availabilitySchema
 const time_slots_by_counsellorsSchema = require("./models/contentDB").counsellor_availabilitySchema;
 const Gymbook = require("./models/bookingsDB").gym_bookingsSchema;
 const Counsellor_Appointments = require("./models/bookingsDB").counsellorAppointmentsSchema;
+const Blogs_Posted_By_Counsellors = require("./models/contentDB").blog_counsellorSchema;
 
 app.get("/badminton/leaderboard", async (req, res) => {
   let attributeList;
@@ -441,9 +442,6 @@ app.post("/coach/reserveCourt", async (req, res) => {
 
 //Apply functionality
 
-const Blogs_Posted_By_Counsellors =
-  require("./models/contentDB").blog_counsellorSchema;
-
 app.get("/self_help", async (req, res) => {
   let attributeList;
   await Blogs_Posted_By_Counsellors.find({}).then((results) => {
@@ -503,6 +501,51 @@ function verifyToken(req, res, next) {
     next();
   });
 }
+
+app.get("/checkUser/:username", async (req, res) => {
+  // console.log(req.body);
+  try {
+    const username = req.params.username;
+    const user = await User.findOne({ username }); // Assuming username is the field in your database that stores usernames
+
+    if (user) {
+      // User exists
+      res.json({ exists: true });
+    } else {
+      // User doesn't exist
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error("Error checking user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/checkappliedTimeslots", async (req, res) => {
+  try {
+    const { user_id, selectedTime } = req.body;
+
+    // Convert selectedTime to hours
+    const selectedHour = parseInt(selectedTime.split(":")[0], 10);
+
+    // Check if there is any existing booking for the user for the selected timeslot
+    const existingBooking = await SportsBookings.findOne({
+      user_id: user_id, // Assuming user_id is stored as ObjectId in the database
+      time_slot: selectedHour, // Assuming time_slot is stored as an integer representing the hour in the database
+    });
+
+    if (existingBooking) {
+      // If there is an existing booking, send a response indicating that the user has already applied for the timeslot
+      res.json({ alreadyapplied: true });
+    } else {
+      // If there is no existing booking, send a response indicating that the user has not applied for the timeslot
+      res.json({ alreadyapplied: false });
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.post("/badminton/active_booking", async (req, res) => {
   console.log(req.body);
@@ -572,25 +615,6 @@ app.post("/badminton/active_booking", async (req, res) => {
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.get("/checkUser/:username", async (req, res) => {
-  // console.log(req.body);
-  try {
-    const username = req.params.username;
-    const user = await User.findOne({ username }); // Assuming username is the field in your database that stores usernames
-
-    if (user) {
-      // User exists
-      res.json({ exists: true });
-    } else {
-      // User doesn't exist
-      res.json({ exists: false });
-    }
-  } catch (error) {
-    console.error("Error checking user:", error);
-    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -788,32 +812,6 @@ app.post("/squash/pre_booking", async (req, res) => {
     });
     const doc = await booking.save();
     res.json(doc);
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.post("/checkappliedTimeslots", async (req, res) => {
-  try {
-    const { user_id, selectedTime } = req.body;
-
-    // Convert selectedTime to hours
-    const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-
-    // Check if there is any existing booking for the user for the selected timeslot
-    const existingBooking = await SportsBookings.findOne({
-      user_id: user_id, // Assuming user_id is stored as ObjectId in the database
-      time_slot: selectedHour, // Assuming time_slot is stored as an integer representing the hour in the database
-    });
-
-    if (existingBooking) {
-      // If there is an existing booking, send a response indicating that the user has already applied for the timeslot
-      res.json({ alreadyapplied: true });
-    } else {
-      // If there is no existing booking, send a response indicating that the user has not applied for the timeslot
-      res.json({ alreadyapplied: false });
-    }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
