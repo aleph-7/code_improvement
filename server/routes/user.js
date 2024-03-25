@@ -2,8 +2,8 @@ const express = require("express");
 const SportsBookings = require("../models/bookingsDB").sports_bookingsSchema;
 const router = express.Router();
 
-const time_slots_by_counsellorsSchema = require("./models/contentDB").counsellor_availabilitySchema;
-const Counsellor_Appointments = require("./models/bookingsDB").counsellor_appointmentsSchema;
+const time_slots_by_counsellorsSchema = require("../models/contentDB").counsellor_availabilitySchema;
+const Counsellor_Appointments = require("../models/bookingsDB").counsellor_appointmentsSchema;
 
 
 router.get("/get_booking_history", async (req, res) => {
@@ -24,7 +24,7 @@ router.get("/get_booking_history", async (req, res) => {
 // =================================  
 // COUNSELLOR USER PAGES 1
 
-app.get('/counsellor_page_user', async (req, res) => {
+router.get('/counsellor_page_user', async (req, res) => {
   let attributeList;
   await time_slots_by_counsellorsSchema.find({}).then((results) => {
 
@@ -82,7 +82,7 @@ app.get('/counsellor_page_user', async (req, res) => {
 // COUNSELLOR USER PAGES 2
 
 
-app.get('/institute_counsellors', async (req, res) => {
+router.get('/institute_counsellors', async (req, res) => {
   let attributeList;
   await User.find({user_category:2}).then((results) => {
     attributeList = results.map((doc) => [doc.username, doc._id]);
@@ -90,7 +90,7 @@ app.get('/institute_counsellors', async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.post('/get_available_days', async (req, res) => {
+router.post('/get_available_days', async (req, res) => {
   counsellor_username=req.body.counsellor_username;
   counsellor_user_id = (await User.findOne({username:counsellor_username}))._id;
   let attributeList;
@@ -114,7 +114,7 @@ app.post('/get_available_days', async (req, res) => {
 });
 
 
-app.post('/get_available_time_slots', async (req, res) => {
+router.post('/get_available_time_slots', async (req, res) => {
   counsellor_username=req.body.counsellor_username;
   date=req.body.date;
   console.log(counsellor_username);
@@ -171,7 +171,7 @@ function getDate(date)
   return dayOfMonth+ "-" + month + "-" + year;
 };
 
-app.post('/book_counsellor_appointment', async (req, res) => {
+router.post('/book_counsellor_appointment', async (req, res) => {
   const user_id = req.body.user_id;
   const counsellor_username = req.body.counsellor_username;
   let date = req.body.date;
@@ -197,7 +197,7 @@ app.post('/book_counsellor_appointment', async (req, res) => {
 
 // =====================================
 // COUNSELLOR USER PAGES 3
-app.get('/counsellor_page_user_3', async (req, res) => {
+router.get('/counsellor_page_user_3', async (req, res) => {
   let patient_id=req.body.user_id;
   let attributeList;
   await Counsellor_Appointments.find({}).then((results) => {

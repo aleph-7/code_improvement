@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const Swim_Gym_Memberships = require("./models/bookingsDB").swim_gym_membershipsSchema;
+const Swim_Gym_Memberships = require("../models/bookingsDB").swim_gym_membershipsSchema;
 
 // =====================================
 // SWIM GYM INSTRUCTOR DASHBOARD
 // =====================================
 
-app.get('/swim_gym_instructor_dashboard', async (req, res) => {
+router.get('/swim_gym_instructor_dashboard', async (req, res) => {
   let attributeList;
   await Swim_Gym_Memberships.find({}).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.year, doc.month, doc.type, doc.booking_status]);
@@ -16,7 +16,7 @@ app.get('/swim_gym_instructor_dashboard', async (req, res) => {
 });
 
 
-app.get('/check_gym_enrollment', async (req, res) => {
+router.get('/check_gym_enrollment', async (req, res) => {
   let attributeList=[];
   let year = new Date().getFullYear();
   let month = new Date().getMonth() + 1;
@@ -61,7 +61,7 @@ app.get('/check_gym_enrollment', async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.post('/check_swim_enrollment', async (req, res) => {
+router.post('/check_swim_enrollment', async (req, res) => {
   let attributeList=[];
   let year = new Date().getFullYear();
   let month = new Date().getMonth() + 1;
@@ -107,7 +107,7 @@ app.post('/check_swim_enrollment', async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.get('/pending_gym_enrollment', async (req, res) => {
+router.get('/pending_gym_enrollment', async (req, res) => {
   let attributeList=[];
   let headerList =[];
   headerList.push("username");
@@ -150,7 +150,7 @@ app.get('/pending_gym_enrollment', async (req, res) => {
   res.json({ message: attributeList });
 });
 
-app.post('/accept_gym_enrollment', async (req, res) =>{
+router.post('/accept_gym_enrollment', async (req, res) =>{
   let username=req.body.username;
   let year=req.body.year;
   let month=req.body.month;
@@ -184,7 +184,7 @@ app.post('/accept_gym_enrollment', async (req, res) =>{
   res.json({ message: "Enrollment accepted successfully" });
 });
 
-app.post('/accept_swim_enrollment', async (req, res) =>{
+router.post('/accept_swim_enrollment', async (req, res) =>{
   let username=req.body.username;
   let year=req.body.year;
   let month=req.body.month;
@@ -219,7 +219,7 @@ app.post('/accept_swim_enrollment', async (req, res) =>{
 });
 
 
-app.get('/get_statistics', async (req, res) => {
+router.get('/get_statistics', async (req, res) => {
   let attributeList=[];
   let bookingJanuary=0;
   let bookingFebruary=0;
@@ -375,3 +375,6 @@ app.get('/get_statistics', async (req, res) => {
 
   res.json({ message: finalAttributeList });
 });
+
+
+module.exports = router;
