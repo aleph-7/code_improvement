@@ -25,7 +25,7 @@ function page2() {
    useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:6300/institute_counsellors");
+        const response = await fetch("http://localhost:6300/user/institute_counsellors");
         const data = await response.json();
         const options = data.message.map(counsellor => counsellor[0]);
         setCounsellorOptions(options);

@@ -8,7 +8,7 @@ import "./page3.css";
 const page3 = () => {
   const [message, setMessage] = useState("");
   const fetchInfo = async() => {
-    return await fetch("http://localhost:6300/counsellor_page_user_3")
+    return await fetch("http://localhost:6300/user/counsellor_page_user_3")
     .then(response => response.json())
     .then(data => setMessage(data.message));
   };
