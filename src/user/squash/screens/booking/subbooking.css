@@ -109,5 +109,24 @@
 .active-booking-form-squash .drop-down {
   margin-bottom: 3vw;
   margin-left: 4vw;
-  height: fit-content;
+  height:40%;
+  background-color: rgb(215, 215, 215);
+  border-radius:20px;
+  font-family:"Poppins";
 }
+
+
+.active-booking-form-squash .select{
+  display:flex;
+  /* padding-top:10%; */
+}
+.active-booking-form-squash .show_cont{
+  height:80%;
+  background-color: rgb(215, 215, 215);
+  border-radius:20px;
+}
+
+.active-booking-form-squash .pre-check{
+  padding-top:4%;
+}
+

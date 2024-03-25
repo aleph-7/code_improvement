@@ -13,7 +13,7 @@ function Error() {
       </div>
       <button>
         <Link
-          to="/login "
+          to="/home "
           style={{ color: "inherit", textDecoration: "inherit" }}
         >
           get back to base

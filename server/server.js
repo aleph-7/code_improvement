@@ -22,7 +22,7 @@ const Availability =
   require("./models/contentDB").counsellor_availabilitySchema;
 const time_slots_by_counsellorsSchema =
   require("./models/contentDB").counsellor_availabilitySchema;
-const Gymbook = require("./models/bookingsDB").gym_bookingsSchema;
+const Gymbook = require("./models/bookingsDB").swimGymMembershipsSchema;
 const Counsellor_Appointments =
   require("./models/bookingsDB").counsellorAppointmentsSchema;
 
@@ -1830,4 +1830,140 @@ app.get('/get_statistics', async (req, res) => {
   finalAttributeList[1].push(totalPending);
 
   res.json({ message: finalAttributeList });
+});
+
+
+
+//////Active-booking available slots
+app.post("/getAvailableSlots", async (req, res) => {
+  const { date, type_of_sport,capacity } = req.body;
+  console.log(req.body);
+  try {
+    const bookings = await SportsBookings.find({ date_slot: date, type_of_sport: type_of_sport, booking_status: 1 });
+    const bookedSlots = bookings.reduce((acc, booking) => {
+      if (!acc[booking.time_slot]) {
+        acc[booking.time_slot] = 1;
+      } else {
+        acc[booking.time_slot]++;
+      }
+      return acc;
+    }, {});
+    console.log(bookedSlots);
+    // Generate all possible slots
+    const allSlots = [
+      "6", "7", "8","16", "17", 
+      "18", "19", "20"
+    ];
+
+    // Determine available slots
+    const availableSlots = allSlots.filter(slot => {
+      return !bookedSlots.hasOwnProperty(slot) || bookedSlots[slot] < capacity;
+    });
+
+    res.json({ availableSlots });
+  } catch (error) {
+    console.error("Error fetching available slots for date:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+///////////Gym and Pool membership pass
+app.get('/gym/swim_pass', async (req, res) => {
+  try {
+    const { userid, year, month,type } = req.query;
+    console.log(req.query);
+    // Fetch membership details from the database based on the provided parameters
+    const membershipDetails = await Gymbook.find({
+      user_id: userid,
+      year: year,
+      month: month,
+      type:type,
+      booking_status:1,
+    });
+
+
+    const formattedTimeSlots = membershipDetails.map(detail => {
+      const startTime = `${detail.time_slot}:00 `; // Assuming slots are in AM
+      const endTime = `${detail.time_slot + 1}:00`; // Assuming each slot is 1 hour
+      return `${startTime}-${endTime}`;
+    });
+
+    // Send the formatted time slots back to the client
+    res.json(formattedTimeSlots);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred while fetching membership details." });
+  }
+});
+
+
+
+///////////////////Gym and Pool Booking
+app.post("/gym/swim_booking", async (req, res) => {
+  console.log(req.body);
+  try {
+    const month = req.body.month;
+    const time_slot = parseInt(req.body.time_slot.split(":")[0], 10);
+    const user_id = req.body.user_id;
+    const year = req.body.year;
+    const time = req.body.time;
+    const type = req.body.type;
+    // Check if the user has already booked the same slot
+    const existingBooking = await Gymbook.findOne({
+      month: month,
+      time_slot: time_slot,
+      user_id: user_id,
+      year: year,
+      type:type,
+    });
+
+    if (existingBooking) {
+      // User has already booked the slot
+      return res.status(400).json({ error: "You have already booked this slot." });
+    }
+
+    // Check if the maximum capacity for the slot has been reached
+    const countBookings = await Gymbook.countDocuments({
+      month: month,
+      time_slot: time_slot,
+      year: year,
+      booking_status:1,
+      type: type,
+    });
+
+    if (countBookings >= 40) {
+      // Maximum capacity reached, save a document with booking_status -1
+      const unsuccessfulBooking = new Gymbook({
+        month: month,
+        time_slot: time_slot,
+        user_id: user_id,
+        type: type,
+        year: year,
+        booking_status: -1, // Set booking status to -1 for unsuccessful booking
+        time_of_booking: time,
+      });
+
+      await unsuccessfulBooking.save();
+      return res.status(400).json({ error: "Maximum capacity for this slot has been reached." });
+    }
+
+    // If all checks pass, proceed with booking
+    const booking = new Gymbook({
+      month: month,
+      time_slot: time_slot,
+      user_id: user_id,
+      type: type,
+      year: year,
+      booking_status: 1, // Set booking status to 1 for successful booking
+      time_of_booking: time,
+    });
+
+    const doc = await booking.save();
+    res.json(doc);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred while processing your request." });
+  }
 });

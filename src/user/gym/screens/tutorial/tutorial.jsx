@@ -5,7 +5,7 @@ import "./tutorial.css";
 function Tutorial() {
   const [message, setMessage] = useState("");
   const fetchInfo = async () => {
-    return await fetch("http://localhost:6300/tutorials/badminton")
+    return await fetch("http://localhost:6300/tutorials/gym")
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };

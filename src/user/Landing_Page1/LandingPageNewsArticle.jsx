@@ -21,7 +21,7 @@ const LandingPageNewsArticle = ({ imageurl, Headline }) => {
         <h1 id="Headline">{Headline}</h1>
         
         <button id="HeadlineButton" onClick={() => {
-                          window.location.pathname = "/LP2";
+                          window.location.pathname = "/home_readmore";
                         }}>Read More</button>
       </div>
     );

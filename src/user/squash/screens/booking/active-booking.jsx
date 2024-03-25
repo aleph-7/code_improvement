@@ -1,19 +1,39 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./subbooking.css";
 import SERVER_ROOT_PATH from "../../../../../config";
 
-function ActiveBooking() {
-  const [data, setData] = useState({});
 
-  const handleChange = (e) => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
+function fetchAvailableSlots(date, typeOfSport,cap) {
+  return fetch(`${SERVER_ROOT_PATH}/getAvailableSlots`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ date:date, type_of_sport: typeOfSport ,capacity:cap}),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch available slots");
+      }
+      return response.json();
+    })
+    .then((data) => data.availableSlots)
+    .catch((error) => {
+      console.error("Error fetching available slots:", error);
+      return [];
     });
-  };
+}
 
+
+function ActiveBooking() {
+  const [availableSlots, setAvailableSlots] = useState([]);
   const userid = localStorage.getItem("userMongoId");
-  const sport = localStorage.getItem("type_of_sport");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [users, setUsers] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [showWarning, setShowWarning] = useState(false);
+  var date = new Date();
+  const current_date = (date.getDate() < 10 ? "0" : "") + date.getDate() + "-" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "-" +date.getFullYear(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,9 +86,6 @@ function ActiveBooking() {
       setInputValue("");
       setAllowPlayerSelection(false);
       setShowWarning(false);
-      // Reset form after successful submission
-
-      // Show alert for successful booking
     } else {
       const errorMessage = await bookingRes.json();
       if (errorMessage.error === "Court is full") {
@@ -83,16 +100,29 @@ function ActiveBooking() {
       setShowWarning(false);
     }
   };
-  const [selectedTime, setSelectedTime] = useState("");
 
-  const handleSelectChange = (event) => {
-    setSelectedTime(event.target.value);
+
+  useEffect(() => {
+    async function fetchData() {
+      const slots = await fetchAvailableSlots(current_date, "squash",4);
+      setAvailableSlots(slots);
+    }
+    fetchData();
+  }, []);
+  
+
+  const handleSelectChange = async (event) => {
+    const selectedValue = event.target.value;
+    setSelectedTime(selectedValue);
+    
+    if (selectedValue === "") {
+      const current_date = getFormattedDate();
+      const slots = await fetchAvailableSlots(current_date, "squash",4);
+      setAvailableSlots(slots);
+    }
   };
 
-  const [users, setUsers] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [showWarning, setShowWarning] = useState(false);
-
+  
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -149,14 +179,12 @@ function ActiveBooking() {
               value={selectedTime}
               onChange={handleSelectChange}
             >
-              <option value="6:00 - 7:00">6:00 - 7:00</option>
-              <option value="7:00 - 8:00">7:00 - 8:00</option>
-              <option value="8:00 - 9:00">8:00 - 9:00</option>
-              <option value="16:00 - 17:00">16:00 - 17:00</option>
-              <option value="17:00 - 18:00">17:00 - 18:00</option>
-              <option value="18:00 - 19:00">18:00 - 19:00</option>
-              <option value="19:00 - 20:00">19:00 - 20:00</option>
-              <option value="20:00 - 21:00">20:00 - 21:00</option>
+              <option value="">select a time slot</option>
+              {availableSlots.map((slot) => (
+                <option key={slot} value={slot}>
+                  {slot}:00 - {parseInt(slot) + 1}:00
+                </option>
+              ))}
             </select>
           </div>
         </div>

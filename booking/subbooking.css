@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.active-booking-form-tennis {
+  width: auto;
+  overflow: hidden;
+  overflow-y: scroll;
+  background: rgba(255, 255, 255, 0.33);
+  font-family: "Poppins";
+  position: center;
+  margin-left: 10vw;
+  padding-top: 4vh;
+  margin-right: 5vw;
+  margin-top: 4vh;
+  width: 80%;
+
+  border-radius: 2vw;
+}
+
+.active-booking-form-tennis .booking-area {
+  width: 80%;
+}
+
+.active-booking-form-tennis .play-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.active-booking-form-tennis .drop {
+  display: flex;
+  gap: 5vw;
+}
+
+.active-booking-form-tennis .labeeels {
+  font-size: 2.5vh;
+  font-weight: bold;
+  margin-left: 7vw;
+  color: #000000;
+}
+
+.active-booking-form-tennis .players-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.active-booking-form-tennis .show_cont {
+  margin-left: 2vw;
+}
+
+.active-booking-form-tennis .buttonContainer {
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  margin-bottom: 1vw;
+  margin-top: 5vw;
+  margin-left: 2vw;
+}
+
+.active-booking-form-tennis .orangeButtonnn {
+  background-color: orange;
+  cursor: pointer;
+  width: 10vw;
+  height: 3.3vw;
+  border-radius: 2.5vw;
+  color: white;
+  border: none;
+  font-size: 2vh;
+  font-weight: bold;
+}
+
+.active-booking-form-tennis .orangeButton:hover {
+  background-color: darkorange;
+}
+
+.active-booking-form-tennis .greenButtonnn {
+  width: 10vw;
+  height: 3.3vw;
+  border-radius: 2.5vw;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 2vh;
+  font-weight: bold;
+}
+
+.active-booking-form-tennis .greenButtonn:hover {
+  background-color: #45a049;
+}
+
+.active-booking-form-tennis .redButton {
+  width: 10vw;
+  height: 3.3vw;
+  border-radius: 2.5vw;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  margin-left: 4vw;
+  align-items: center;
+}
+
+.active-booking-form-tennis .redButton:hover {
+  background-color: #cc0000;
+}
+
+.active-booking-form-tennis .drop-down {
+  margin-bottom: 3vw;
+  margin-left: 4vw;
+  height:40%;
+  background-color: rgb(215, 215, 215);
+  border-radius:20px;
+  font-family:"Poppins";
+}
+
+
+.active-booking-form-tennis .select{
+  display:flex;
+  /* padding-top:10%; */
+}
+.active-booking-form-tennis .show_cont{
+  height:80%;
+  background-color: rgb(215, 215, 215);
+  border-radius:20px;
+}
+
+.active-booking-form-tennis .pre-check{
+  padding-top:4%;
+}
+
