@@ -174,7 +174,36 @@ const Availability = () => {
         err =  "Invalid date.";
         return {isValid,err}
     }
-}
+  }
+  function DaysInFuture(dateString) {
+    const dateStatus = isValidDate(dateString);
+
+    let err = "";
+    let daysInFuture = 0;
+
+    if (!dateStatus.isValid) {
+        err = dateStatus.err;
+        return { daysInFuture, err };
+    }
+
+    // Split the date into day, month, and year
+    const parts = dateString.split('-');
+
+    // Rearrange the parts to form the new date format (mm/dd/yyyy)
+    const invertedDateString = `${parts[1]}/${parts[0]}/${parts[2]}`;
+
+    const inputDate = new Date(invertedDateString);
+    const currentDate = new Date();
+
+    const timeDifference = inputDate.getTime() - currentDate.getTime();
+    const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)); // Calculate days difference
+
+    if (dayDifference > 0) {
+        daysInFuture = dayDifference; // Number of days in the future
+    }
+
+    return { daysInFuture, err };
+  }
 
   const [error,setError] = useState({
     day_vector : "",
@@ -203,6 +232,13 @@ const Availability = () => {
         const dateValidator = isValidDate(value);
         if (!dateValidator.isValid) {
           stateObj[name] = dateValidator.err;
+        }
+        const out = DaysInFuture(value);
+        if (out.daysInFuture > 31) {
+          stateObj[name] = "The input date must be at most 30 days from today"
+        }
+        if (out.daysInFuture < 0 ){
+          stateObj[name] = "The input date must be in the future!"
         }
         break;
     default:
