@@ -992,32 +992,6 @@ app.post("/tennis/pre_booking", async (req, res) => {
   }
 });
 
-app.post("/checkappliedTimeslots", async (req, res) => {
-  try {
-    const { user_id, selectedTime } = req.body;
-
-    // Convert selectedTime to hours
-    const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-
-    // Check if there is any existing booking for the user for the selected timeslot
-    const existingBooking = await SportsBookings.findOne({
-      user_id: user_id, // Assuming user_id is stored as ObjectId in the database
-      time_slot: selectedHour, // Assuming time_slot is stored as an integer representing the hour in the database
-    });
-
-    if (existingBooking) {
-      // If there is an existing booking, send a response indicating that the user has already applied for the timeslot
-      res.json({ alreadyapplied: true });
-    } else {
-      // If there is no existing booking, send a response indicating that the user has not applied for the timeslot
-      res.json({ alreadyapplied: false });
-    }
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 // =================================
 // COUNSELLOR USER PAGES 1
 
@@ -1231,32 +1205,6 @@ app.post("/table_tennis/pre_booking", async (req, res) => {
     });
     const doc = await booking.save();
     res.json(doc);
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.post("/checkappliedTimeslots", async (req, res) => {
-  try {
-    const { user_id, selectedTime } = req.body;
-
-    // Convert selectedTime to hours
-    const selectedHour = parseInt(selectedTime.split(":")[0], 10);
-
-    // Check if there is any existing booking for the user for the selected timeslot
-    const existingBooking = await SportsBookings.findOne({
-      user_id: user_id, // Assuming user_id is stored as ObjectId in the database
-      time_slot: selectedHour, // Assuming time_slot is stored as an integer representing the hour in the database
-    });
-
-    if (existingBooking) {
-      // If there is an existing booking, send a response indicating that the user has already applied for the timeslot
-      res.json({ alreadyapplied: true });
-    } else {
-      // If there is no existing booking, send a response indicating that the user has not applied for the timeslot
-      res.json({ alreadyapplied: false });
-    }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
