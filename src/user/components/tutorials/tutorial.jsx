@@ -6,11 +6,7 @@ import SERVER_ROOT_PATH from "../../../../config.js";
 function Tutorial({ sport }) {
   const [message, setMessage] = useState("");
   const fetchInfo = async () => {
-<<<<<<< HEAD:src/user/components/tutorials/tutorial.jsx
     return await fetch(SERVER_ROOT_PATH + "/tutorials/" + sport)
-=======
-    return await fetch("http://localhost:6300/tutorials/gym")
->>>>>>> main:src/user/gym/screens/tutorial/tutorial.jsx
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };
