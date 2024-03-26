@@ -104,9 +104,13 @@ function Header() {
                 </ul>
               </li>
               <li className="section">
-                <button onClick={() => {
-                          window.location.pathname = "/home";
-                        }}>home</button>
+                <button
+                  onClick={() => {
+                    window.location.pathname = "/home";
+                  }}
+                >
+                  home
+                </button>
               </li>
               <li className="section">
                 <button onClick={logout}>logout</button>
