@@ -10,7 +10,7 @@ const NewsArticle = ({ NewsArticleHeadline, NewsArticleText }) => {
       </div>
       <div id="NewsArticleContent">
         <div id="NewsArticleImageDiv">
-            <img src={basketballImage} alt="NewsArticleImage" />
+            <img id="imgnews" src={basketballImage} alt="NewsArticleImage" />
         </div>
         <div id="NewsArticleTextDiv">
             <p>{NewsArticleText}</p>

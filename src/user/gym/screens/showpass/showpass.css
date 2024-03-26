@@ -1,0 +1,39 @@
+.Viewshow{
+  justify-content:center;
+  width:80%;
+  margin-top: 5%;
+  margin-left: %;
+  min-height: 300px;
+  background-color: #f5ebe7;
+  border-radius: 29px;
+}
+
+.wrapper{
+  height: 100%;
+    background-color: #ede4dd;
+    border-radius: 25px;
+    padding-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    padding-top: 10px;
+    padding : 20px;
+}
+
+.wrapper h3{
+  margin-left: 2%;
+  font-size:3.5vh;
+}
+
+.name {
+  display:flex;
+  font-size:2.5vh;
+  height:10%;
+}
+.month{
+  display:flex;
+  font-size:2.5vh;
+}
+.timings {
+  display:flex;
+  font-size:2.5vh;
+}

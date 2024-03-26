@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './LP2.css';
-import App from './App.jsx';
 import NewsArticle from './NewsArticle.jsx';
 import Header from "../Header";
 

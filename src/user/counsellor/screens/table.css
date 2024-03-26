@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-#mainTableDiv {
+#mainTableDivPage1 {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9,29 +9,27 @@
   align-items: center;
   margin: 20px;
 }
-#websiteTableHeader {
-  width: 90%;
+#websiteTableHeaderPage1 {
+  width:90%;
   background-color: rgba(237, 186, 186, 0.68);
   text-align: center;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
-#websiteTableContent {
-  width: 100%;
+#websiteTableContentPage1 {
   text-align: center;
+  width:90%;
 }
 
-.tableBookingDiv {
+.tableBookingDivPage1 {
+  width:90%;
   max-height: 600px;
   overflow-y: scroll;
   background-color: rgba(224, 217, 217, 0.7);
-  width: 90%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
   font-family: Poppins;
   align-items: center;
-  margin: 20px;
   border: 1px solid #ff0000;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -42,36 +40,35 @@
   overflow: hidden;
 } */
 
-#websiteTableHeader td {
+#websiteTableHeaderPage1 td {
   padding: 10px;
   font-size: 20px;
   font-weight: bold;
   height: 3vh;
 }
 
-#websiteTableContent td {
+#websiteTableContentPage1 td {
   padding: 10px;
   height: 1vh;
   font-weight: bold;
   font-size: 15px;
 }
 
-.accepted
+.acceptedPage1
 {
   background-color: #22992E;
   border-radius: 25px;
   color: #ffffff;
 }
-.rejected
+.rejectedPage1
 {
   background-color: #ff0000;
   border-radius: 25px;
   color: #ffffff;
 }
-.pending
+.pendingPage1
 {
   background-color: #FF820E;
   border-radius: 25px;
   color: #ffffff;
 }
-

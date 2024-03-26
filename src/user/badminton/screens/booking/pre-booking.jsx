@@ -145,6 +145,7 @@ function PreBooking() {
               value={selectedTime}
               onChange={handleSelectChange}
             >
+              <option value="">select a time slot</option>
               <option value="6:00 - 7:00">6:00 - 7:00</option>
               <option value="7:00 - 8:00">7:00 - 8:00</option>
               <option value="8:00 - 9:00">8:00 - 9:00</option>
@@ -158,7 +159,7 @@ function PreBooking() {
         </div>
         <div className="select">
           <p className="labeeels">Select Playmate(s)</p>
-          <div>
+          <div className="pre-check">
             <input
               type="checkbox"
               checked={allowPlayerSelection}
@@ -170,7 +171,7 @@ function PreBooking() {
             {allowPlayerSelection && (
               <>
                 <div className="players-list">
-                  <div>
+                  <div >
                     <input
                       className="show_cont"
                       type="text"

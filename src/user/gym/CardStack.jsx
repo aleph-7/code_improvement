@@ -1,15 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
-import booknow from "../assets/swimming/booknow.jpeg";
-import tutorials from "../assets/swimming/tutorials.jpeg";
-//import workshops from "../assets/badminton/workshops.png";
-import logo from "../assets/swimming/logo.png";
 import move from "lodash-move";
-import BookingApp from "./screens/booking/booking";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
-import Equipment from "./screens/equipment/equipment";
-import Leaderboard from "./screens/leaderboard/leaderboard";
+import Tutorial from "../components/tutorials/tutorial";
+import Get_slots from "./screens/get_slots/get_slots";
+import Showpass from "./screens/showpass/showpass";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -88,7 +82,7 @@ const CardStack = () => {
                   <div className="home-swimming">
                     <div className="booknow">
                       <img
-                        src={booknow}
+                        src="https://i0.wp.com/stanzaliving.wpcomstaging.com/wp-content/uploads/2023/02/Top-gyms-in-Nagpur.jpg?fit=1000%2C667&ssl=1"
                         alt="booknow"
                         onClick={() => bringToFront(setIndex(2))}
                       />
@@ -96,15 +90,17 @@ const CardStack = () => {
                     </div>
                     <div className="tutorials">
                       <img
-                        src={tutorials}
+                        src="https://img.freepik.com/free-photo/dumbbells-floor-gym-ai-generative_123827-23744.jpg"
                         alt="tutorials"
                         onClick={() => bringToFront(setIndex(4))}
                       />
                       {/* click image functionality */}
                     </div>
                     <div className="logo">
-                      <img src={logo} alt="logo" />
-                      {/* click image functionality */}
+                      <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/003/108/337/small/fitness-gym-logo-with-strong-athlete-and-barbell-vector.jpg"
+                        alt="logo"
+                      />
                     </div>
                     <div class="booknow-line1">avail all facilities!</div>
                     <div class="booknow-line2">book now!</div>
@@ -112,10 +108,9 @@ const CardStack = () => {
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>
                 ) : null}
-                {color == "2" ? <BookingApp /> : null}
-                {color == "3" ? <Tutorial /> : null}
-                {color == "4" ? <Equipment /> : null}
-                {color == "6" ? <Leaderboard /> : null}
+                {color == "2" ? <Get_slots /> : null}
+                {color == "3" ? <Tutorial sport="gym" /> : null}
+                {color == "4" ? <Showpass /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );

@@ -759,5 +759,3 @@ app.post("/table_tennis/pre_booking", async (req, res) => {
   }
 });
 
-
-

@@ -6,8 +6,8 @@ import workshops from "../assets/squash/workshops.jpg";
 import logo from "../assets/squash/logo.jpg";
 import move from "lodash-move";
 import BookingApp from "./screens/booking/booking";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
+import Workshop from "../components/workshops/workshop";
+import Tutorial from "../components/tutorials/tutorial";
 import Leaderboard from "./screens/leaderboard/leaderboard";
 import "./CardStack.css";
 import "./screens/home/home.css";
@@ -129,8 +129,8 @@ const CardStack = () => {
                   </div>
                 ) : null}
                 {color == "2" ? <BookingApp /> : null}
-                {color == "3" ? <Workshop /> : null}
-                {color == "4" ? <Tutorial /> : null}
+                {color == "3" ? <Workshop sport="squash" /> : null}
+                {color == "4" ? <Tutorial sport="squash" /> : null}
                 {color == "5" ? <Leaderboard /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
