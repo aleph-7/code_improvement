@@ -5,11 +5,9 @@ import tutorials from "../assets/swimming/tutorials.jpeg";
 //import workshops from "../assets/badminton/workshops.png";
 import logo from "../assets/swimming/logo.png";
 import move from "lodash-move";
-import BookingApp from "./screens/booking/booking";
-import Workshop from "./screens/workshop/workshop";
 import Tutorial from "./screens/tutorial/tutorial";
-import Equipment from "./screens/equipment/equipment";
-import Leaderboard from "./screens/leaderboard/leaderboard";
+import Get_slots from "./screens/get_slots/get_slots";
+import Showpass from "./screens/showpass/showpass";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -112,10 +110,9 @@ const CardStack = () => {
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>
                 ) : null}
-                {color == "2" ? <BookingApp /> : null}
+                {color == "2" ? <Get_slots /> : null}
                 {color == "3" ? <Tutorial /> : null}
-                {color == "4" ? <Equipment /> : null}
-                {color == "6" ? <Leaderboard /> : null}
+                {color == "4" ? <Showpass /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );

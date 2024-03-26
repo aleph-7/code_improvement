@@ -158,7 +158,7 @@ function PreBooking() {
         </div>
         <div className="select">
           <p className="labeeels">Select Playmate(s)</p>
-          <div>
+          <div className="pre-check">
             <input
               type="checkbox"
               checked={allowPlayerSelection}
