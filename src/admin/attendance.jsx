@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./attendance.css";
 import { Link } from "react-router-dom";
+import SERVER_ROOT_PATH from "../../config";
 
 const Attendance = (type_of_sport) => {
   let userone = "username";
@@ -89,7 +90,7 @@ const Attendance = (type_of_sport) => {
   // Fill the usernames
 
   const fill_Entries = async () => {
-    const response = await fetch("http://localhost:6300/fill_entries", {
+    const response = await fetch(SERVER_ROOT_PATH + "/fill_entries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -150,7 +151,7 @@ const Attendance = (type_of_sport) => {
     console.log(input.court_name);
     console.log(type_of_sport.type_of_sport);
     try {
-      const response = await fetch("http://localhost:6300/court_name_entry", {
+      const response = await fetch(SERVER_ROOT_PATH + "/court_name_entry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -190,7 +191,7 @@ const Attendance = (type_of_sport) => {
       setError((prev) => ({ ...prev, password: "Password is required." }));
     }
     try {
-      const response = await fetch("http://localhost:5090/login", {
+      const response = await fetch(SERVER_ROOT_PATH + "/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -339,7 +340,7 @@ const Attendance = (type_of_sport) => {
     } else if (no_present === 2) {
       try {
         const response = await fetch(
-          "http://localhost:6300/match_metric_marking",
+          SERVER_ROOT_PATH + "/match_metric_marking",
           {
             method: "POST",
             headers: {
@@ -374,7 +375,7 @@ const Attendance = (type_of_sport) => {
         console.error("Error during signup:", error);
       }
       try {
-        const response = await fetch("http://localhost:6300/mark_attendance", {
+        const response = await fetch(SERVER_ROOT_PATH + "/mark_attendance", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -407,7 +408,7 @@ const Attendance = (type_of_sport) => {
       }
     } else {
       try {
-        const response = await fetch("http://localhost:6300/mark_attendance", {
+        const response = await fetch(SERVER_ROOT_PATH + "/mark_attendance", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

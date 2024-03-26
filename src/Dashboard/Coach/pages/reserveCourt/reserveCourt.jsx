@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import "./reserveCourt.css";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 const ReserveCourt = () => {
   const [input, setInput] = useState({
     user_id: localStorage.getItem("userMongoId"), //user id is the coach id
     type_of_sport: localStorage.getItem("type_of_sport"),
-    show_up_status : "0",
-    time_of_booking : "",
-    booking_status : "0",
-    no_partners : "0",
-    court_id : "",
-    date_slot : "", // string storing the date
+    show_up_status: "0",
+    time_of_booking: "",
+    booking_status: "0",
+    no_partners: "0",
+    court_id: "",
+    date_slot: "", // string storing the date
     time_slot: "", // 1hr duration beginning at time_slot
-    partners_id : []
+    partners_id: [],
   });
 
   const [error, setError] = useState({
-    date_slot : "", // string storing the date
+    date_slot: "", // string storing the date
     time_slot: "", // 1hr duration beginning at time_slot
   });
 
@@ -55,7 +56,7 @@ const ReserveCourt = () => {
             if (Number(value) > 20)
               stateObj[name] = "Please enter a valid time, less than 21.";
           }
-          break; 
+          break;
         default:
           break;
       }
@@ -68,7 +69,7 @@ const ReserveCourt = () => {
       alert("Date is required.");
       setError((prev) => ({
         ...prev,
-        date_slot : "Date is required.",
+        date_slot: "Date is required.",
       }));
     }
     if (!input.time_slot) {
@@ -78,7 +79,7 @@ const ReserveCourt = () => {
     try {
       const currentTime = new Date(); // Get current time
       input.time_of_booking = currentTime; // Set the current time as input.time_of_booking
-      const response = await fetch("http://localhost:6300/coach/reserveCourt", {
+      const response = await fetch(SERVER_ROOT_PATH + "/coach/reserveCourt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PostSession.css";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 function PostSession() {
   const [input, setInput] = useState({
@@ -102,7 +103,7 @@ function PostSession() {
     //   return;
     // }
 
-    const response = await fetch("http://localhost:6300/yoga/postSession", {
+    const response = await fetch(SERVER_ROOT_PATH + "/yoga/postSession", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

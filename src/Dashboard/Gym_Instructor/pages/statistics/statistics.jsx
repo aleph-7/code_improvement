@@ -1,15 +1,15 @@
-import "./statistics.css"
+import "./statistics.css";
 import Table from "../../table/table";
 import { useState, useEffect } from "react";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 function Statistics() {
-
   const [message, setMessage] = useState("");
 
-  const fetchInfo = async() => {
-    return await fetch("http://localhost:6300/get_statistics")
-    .then(response => response.json())
-    .then(data => setMessage(data.message))
+  const fetchInfo = async () => {
+    return await fetch(SERVER_ROOT_PATH + "/get_statistics")
+      .then((response) => response.json())
+      .then((data) => setMessage(data.message));
   };
 
   useEffect(() => {
