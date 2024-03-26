@@ -96,11 +96,9 @@ const Login = () => {
           // Redirect to home page
           if (data.category == "6") {
             window.location.href = "/admin/attendance";
-          }
-          else if (data.category == "3") {
+          } else if (data.category == "3") {
             window.location.href = "/admin/coach";
-          }
-          else if (data.category == "2") {
+          } else if (data.category == "2") {
             window.location.href = "/admin/counsellor";
           } else {
             window.location.href = "/home";
