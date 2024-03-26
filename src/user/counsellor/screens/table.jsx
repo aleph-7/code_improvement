@@ -10,7 +10,7 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     const rows = [];
     for (let i = 0; i < 1; i++) {
       rows.push(
-        <tr key={i} id="tableHeaderRow">
+        <tr key={i} id="tableHeaderRowPage1">
           {generateColumnsHeader()}
         </tr>
       );
@@ -23,7 +23,7 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     if (noOfRows == 0) {
       return (
         <tr>
-          <td>get going and play!</td>
+          <td>Fetching counsellor time slot data</td>
         </tr>
       );
     }
@@ -73,15 +73,15 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
   };
 
   return (
-    <div id="mainTableDiv">
+    <div id="mainTableDivPage1">
       <table
-        id="websiteTableHeader"
+        id="websiteTableHeaderPage1"
         style={{ fontFamily: "Junge, Poppins, sans-serif" }}
       >
         <tbody>{generateTableHeader()}</tbody>
       </table>
-      <div className="tableBookingDiv">
-        <table id="websiteTableContent">
+      <div className="tableBookingDivPage1">
+        <table id="websiteTableContentPage1">
           <tbody>{generateRows()}</tbody>
         </table>
       </div>

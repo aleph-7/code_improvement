@@ -4,6 +4,8 @@ const router = express.Router();
 const SportsBookings = require("../models/bookingsDB").sportBookingsSchema;
 const Counsellor_availability = require("../models/contentDB").counsellor_availabilitySchema;
 const Counsellor_Appointments = require("../models/bookingsDB").counsellorAppointmentsSchema;
+const User=require("../models/userDB").userSchema;
+
 
 //GET COUNSELLOR APPOINTMENTS
 // doesnt seem to be called anywhere in front end currently
@@ -100,78 +102,44 @@ router.get("/counsellor_page_user", async (req, res) => {
 // =====================================
 // COUNSELLOR USER PAGES 2
 
-
-router.get('/institute_counsellors', async (req, res) => {
+router.get("/institute_counsellors", async (req, res) => {
   let attributeList;
-  await User.find({user_category:2}).then((results) => {
+  await User.find({ user_category: 2 }).then((results) => {
     attributeList = results.map((doc) => [doc.username, doc._id]);
   });
   res.json({ message: attributeList });
 });
 
-router.post('/get_available_days', async (req, res) => {
-  counsellor_username=req.body.counsellor_username;
-  counsellor_user_id = (await User.findOne({username:counsellor_username}))._id;
+router.post("/get_available_days", async (req, res) => {
+  counsellor_username = req.body.counsellor_username;
+  console.log(counsellor_username);
+  counsellor_user_id = (await User.findOne({ username: counsellor_username }))
+    ._id;
   let attributeList;
-  await Counsellor_availability.find({counsellor_user_id:counsellor_user_id}).then((results) => {
-    attributeList = results.map((doc) => [doc.day_vector, doc.date_slot]);
-  });
+  await Counsellor_availability
+    .find({ counsellor_user_id: counsellor_user_id })
+    .then((results) => {
+      attributeList = results.map((doc) => [doc.day_vector, doc.date_slot]);
+    })
+    .then(() => console.log(attributeList));
   let messageAttributeList = [];
-  for (let i=0; i<attributeList.length; i++) {
-    if(attributeList[i][1]!=="none") messageAttributeList.push(attributeList[i][1]);
+  for (let i = 0; i < attributeList.length; i++) {
+    if (attributeList[i][1] !== "none")
+      messageAttributeList.push(attributeList[i][1]);
     else {
-      if(attributeList[i][0][0]===1) messageAttributeList.push("Monday");
-      if(attributeList[i][0][1]===1) messageAttributeList.push("Tuesday");
-      if(attributeList[i][0][2]===1) messageAttributeList.push("Wednesday");
-      if(attributeList[i][0][3]===1) messageAttributeList.push("Thursday");
-      if(attributeList[i][0][4]===1) messageAttributeList.push("Friday");
-      if(attributeList[i][0][5]===1) messageAttributeList.push("Saturday");
-      if(attributeList[i][0][6]===1) messageAttributeList.push("Sunday");
+      if (attributeList[i][0][0] === 1) messageAttributeList.push("Monday");
+      if (attributeList[i][0][1] === 1) messageAttributeList.push("Tuesday");
+      if (attributeList[i][0][2] === 1) messageAttributeList.push("Wednesday");
+      if (attributeList[i][0][3] === 1) messageAttributeList.push("Thursday");
+      if (attributeList[i][0][4] === 1) messageAttributeList.push("Friday");
+      if (attributeList[i][0][5] === 1) messageAttributeList.push("Saturday");
+      if (attributeList[i][0][6] === 1) messageAttributeList.push("Sunday");
     }
   }
   res.json({ message: messageAttributeList });
 });
 
-
-router.post('/get_available_time_slots', async (req, res) => {
-  counsellor_username=req.body.counsellor_username;
-  date=req.body.date;
-  console.log(counsellor_username);
-  console.log(date);
-  parameter=0
-if(date==="Monday") {date=0; parameter=1;}
-  else if(date==="Tuesday") {date=1; parameter=1;}
-  else if(date==="Wednesday") {date=2; parameter=1;}
-  else if(date==="Thursday") {date=3; parameter=1;}
-  else if(date==="Friday") {date=4; parameter=1;}
-  else if(date==="Saturday") {date=5; parameter=1;}
-  else if(date==="Sunday") {date=6; parameter=1;}
-  counsellor_user_id = (await User.findOne({username:counsellor_username}))._id;
-  let attributeList;
-  if(parameter)
-  {
-    const query = {counsellor_user_id: counsellor_user_id};
-    query[`day_vector.${date}`] = 1;
-    await Counsellor_availability.find(query).then(results => {
-      attributeList = results.map(doc => [doc.hour_vector]);
-    });
-  }
-  else 
-  {
-    await Counsellor_availability.find({counsellor_user_id:counsellor_user_id,date_slot:date}).then((results) => {
-      attributeList = results.map((doc) => [doc.date_slot_time_vector]);
-    });
-  }
-  let messageAttributeList = [];
-  for(let i=0;i<23;i++)
-  {
-    if(attributeList[0][0][i]===1) messageAttributeList.push(i);
-  }
-  res.json({ message: messageAttributeList });
-});
-
-function getDate(date)
-{
+function getDate(date) {
   let current_date_get_date = new Date();
   let day_of_week = current_date_get_date.getDay();
   let days_until;
@@ -185,67 +153,195 @@ function getDate(date)
   let new_date = new Date(current_date_get_date);
   new_date.setDate(new_date.getDate() + days_until);
   let year = new_date.getFullYear();
-  let month = (new_date.getMonth() + 1).toString().padStart(2, '0');
-  let dayOfMonth = new_date.getDate().toString().padStart(2, '0'); 
-  return dayOfMonth+ "-" + month + "-" + year;
-};
+  let month = (new_date.getMonth() + 1).toString().padStart(2, "0");
+  let dayOfMonth = new_date.getDate().toString().padStart(2, "0");
+  return dayOfMonth + "-" + month + "-" + year;
+}
 
-router.post('/book_counsellor_appointment', async (req, res) => {
+async function check_booking (counsellor_user_id, date, parameter, attributeList) {
+  if(parameter)
+  {
+    if(date==0){
+      date=getDate("Monday");
+    }
+    else if(date==1)
+    {
+      date=getDate("Tuesday");
+    }
+    else if(date==2)
+    {
+      date=getDate("Wednesday");
+    }
+    else if(date==3)
+    {
+      date=getDate("Thursday");
+    }
+    else if(date==4)
+    {
+      date=getDate("Friday");
+    }
+    else if(date==5)
+    {
+      date=getDate("Saturday");
+    }
+    else if(date==6)
+    {
+      date=getDate("Sunday");
+    }
+  }
+  let attributeListFinal=[];
+  for(let i=0; i<23;i++){
+    if(attributeList[0][0][i]==1)
+    {
+      query={counsellor_user_id: counsellor_user_id, date_slot: date, time_slot: i, booking_status:1};
+      let result=await Counsellor_Appointments.find(query);
+      if(result.length>0)
+      {
+        ;
+      }
+      else
+      {
+        attributeListFinal.push(i);
+      }
+    }
+  }
+  return attributeListFinal;
+}
+
+router.post("/get_available_time_slots", async (req, res) => {
+  counsellor_username = req.body.counsellor_username;
+  let date = req.body.date;
+  parameter = 0;
+  if (date === "Monday") {
+    date = 0;
+    parameter = 1;
+  } else if (date === "Tuesday") {
+    date = 1;
+    parameter = 1;
+  } else if (date === "Wednesday") {
+    date = 2;
+    parameter = 1;
+  } else if (date === "Thursday") {
+    date = 3;
+    parameter = 1;
+  } else if (date === "Friday") {
+    date = 4;
+    parameter = 1;
+  } else if (date === "Saturday") {
+    date = 5;
+    parameter = 1;
+  } else if (date === "Sunday") {
+    date = 6;
+    parameter = 1;
+  }
+  counsellor_user_id = (await User.findOne({ username: counsellor_username }))
+    ._id;
+  let attributeList;
+  if (parameter) {
+    const query = { counsellor_user_id: counsellor_user_id };
+    query[`day_vector.${date}`] = 1;
+    await Counsellor_availability.find(query).then((results) => {
+      attributeList = results.map((doc) => [doc.hour_vector]);
+    });
+  } else {
+    await Counsellor_availability
+      .find({ counsellor_user_id: counsellor_user_id, date_slot: date })
+      .then((results) => {
+        attributeList = results.map((doc) => [doc.date_slot_time_vector]);
+      });
+  }
+  let messageAttributeList = await check_booking(counsellor_user_id, date, parameter, attributeList);
+  console.log(messageAttributeList);
+  res.json({ message: messageAttributeList });
+});
+
+router.post("/book_counsellor_appointment", async (req, res) => {
   const user_id = req.body.user_id;
   const counsellor_username = req.body.counsellor_username;
+  console.log(counsellor_username);
   let date = req.body.date;
-  if(date==="Monday") {date=getDate(date);}
-  else if(date==="Tuesday") {date=getDate(date);}
-  else if(date==="Wednesday") {date=getDate(date);}
-  else if(date==="Thursday") {date=getDate(date);}
-  else if(date==="Friday") {date=getDate(date);}
-  else if(date==="Saturday") {date=getDate(date);}
-  else if(date==="Sunday") {date=getDate(date);}
+  if (date === "Monday") {
+    date = getDate(date);
+  } else if (date === "Tuesday") {
+    date = getDate(date);
+  } else if (date === "Wednesday") {
+    date = getDate(date);
+  } else if (date === "Thursday") {
+    date = getDate(date);
+  } else if (date === "Friday") {
+    date = getDate(date);
+  } else if (date === "Saturday") {
+    date = getDate(date);
+  } else if (date === "Sunday") {
+    date = getDate(date);
+  }
   const time = req.body.time;
   const program = req.body.program;
   const department = req.body.department;
   const hall = req.body.hall;
   const contact_number = req.body.contact_number;
-  const counsellor_user_id = (await User.findOne({username:counsellor_username}))._id;
+  console.log(contact_number);
+  const final_contact_number = Number(contact_number)
+  const counsellor_user_id = (
+    await User.findOne({ username: counsellor_username })
+  )._id;
   const time_of_booking = new Date();
   const booking_status = 0;
-  const doc = new Counsellor_Appointments({ user_id:user_id, time_slot: time, date_slot: date, counsellor_user_id: counsellor_user_id, booking_status: booking_status, time_of_booking: time_of_booking, program: program, department: department, hall: hall, contact_number: contact_number });
+  const doc = new Counsellor_Appointments({
+    user_id: user_id,
+    time_slot: time,
+    date_slot: date,
+    counsellor_user_id: counsellor_user_id,
+    booking_status: booking_status,
+    time_of_booking: time_of_booking,
+    program: program,
+    department: department,
+    hall: hall,
+    contact_number: final_contact_number,
+  });
   doc.save();
   res.json({ message: "Appointment booked successfully" });
 });
 
 // =====================================
 // COUNSELLOR USER PAGES 3
-router.get('/counsellor_page_user_3', async (req, res) => {
-  let patient_id=req.body.user_id;
+router.post("/counsellor_page_user_3", async (req, res) => {
+  let patient_id = req.body.user_id;
+  console.log(patient_id);
   let attributeList;
-  await Counsellor_Appointments.find({}).then((results) => {
-    attributeList = results.map((doc) => [doc.counsellor_user_id, doc.date_slot,doc.time_slot, doc.booking_status]);
-  });
-  for (let i = 0; i < attributeList.length; i++) {
-    let username
-    try {
-      username=(await User.findOne({_id:attributeList[i][0]})).username;
-      attributeList[i][0]=username;
+  await Counsellor_Appointments.find({ user_id: patient_id }).then(
+    (results) => {
+      attributeList = results.map((doc) => [
+        doc.counsellor_user_id,
+        doc.date_slot,
+        doc.time_slot,
+        doc.booking_status,
+      ]);
     }
-    catch(err) {
+  );
+  for (let i = 0; i < attributeList.length; i++) {
+    let username;
+    try {
+      username = (await User.findOne({ _id: attributeList[i][0] })).username;
+      attributeList[i][0] = username;
+    } catch (err) {
       console.log(err);
     }
   }
-  for(let i = 0; i<attributeList.length; i++) {
-    let timimg
-    if(attributeList[i][2]<12) timimg=attributeList[i][2]+"am";
-    else timimg=(attributeList[i][2]-12)+"pm";
-    attributeList[i][2]=timimg;
+  for (let i = 0; i < attributeList.length; i++) {
+    let timimg;
+    if (attributeList[i][2] < 12) timimg = attributeList[i][2] + "am";
+    else timimg = attributeList[i][2] - 12 + "pm";
+    attributeList[i][2] = timimg;
   }
-  for(let i = 0; i<attributeList.length; i++) {
-    let booking_status
-    if(attributeList[i][3]==0) booking_status="pending";
-    else if(attributeList[i][3]==1) booking_status="accepted";
-    else booking_status="rejected";
-    attributeList[i][3]=booking_status;
+  for (let i = 0; i < attributeList.length; i++) {
+    let booking_status;
+    if (attributeList[i][3] == 0) booking_status = "pending";
+    else if (attributeList[i][3] == 1) booking_status = "accepted";
+    else booking_status = "rejected";
+    attributeList[i][3] = booking_status;
   }
-  res.json({ message: attributeList }); 
+  res.json({ message: attributeList });
 });
 
 module.exports = router;

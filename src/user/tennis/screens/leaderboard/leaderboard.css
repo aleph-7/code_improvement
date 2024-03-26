@@ -66,3 +66,41 @@
   left: 48%;
   bottom: 0%;
 }
+
+.TennisLeaderboardSearch
+{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  gap:20px;
+  height:4vh;
+}
+
+.TennisLeaderboardSearch h3
+{
+  font-size: 20px;
+  font-weight: bold;
+  margin-top:-1px;
+}
+
+.TennisLeaderboardSearch input
+{
+  width: 20%;
+  height: 4vh;
+  border-radius: 25px;
+  border: 1px solid #ff0000;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.TennisLeaderboardSearch button
+{
+  width: 20%;
+  height: 4vh;
+  border-radius: 25px;
+  border: 1px solid #ff0000;
+  background-color: #ff0000;
+  color: white;
+  font-size: 20px;
+
+}
