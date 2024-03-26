@@ -115,6 +115,97 @@ router.get("/table_tennis", async (req, res) => {
 });
 
 
+// LEADERBOARD SEARCH
+
+router.post("/tennis/selected", async (req, res) => {
+  let user_id;
+  let attributeList=[];
+  let username = req.body.username;
+  try{
+    await user.findOne({ username: username }).then((results) => {
+    user_id = results._id;
+    });
+    await Leaderboard_Tennis.find({user_id:user_id}).then((results) => {
+    attributeList = results.map((doc) => [doc.user_id, doc.position]);
+    });
+    attributeList[0][0] = username;
+    console.log(attributeList);
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+  catch(err){
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+});
+
+router.post("/badminton/selected", async (req, res) => {
+  let user_id;
+  let attributeList=[];
+  let username = req.body.username;
+  try{
+    await user.findOne({ username: username }).then((results) => {
+    user_id = results._id;
+    });
+    await Leaderboard_Badminton.find({user_id:user_id}).then((results) => {
+    attributeList = results.map((doc) => [doc.user_id, doc.position]);
+    });
+    attributeList[0][0] = username;
+    console.log(attributeList);
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+  catch(err){
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+});
+
+router.post("/squash/selected", async (req, res) => {
+  let user_id;
+  let attributeList=[];
+  let username = req.body.username;
+  try{
+    await user.findOne({ username: username }).then((results) => {
+    user_id = results._id;
+    });
+    await Leaderboard_Squash.find({user_id:user_id}).then((results) => {
+    attributeList = results.map((doc) => [doc.user_id, doc.position]);
+    });
+    attributeList[0][0] = username;
+    console.log(attributeList);
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+  catch(err){
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+});
+
+router.post("/table_tennis/selected", async (req, res) => {
+  let user_id;
+  let attributeList=[];
+  let username = req.body.username;
+  try{
+    await user.findOne({ username: username }).then((results) => {
+    user_id = results._id;
+    });
+    await Leaderboard_TableTennis.find({user_id:user_id}).then((results) => {
+    attributeList = results.map((doc) => [doc.user_id, doc.position]);
+    });
+    attributeList[0][0] = username;
+    console.log(attributeList);
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+  catch(err){
+    console.log(attributeList);
+    res.json({ message: attributeList });
+  }
+});
+
+
 //LEADER BOARD IMPLEMENTATION
 
 

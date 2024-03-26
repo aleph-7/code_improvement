@@ -10,7 +10,7 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     const rows = [];
     for (let i = 0; i < 1; i++) {
       rows.push(
-        <tr key={i} id="tableHeaderRow">
+        <tr key={i} id="tableHeaderRowPage1">
           {generateColumnsHeader()}
         </tr>
       );
@@ -23,7 +23,7 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     if (noOfRows == 0) {
       return (
         <tr>
-          <td>get going and play!</td>
+          <td>You have not made any appointments yet!</td>
         </tr>
       );
     }
@@ -45,7 +45,6 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
         </td>
       );
     }
-
     return columns;
   };
   const generateColumns = (rowIndex) => {
@@ -53,35 +52,26 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     const columnWidth = `${100 / noOfColumns}%`;
     for (let j = 0; j < 4; j++) {
       columns.push(
-        <td key={j} style={{ width: columnWidth }} className={rowEntries[rowIndex][j]}>
+        <td key={j} style={{ width: columnWidth }} className={rowEntries[rowIndex][j]+'Page1'}>
           {rowEntries[rowIndex] && rowEntries[rowIndex][j]
             ? rowEntries[rowIndex][j]
             : ""}
         </td>
       );
     }
-  
-    rowEntries[rowIndex] &&
-    (rowEntries[rowIndex][3] == 0 || rowEntries[rowIndex][3])
-      ? rowEntries[rowIndex][3] == 1
-        ? (accepted = accepted + 1)
-        : rowEntries[rowIndex][3] == -1
-        ? (rejected = rejected + 1)
-        : (accepted = accepted)
-      : "";
     return columns;
   };
 
   return (
-    <div id="mainTableDiv">
+    <div id="mainTableDivPage1">
       <table
-        id="websiteTableHeader"
+        id="websiteTableHeaderPage1"
         style={{ fontFamily: "Junge, Poppins, sans-serif" }}
       >
         <tbody>{generateTableHeader()}</tbody>
       </table>
-      <div className="tableBookingDiv">
-        <table id="websiteTableContent">
+      <div className="tableBookingDivPage1">
+        <table id="websiteTableContentPage1">
           <tbody>{generateRows()}</tbody>
         </table>
       </div>
