@@ -16,6 +16,7 @@
   width: 90%;
   text-align: center;
   gap: 40px;
+  border-collapse: collapse;
 }
 
 #websiteTable td {
@@ -42,7 +43,7 @@
 
 .websiteTableContent {
   overflow-y: scroll;
-  max-height: 400px;
+  max-height: 45vh;
   margin-top: 40px;
   border: 1px solid #ff0000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -51,16 +52,23 @@
   justify-content: space-between;
   display: flex;
 }
-.websiteTableContent td {
-  line-height: 1.6rem;
-  width: auto;
+
+.websiteTableContent tr {
+  transition: 0.2s;
+  padding: 5%;
+  height: 20vh;
 }
 
-.book_workshop_tableentry {
-  display: flex;
-  flex-direction: row;
-  gap: 1vw;
-  justify-content: center;
+.websiteTableContent tr:hover {
+  background-color: rgb(242, 200, 200);
+}
+
+.websiteTableContent td {
+  line-height: 1.6rem;
+}
+
+.book_workshop_tableentry ul {
+  list-style: none;
 }
 
 .book_workshop_tableentry button {

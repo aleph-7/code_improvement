@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import "./table_workshop.css";
 import SERVER_ROOT_PATH from "../../../../config.js";
 
+/**
+ * Renders a table for workshops.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.sport - The sport associated with the workshops.
+ * @param {number} props.noOfRows - The number of rows in the table.
+ * @param {number} props.noOfColumns - The number of columns in the table.
+ * @param {Array} props.rowEntries - The entries for each row in the table.
+ * @returns {JSX.Element} The rendered table component.
+ */
+
 const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
   const [isApplying, setIsApplying] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
@@ -11,7 +23,7 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
     for (let i = 0; i < 1; i++) {
       rows.push(
         <tr key={i} id="tableHeaderRow">
-          {generateColumns(i)}
+          {generateColumnsHeader(i)}
         </tr>
       );
     }
@@ -25,6 +37,14 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
     }
 
     return rows;
+  };
+
+  const generateColumnsHeader = (rowIndex) => {
+    const columns = [];
+    for (let j = 0; j < noOfColumns; j++) {
+      columns.push(<td key={j}>{rowEntries_withHeader[rowIndex][j]}</td>);
+    }
+    return columns;
   };
 
   const sendApplyRequest = async (workshopId) => {
@@ -86,6 +106,11 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
       .finally(() => {
         // Set isApplying to false after request completion (whether successful or not)
         setIsApplying(false);
+        //refresh this page
+
+        //reload to this tab
+        window.location.href = window;
+        window.location.reload();
       });
   };
 
@@ -107,7 +132,21 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
           isUserApplied = false;
         }
 
-        for (let j = 0; j < noOfColumns - 1; j++) {
+        columns.push(
+          <td key={0}>
+            {rowEntries_withHeader[rowIndex] &&
+            rowEntries_withHeader[rowIndex][0] ? (
+              <div>
+                <b>{rowEntries_withHeader[rowIndex][0].substring(0, 10)}</b>
+                <br />
+                {rowEntries_withHeader[rowIndex][0].substring(10, 25)}
+              </div>
+            ) : (
+              ""
+            )}
+          </td>
+        );
+        for (let j = 1; j < noOfColumns - 1; j++) {
           columns.push(
             <td key={j}>
               {rowEntries_withHeader[rowIndex] &&
@@ -125,21 +164,34 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
                 "apply here!"
               ) : (
                 <div className="book_workshop_tableentry">
-                  <h2>{rowEntries_withHeader[rowIndex][2]}</h2>
-                  <button
-                    onClick={() =>
-                      handleApply(rowEntries_withHeader[rowIndex][3], rowIndex)
-                    }
-                    disabled={
-                      isApplying || isUserApplied || isApplied[rowIndex]
-                    }
-                    style={{
-                      backgroundColor:
-                        isUserApplied || isApplied[rowIndex] ? "grey" : "green",
-                    }}
-                  >
-                    {isUserApplied || isApplied[rowIndex] ? "Applied" : "Apply"}
-                  </button>
+                  <ul>
+                    <li>
+                      <h2>{rowEntries_withHeader[rowIndex][2]}</h2>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleApply(
+                            rowEntries_withHeader[rowIndex][3],
+                            rowIndex
+                          )
+                        }
+                        disabled={
+                          isApplying || isUserApplied || isApplied[rowIndex]
+                        }
+                        style={{
+                          backgroundColor:
+                            isUserApplied || isApplied[rowIndex]
+                              ? "grey"
+                              : "green",
+                        }}
+                      >
+                        {isUserApplied || isApplied[rowIndex]
+                          ? "Applied"
+                          : "Apply"}
+                      </button>
+                    </li>{" "}
+                  </ul>
                 </div>
               )
             ) : (
@@ -168,5 +220,3 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
 };
 
 export default Table_Workshop;
-
-/*KS*/
