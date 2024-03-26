@@ -34,6 +34,18 @@ function Homepage() {
     setSidebar(!sidebar);
   };
 
+  const changePageCounsellor = () => {
+    window.location.href = "/counsellor";
+  };
+
+  const changePageYoga = () => {
+    window.location.href = "/yoga";
+  };
+
+  const changePageSelfHelp = () => {
+    window.location.href = "/self-help";
+  };
+
   return (
     <div>
       <div>
@@ -175,10 +187,7 @@ function Homepage() {
                 workshop enrollment or learn at home via tutorials.
               </p>
             </div>
-            <div
-              className="HomepageYogaBox"
-              onClick={() => window.location.replace("/yoga")}
-            >
+            <div className="HomepageYogaBox" onClick={changePageYoga}>
               <p className="HomepageYogaBoxContent">
                 Yoga is a way of life. It is a holistic approach to health and
                 well-being. We at elysium will help you inculcate this habit in
@@ -189,7 +198,7 @@ function Homepage() {
             </div>
             <div
               className="HomepageCounsellorBox"
-              onClick={() => window.location.replace("/counsellor")}
+              onClick={changePageCounsellor}
             >
               <p className="HomepageCounsellorBoxContent">
                 Mental health is as important as physical health. We at elysium
@@ -205,7 +214,7 @@ function Homepage() {
             <div className="HomepageSelfHelpBlogsBox">
               <h2
                 className="HomepageSelfHelpBlogsBoxHeading"
-                onClick={() => window.location.replace("/self-help")}
+                onClick={changePageSelfHelp}
               >
                 POWER OF THE WRITTEN<br></br>WORD@IITK
               </h2>
