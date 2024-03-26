@@ -5,7 +5,7 @@ import React from 'react'
 const page1 = () => {
   const [message, setMessage] = useState("");
   const fetchInfo = async() => {
-    return await fetch("http://localhost:6300/counsellor_page_user")
+    return await fetch("http://localhost:6300/user/counsellor_page_user")
     .then(response => response.json())
     .then(data => setMessage(data.message));
   };
