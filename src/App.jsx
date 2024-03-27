@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   Route,
   Routes,
@@ -53,6 +53,11 @@ import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
 // import Coach from "./Dashboard/Coach/Coach.jsx";
 
 function App() {
+useEffect(() => {
+    document.title = 'Elysium'
+}, []);
+
+  
   return (
     <div className="App">
       <BrowserRouter>
