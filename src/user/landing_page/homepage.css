@@ -50,8 +50,15 @@
   font-size: 0.9em;
   text-align: center;
   margin-top: 10%;
-  font-weight: 100;
+  font-weight: 300;
 }
+
+
+.HomepageSportsBoxContent{
+  cursor: pointer;
+}
+
+
 
 .HomepageYogaBox {
   grid-column: 1;
@@ -74,10 +81,16 @@
   font-family: Poppins;
   font-size: 0.9em;
   text-align: center;
-  font-weight: 100;
+  font-weight: 300;
   padding-left: 5%;
   padding-right: 5%;
 }
+
+
+.HomepageYogaBoxContent{
+  cursor: pointer;
+}
+
 
 .HomepageCounsellorBox {
   grid-column: 2;
@@ -102,10 +115,14 @@
   font-family: Poppins;
   font-size: 0.9em;
   text-align: center;
-  font-weight: 100;
+  font-weight: 300;
   padding-left: 5%;
   padding-right: 5%;
   align-content: center;
+}
+
+.HomepageCounsellorBoxContent{
+  cursor: pointer;
 }
 
 .HomepageSelfHelpBlogsBox {
@@ -128,7 +145,11 @@
   font-family: Poppins;
   font-size: 0.9em;
   text-align: center;
-  font-weight: 100;
+  font-weight: 300;
   padding-left: 5%;
   padding-right: 5%;
+}
+
+.HomepageSelfHelpBlogsBoxContent:hover {
+  cursor: pointer;
 }

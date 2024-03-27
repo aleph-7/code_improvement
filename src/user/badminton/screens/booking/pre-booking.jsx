@@ -47,7 +47,7 @@ function PreBooking() {
     }
 
     const bookingRes = await fetch(
-      SERVER_ROOT_PATH + "/badminton/pre_booking",
+      SERVER_ROOT_PATH + "/pre_booking",
       {
         method: "POST",
         headers: {
