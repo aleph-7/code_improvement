@@ -1,10 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import booknow from "../assets/swimming/booknow.jpeg";
-import tutorials from "../assets/swimming/tutorials.jpeg";
-import logo from "../assets/swimming/logo.png";
 import move from "lodash-move";
-import Tutorial from "./screens/tutorial/tutorial";
+import Tutorial from "../components/tutorials/tutorial";
 import Get_slots from "./screens/get_slots/get_slots";
 import Showpass from "./screens/showpass/showpass";
 import "./CardStack.css";
@@ -100,8 +97,10 @@ const CardStack = () => {
                       {/* click image functionality */}
                     </div>
                     <div className="logo">
-                      <img src="https://static.vecteezy.com/system/resources/thumbnails/003/108/337/small/fitness-gym-logo-with-strong-athlete-and-barbell-vector.jpg" alt="logo" />
-                     
+                      <img
+                        src="https://static.vecteezy.com/system/resources/thumbnails/003/108/337/small/fitness-gym-logo-with-strong-athlete-and-barbell-vector.jpg"
+                        alt="logo"
+                      />
                     </div>
                     <div class="booknow-line1">avail all facilities!</div>
                     <div class="booknow-line2">book now!</div>
@@ -110,7 +109,7 @@ const CardStack = () => {
                   </div>
                 ) : null}
                 {color == "2" ? <Get_slots /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "3" ? <Tutorial sport="gym" /> : null}
                 {color == "4" ? <Showpass /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>

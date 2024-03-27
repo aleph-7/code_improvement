@@ -4,8 +4,8 @@ import Yoga1 from "../assets/yoga/Yoga1.png";
 import Yoga2 from "../assets/yoga/yoga2.png";
 import Yoga3 from "../assets/yoga/yoga4.jpg";
 import move from "lodash-move";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
+import Workshop from "../components/workshops/workshop";
+import Tutorial from "../components/tutorials/tutorial";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
@@ -104,7 +104,10 @@ const CardStack = () => {
                       {/* click image functionality */}
                     </div>
                     <div className="logo">
-                      <img src="https://png.pngtree.com/png-clipart/20200324/ourmid/pngtree-hand-drawn-creative-yoga-fitness-png-image_2164371.jpg" alt="logo" />
+                      <img
+                        src="https://png.pngtree.com/png-clipart/20200324/ourmid/pngtree-hand-drawn-creative-yoga-fitness-png-image_2164371.jpg"
+                        alt="logo"
+                      />
                       {/* click image functionality */}
                     </div>
                     <div class="booknow-line1">avail all facilities!</div>
@@ -114,8 +117,8 @@ const CardStack = () => {
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>
                 ) : null}
-                {color == "2" ? <Workshop /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "2" ? <Workshop sport="yoga" /> : null}
+                {color == "3" ? <Tutorial sport="yoga" /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
             );

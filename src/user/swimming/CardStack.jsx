@@ -5,7 +5,7 @@ import tutorials from "../assets/swimming/tutorials.jpeg";
 //import workshops from "../assets/badminton/workshops.png";
 import logo from "../assets/swimming/logo.png";
 import move from "lodash-move";
-import Tutorial from "./screens/tutorial/tutorial";
+import Tutorial from "../components/tutorials/tutorial";
 import Get_slots from "./screens/get_slots/get_slots";
 import Showpass from "./screens/showpass/showpass";
 import "./CardStack.css";
@@ -111,7 +111,7 @@ const CardStack = () => {
                   </div>
                 ) : null}
                 {color == "2" ? <Get_slots /> : null}
-                {color == "3" ? <Tutorial /> : null}
+                {color == "3" ? <Tutorial sport="swimming" /> : null}
                 {color == "4" ? <Showpass /> : null}
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>

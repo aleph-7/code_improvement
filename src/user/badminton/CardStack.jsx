@@ -6,13 +6,13 @@ import workshops from "../assets/badminton/workshops.png";
 import logo from "../assets/badminton/logo.png";
 import move from "lodash-move";
 import BookingApp from "./screens/booking/booking";
-import Workshop from "./screens/workshop/workshop";
-import Tutorial from "./screens/tutorial/tutorial";
+import Workshop from "../components/workshops/workshop";
+import Tutorial from "../components/tutorials/tutorial";
 import Leaderboard from "./screens/leaderboard/leaderboard";
 import "./CardStack.css";
 import "./screens/home/home.css";
 
-/* THIS CODE CONTAINS THE SWAPPABLE CARDS AND THE nav-badmintonIGATION BAR, ALONG WITH ALL COMPONENTS CONNECTED */
+/* THIS CODE CONTAINS THE SWAPPABLE CARDS AND THE NAVIGATION BAR, ALONG WITH ALL COMPONENTS CONNECTED */
 /* Enter the list of components in the CARD_INDICES array and the corresponding button labels in the BUTTON_LABELS array */
 /* Do not alter the internal working of the code */
 /* The linked pages in the function also need to be changed, that is, the pages that are to be displayed on the cards. Please do so only at the indicated spot.*/
@@ -129,8 +129,8 @@ const CardStack = () => {
                   </div>
                 ) : null}
                 {color == "2" ? <BookingApp /> : null}
-                {color == "3" ? <Workshop /> : null}
-                {color == "4" ? <Tutorial /> : null}
+                {color == "3" ? <Workshop sport={"badminton"} /> : null}
+                {color == "4" ? <Tutorial sport={"badminton"} /> : null}
                 {color == "5" ? <Leaderboard /> : null}
               </motion.li>
             );

@@ -4,6 +4,7 @@ import Table2 from "../table/Table2";
 import "./acceptAppointments.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 const AcceptAppointments = () => {
   const onClickButton = async (isAccept, appointment_id) => {
@@ -11,7 +12,7 @@ const AcceptAppointments = () => {
     console.log("button pressed");
     try {
       const response = await fetch(
-        "http://localhost:6300/counsellor/acceptAppointments",
+        SERVER_ROOT_PATH + "/counsellor/acceptAppointments",
         {
           method: "POST",
           headers: {
@@ -57,7 +58,7 @@ const AcceptAppointments = () => {
   useEffect(() => {
     const getAppointments = async () => {
       try {
-        return await fetch("http://localhost:6300/counsellor/getAppointments", {
+        return await fetch(SERVER_ROOT_PATH + "/counsellor/getAppointments", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
