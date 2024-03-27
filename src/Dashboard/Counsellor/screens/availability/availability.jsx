@@ -10,7 +10,7 @@ const Availability = () => {
     day_vector: Array(7).fill(0),
     hour_vector: Array(24).fill(0),
     counsellor_user_id: localStorage.getItem("userMongoId"),
-    date_slot: "",
+    date_slot: "none",
     date_slot_time_vector: Array(24).fill(0),
   });
   const [inputDate, setInputDate] = useState({

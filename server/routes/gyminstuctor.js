@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Swim_Gym_Memberships = require("../models/bookingsDB").swim_gym_membershipsSchema;
+const Swim_Gym_Memberships = require("../models/bookingsDB").swimGymMembershipsSchema;
 
 // =====================================
 // SWIM GYM INSTRUCTOR DASHBOARD
