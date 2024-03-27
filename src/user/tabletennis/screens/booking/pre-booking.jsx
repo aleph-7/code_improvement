@@ -47,7 +47,7 @@ function PreBooking() {
     }
 
     const bookingRes = await fetch(
-      SERVER_ROOT_PATH + "/table_tennis/pre_booking",
+      SERVER_ROOT_PATH + "/pre_booking",
       {
         method: "POST",
         headers: {
@@ -144,7 +144,7 @@ function PreBooking() {
               style={{ width: "200px" }}
               value={selectedTime}
               onChange={handleSelectChange}
-            >
+            > <option value="">select a time slot</option>
               <option value="6:00 - 7:00">6:00 - 7:00</option>
               <option value="7:00 - 8:00">7:00 - 8:00</option>
               <option value="8:00 - 9:00">8:00 - 9:00</option>
