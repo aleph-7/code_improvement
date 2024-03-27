@@ -1,0 +1,54 @@
+.wrapperStyle {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  margin-top: -30px;
+}
+.nav-gym-instructor {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 2%;
+  position: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-gym-instructor ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-gym-instructor ul li {
+  list-style: none;
+}
+
+.nav-gym-instructor ul li:last-child {
+  margin-right: 0;
+}
+
+.nav-gym-instructor ul li a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.nav-gym-instructor ul li button {
+  height: 40px;
+  width: 38vw;
+  background: rgba(237, 186, 186, 0.33);
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+
+  transition: 0.1s;
+  font-family: "Poppins";
+}
+
+.nav-gym-instructor ul li button:hover {
+  background: rgba(237, 186, 186, 0.5);
+}

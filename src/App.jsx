@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Route,
   Routes,
@@ -33,7 +33,6 @@ import Landing_Page from "./user/landing_page/landing_page.jsx";
 //Coach Pages
 import ProtectedRoute_Coach from "./protected_routes_coach.jsx";
 import Coach_Dashboard from "./Dashboard/Coach/Coach_Dashboard.jsx";
-import Gym_Instructor from "./Dashboard/Gym_Instructor/Gym_Instructor.jsx";
 
 //Admin-Attendance Pages
 import ProtectedRoute_Admin from "./protected_routes_admin.jsx";
@@ -42,6 +41,8 @@ import Attendance from "./admin/attendance.jsx";
 //Yoga Instructor
 
 //Gym/Swimiming Instructor
+import Gym_Instructor from "./Dashboard/gym_instructor/Gym_Instructor.jsx";
+import Swimming_Instructor from "./Dashboard/swimming_instructor/Swimming_Instructor.jsx";
 
 //Counsellor page
 import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
@@ -49,15 +50,14 @@ import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.js
 
 import Error from "./error/Error.jsx";
 import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
-
+import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
 // import Coach from "./Dashboard/Coach/Coach.jsx";
 
 function App() {
-useEffect(() => {
-    document.title = 'Elysium'
-}, []);
+  useEffect(() => {
+    document.title = "Elysium";
+  }, []);
 
-  
   return (
     <div className="App">
       <BrowserRouter>
@@ -91,6 +91,13 @@ useEffect(() => {
 
           <Route element={<ProtectedRoute_Gym />}>
             <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
+          </Route>
+
+          <Route element={<ProtectedRoute_Swimming />}>
+            <Route
+              path="/admin/swiminstructor"
+              element={<Swimming_Instructor />}
+            />
           </Route>
 
           <Route element={<ProtectedRoute_Counsellor />}>

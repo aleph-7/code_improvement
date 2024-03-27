@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+.gym-check-enrollment-container {
+  color: #000000;
+  font-family: "Poppins";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.gym-check-enrollment-container .enrollment-container {
+  background: rgba(255, 255, 255, 0.33);
+  border-radius: 25px;
+  left: 5%;
+  top: 5%;
+  right: 5%;
+  bottom: 5%;
+  position: absolute;
+  overflow-y: scroll;
+}
+
+.gym-check-enrollment-container .enrollment-container h3 {
+  text-align: left;
+  margin-left: 5vw;
+  font-weight: bold;
+  font-family: Poppins;
+  margin-top: 5%;
+  margin-bottom: -3%;
+}
+.gym-check-enrollment-container .enrollment-container .enrollment_accept h4 {
+  text-align: left;
+  width: 20vw;
+  margin-left: -15vw;
+  font-weight: bold;
+  font-family: "Poppins";
+  margin-top: 5%;
+}
+
+.gym-check-enrollment-container .enrollment-container select {
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 5%;
+  justify-self: center;
+}
+
+.gym-check-enrollment-container .buttons_en {
+  display: flex;
+  flex-direction: row;
+  top: -25px;
+  color: #000000;
+  font-family: Poppins;
+  gap: 20%;
+  align-items: center;
+}
+
+.gym-check-enrollment-container .buttons_en .b1 {
+  position: relative;
+  display: inline-block;
+  margin-left: 40px;
+  background-color: #ff820e;
+  color: #ffffff;
+  width: 8vw;
+  border-radius: 25px;
+  font-weight: 600;
+  height: 1.7vw;
+}
+.gym-check-enrollment-container .buttons_en .b2 {
+  color: #ffffff;
+  position: absolute;
+  display: inline-block;
+  background-color: #d90000;
+  margin-left: 220px;
+  font-weight: 600;
+  width: 8vw;
+  height: 1.7vw;
+  border-radius: 25px;
+}
+
+.gym_instructor_page_user_button {
+  font-weight: bold;
+  font-family: Poppins;
+  font-size: 16px;
+  width: 200px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: #22992e;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.enrollment_accept {
+  margin-left: 25%;
+}
+
+select {
+  border-radius: 25px;
+}
+
+.gym-check-enrollment-container .choice-container {
+  height: 5vh;
+}
+
+.gym-check-enrollment-container .choice-container ul {
+  position: relative;
+  list-style: none;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10vw;
+}
+
+.gym-check-enrollment-container .choice-container .choice-enrollment {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.gym-check-enrollment-container .choice-container .choice-enrollment h2 {
+  justify-self: center;
+  text-align: center;
+  height: 5vh;
+  padding-top: 2vh;
+}
+
+.gym-check-enrollment-container .choice-container .choice-enrollment select {
+  background-color: #d9d9d9;
+  border-radius: 25px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+}

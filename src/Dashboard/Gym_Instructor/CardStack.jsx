@@ -3,8 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import move from "lodash-move";
 // import Reserve from "./pages/reserve/reserve.jsx";
-import CheckEnrollment from "./pages/check_enrollment/check_enrollment.jsx";
-import Statistics from "./pages/statistics/statistics.jsx";
+import CheckEnrollment from "./screens/check_enrollment/check_enrollment.jsx";
+import Statistics from "./screens/statistics/statistics.jsx";
 import "./CardStack.css";
 
 /* THIS CODE CONTAINS THE SWAPPABLE CARDS AND THE nav-gym-instructorIGATION BAR, ALONG WITH ALL COMPONENTS CONNECTED */
@@ -14,7 +14,7 @@ import "./CardStack.css";
 /* The rest of the code is not to be altered */
 
 const CARD_INDICES = ["1", "2"];
-const BUTTON_LABELS = ["check and accept enrollment", "statistics"];
+const BUTTON_LABELS = ["check enrollment", "statistics"];
 
 /*INTERNAL WORKING*/
 const CARD_OFFSET = 6;

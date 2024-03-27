@@ -97,7 +97,11 @@ const Login = () => {
           if (data.category == "6") {
             window.location.href = "/admin/attendance";
           } else if (data.category == "5") {
-            window.location.href = "/admin/gyminstructor";
+            if (data.type_of_sport == "swimming") {
+              window.location.href = "/admin/swiminstructor";
+            } else {
+              window.location.href = "/admin/gyminstructor";
+            }
           } else if (data.category == "3") {
             window.location.href = "/admin/coach";
           } else if (data.category == "2") {

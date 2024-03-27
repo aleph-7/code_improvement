@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./table_tutorials.css";
 import SERVER_ROOT_PATH from "../../../../config.js";
 
-const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
+const Table_Tutorials = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
   let rowEntries_withHeader = [["topic", "author", "link"], ...rowEntries];
   const generateTableHeader = () => {
     const rows = [];
@@ -77,4 +77,4 @@ const Table_Workshop = ({ sport, noOfRows, noOfColumns, rowEntries }) => {
   );
 };
 
-export default Table_Workshop;
+export default Table_Tutorials;
