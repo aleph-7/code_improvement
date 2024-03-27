@@ -48,8 +48,7 @@ import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
 import Error from "./error/Error.jsx";
-
-// import Gym_Instructor from "./Dashboard/Gym_Instructor/Gym_Instructor.jsx";
+import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
 
 // import Coach from "./Dashboard/Coach/Coach.jsx";
 
@@ -85,7 +84,9 @@ function App() {
             <Route path="/admin/coach" element={<Coach_Dashboard />} />
           </Route>
 
-          <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
+          <Route element={<ProtectedRoute_Gym />}>
+            <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
+          </Route>
 
           <Route element={<ProtectedRoute_Counsellor />}>
             <Route

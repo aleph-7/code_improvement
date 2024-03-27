@@ -96,6 +96,8 @@ const Login = () => {
           // Redirect to home page
           if (data.category == "6") {
             window.location.href = "/admin/attendance";
+          } else if (data.category == "5") {
+            window.location.href = "/admin/gyminstructor";
           } else if (data.category == "3") {
             window.location.href = "/admin/coach";
           } else if (data.category == "2") {
