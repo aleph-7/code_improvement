@@ -28,8 +28,7 @@ import Gym from "./user/gym/Gym.jsx";
 import Counsellor from "./user/counsellor/Counsellor.jsx";
 import Self_help from "./user/self-help/self_help.jsx";
 import History from "./user/history/History.jsx";
-import Home from "./user/Landing_Page1/LP1.jsx";
-import LP2 from "./user/Landing_Page2/LP2.jsx"
+import Landing_Page from "./user/landing_page/landing_page.jsx";
 
 //Coach Pages
 import ProtectedRoute_Coach from "./protected_routes_coach.jsx";
@@ -49,8 +48,7 @@ import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
 import Error from "./error/Error.jsx";
-
-// import Gym_Instructor from "./Dashboard/Gym_Instructor/Gym_Instructor.jsx";
+import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
 
 // import Coach from "./Dashboard/Coach/Coach.jsx";
 
@@ -65,8 +63,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute_User />}>
             <Route path="/history" element={<History />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/home_readmore" element={<LP2 />} />
+            <Route path="/home" element={<Landing_Page />} />
             <Route path="/basketball" element={<Basketball />} />
             <Route path="/cricket" element={<Cricket />} />
             <Route path="/volleyball" element={<Volleyball />} />
@@ -87,7 +84,9 @@ function App() {
             <Route path="/admin/coach" element={<Coach_Dashboard />} />
           </Route>
 
-          <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
+          <Route element={<ProtectedRoute_Gym />}>
+            <Route path="/admin/gyminstructor" element={<Gym_Instructor />} />
+          </Route>
 
           <Route element={<ProtectedRoute_Counsellor />}>
             <Route
