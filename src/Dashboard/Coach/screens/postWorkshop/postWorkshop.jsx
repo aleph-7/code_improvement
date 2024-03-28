@@ -9,9 +9,6 @@ const PostWorkshop = () => {
     type_of_sport: localStorage.getItem("type_of_sport"),
     description: "",
     date: "",
-    raquet: "0",
-    cork: "0",
-    shoe: "0",
     start_time: "",
     end_time: "",
   });
@@ -20,9 +17,6 @@ const PostWorkshop = () => {
     description: "",
     max_participants: "",
     date: "",
-    raquet: "",
-    cork: "",
-    shoe: "",
     start_time: "",
     end_time: "",
   });
@@ -47,58 +41,6 @@ const PostWorkshop = () => {
           }
           break;
 
-        case "date":
-          if (!value) {
-            stateObj[name] = "";
-          }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid date.";
-          }
-          break;
-
-        case "raquet":
-          if (!value) {
-            stateObj[name] = "";
-          }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid number.";
-          } else {
-            if (Number(value) < 0)
-              stateObj[name] = "Please enter a valid number.";
-            if (Number(value) > 20)
-              stateObj[name] = "Please enter a valid number, less than 21.";
-          }
-
-          break;
-
-        case "cork":
-          if (!value) {
-            stateObj[name] = "";
-          }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid number.";
-          } else {
-            if (Number(value) < 0)
-              stateObj[name] = "Please enter a valid number.";
-            if (Number(value) > 20)
-              stateObj[name] = "Please enter a valid number, less than 21.";
-          }
-          break;
-
-        case "shoe":
-          if (!value) {
-            stateObj[name] = "";
-          }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid number.";
-          } else {
-            if (Number(value) < 0)
-              stateObj[name] = "Please enter a valid number.";
-            if (Number(value) > 20)
-              stateObj[name] = "Please enter a valid number, less than 21.";
-          }
-          break;
-
         case "start_time":
           if (!value) {
             stateObj[name] = "";
@@ -113,11 +55,6 @@ const PostWorkshop = () => {
           }
           break;
 
-        case "end_time":
-          if (!value) {
-            stateObj[name] = "";
-          }
-          break;
         case "max_participants":
           if (!value) {
             stateObj[name] = "";
@@ -155,10 +92,6 @@ const PostWorkshop = () => {
       alert("Start time is required.");
       setError((prev) => ({ ...prev, start_time: "Start time is required." }));
     }
-    if (!input.end_time) {
-      alert("End time is required.");
-      setError((prev) => ({ ...prev, end_time: "End time is required." }));
-    }
     if (!input.max_participants) {
       alert("Max participants is required.");
       setError((prev) => ({
@@ -166,17 +99,7 @@ const PostWorkshop = () => {
         max_participants: "Max participants is required.",
       }));
     }
-    if (
-      input.start_time &&
-      input.end_time &&
-      input.start_time > input.end_time
-    ) {
-      alert("Start time should be less than end time.");
-      setError((prev) => ({
-        ...prev,
-        start_time: "Start time should be less than end time.",
-      }));
-    }
+    input.end_time = parseInt(input.start_time) + 1;
     try {
       const response = await fetch(SERVER_ROOT_PATH + "/coach/postWorkshop", {
         method: "POST",
@@ -229,63 +152,6 @@ const PostWorkshop = () => {
         {error.max_participants && (
           <span className="errs">{error.max_participants}</span>
         )}
-
-        <div className="heading-page">
-          <h2>equipments needed : </h2>
-        </div>
-        <div className="coach_equipment_selector">
-          <div className="coach_equipment_selector_equipment">
-            <h3> raquet</h3>
-            <input
-              type="text"
-              placeholder="number of raquets needed"
-              className="coach_input_small"
-              name="raquet"
-              value={input.raquet}
-              onChange={onInputChange}
-              onBlur={validateInput}
-            />
-            {error.raquet && (
-              <span className="err">
-                <h3>{error.raquet}</h3>
-              </span>
-            )}
-          </div>
-          <div className="coach_equipment_selector_equipment">
-            <h3> cork </h3>
-            <input
-              type="text"
-              placeholder="number of corks needed"
-              className="coach_input_small"
-              name="cork"
-              value={input.cork}
-              onChange={onInputChange}
-              onBlur={validateInput}
-            />
-            {error.cork && (
-              <span className="err">
-                <h3>{error.cork}</h3>
-              </span>
-            )}
-          </div>
-          <div className="coach_equipment_selector_equipment">
-            <h3> shoe</h3>
-            <input
-              type="text"
-              placeholder="number of shoes needed"
-              className="coach_input_small"
-              name="shoe"
-              value={input.shoe}
-              onChange={onInputChange}
-              onBlur={validateInput}
-            />
-            {error.shoe && (
-              <span className="err">
-                <h3>{error.shoe}</h3>
-              </span>
-            )}
-          </div>
-        </div>
         <input
           type="text"
           placeholder="start time of workshop"
@@ -295,16 +161,6 @@ const PostWorkshop = () => {
           onChange={onInputChange}
           onBlur={validateInput}
         />
-        <input
-          type="text"
-          placeholder="end time of workshop"
-          className="coach_input_large"
-          name="end_time"
-          value={input.end_time}
-          onChange={onInputChange}
-          onBlur={validateInput}
-        />
-
         <button className="coach_workshop_post_button" onClick={onClickButton}>
           post workshop
         </button>
