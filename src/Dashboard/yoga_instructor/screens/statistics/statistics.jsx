@@ -46,7 +46,7 @@ function Statistics() {
                     },
                     {
                       id: 1,
-                      value: message[1].length ? message[2][i] : 0,
+                      value: message[1].length ? message[3][i] : 0,
                       label: "participants",
                     },
                   ],
@@ -80,35 +80,6 @@ function Statistics() {
         />
 
         {generatePie()}
-        {/* <h3>{message[1].length ? message[0][0] : ""}</h3>
-        <div className="workshop-details-pie">
-          <PieChart
-            series={[
-              {
-                data: [
-                  {
-                    id: 0,
-                    value: message[1].length ? message[1][0] : 0,
-                    label: "vacant",
-                  },
-                  {
-                    id: 1,
-                    value: message[1].length ? message[2][0] : 0,
-                    label: "participants",
-                  },
-                ],
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: {
-                  innerRadius: 30,
-                  additionalRadius: -30,
-                  color: "gray",
-                },
-              },
-            ]}
-            width={500}
-            height={200}
-          />
-        </div> */}
       </div>
     </div>
   );

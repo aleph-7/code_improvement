@@ -44,7 +44,7 @@ function PostSession() {
       alert("Date cannot be empty");
       return false;
     }
-    let dateRegex = /^(\d{1,2})\/(\d{1,2})-(\d{4})$/;
+    let dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     if (!dateRegex.test(date)) {
       alert("Invalid date format. Please enter date in dd/mm/yyyy format");
       return false;
