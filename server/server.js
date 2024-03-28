@@ -228,7 +228,7 @@ app.post("/active_booking", async (req, res) => {
   console.log(req.body);
 
   //Searching for players mongoDB Ids
-  const mongodbIds = [];
+  let mongodbIds = [];
   try {
     const players = await User.find(
       { username: { $in: req.body.players } },
@@ -237,9 +237,11 @@ app.post("/active_booking", async (req, res) => {
     players.forEach((player) => {
       mongodbIds.push(player._id.toString());
     });
-    // Log MongoDB IDs
-    console.log("MongoDB IDs:", mongodbIds);
-    console.log(mongodbIds.length);
+    let length = mongodbIds.length;
+    const remainingSlots = 3 - mongodbIds.length;
+    if (remainingSlots > 0) {
+      mongodbIds = mongodbIds.concat(Array(remainingSlots).fill("000000000000000000000000"));
+    }
 
     const name = req.body.slot;
     const type_book = req.body.type;
@@ -265,7 +267,7 @@ app.post("/active_booking", async (req, res) => {
       show_up_status: 0,
       court_id: null,
       partners_id: mongodbIds,
-      no_partners: mongodbIds.length,
+      no_partners: length,
       booking_status: 1,
     });
     const doc = await booking.save();
@@ -281,7 +283,7 @@ app.post("/pre_booking", async (req, res) => {
   console.log(req.body);
 
   //Searching for players mongoDB Ids
-  const mongodbIds = [];
+  let mongodbIds = [];
   try {
     const players = await User.find(
       { username: { $in: req.body.players } },
@@ -290,9 +292,12 @@ app.post("/pre_booking", async (req, res) => {
     players.forEach((player) => {
       mongodbIds.push(player._id.toString());
     });
-    // Log MongoDB IDs
-    console.log("MongoDB IDs:", mongodbIds);
-    console.log(mongodbIds.length);
+    let length = mongodbIds.length;
+    const remainingSlots = 3 - mongodbIds.length;
+    if (remainingSlots > 0) {
+      mongodbIds = mongodbIds.concat(Array(remainingSlots).fill("000000000000000000000000"));
+    }
+
 
     const name = req.body.slot;
     const type_book = req.body.type;
@@ -326,7 +331,7 @@ app.post("/pre_booking", async (req, res) => {
       show_up_status: 0,
       court_id: null,
       partners_id: mongodbIds,
-      no_partners: mongodbIds.length,
+      no_partners:length,
       booking_status: 0,
     });
     const doc = await booking.save();

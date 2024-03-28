@@ -65,7 +65,7 @@ function PreBooking() {
 
     if (bookingRes.ok) {
       e.target.reset();
-      alert("Booking successful!");
+      alert("You successfully applied for court booking.");
       setSelectedTime("");
       setUsers([]);
       setInputValue("");
