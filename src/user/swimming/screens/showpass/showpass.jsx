@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
 import "./showpass.css";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 const ShowPass = () => {
   const [membershipDetails, setMembershipDetails] = useState(null);
   const username = localStorage.getItem("userId");
   const userid = localStorage.getItem("userMongoId");
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   useEffect(() => {
     const fetchMembershipDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:6300/gym/swim_pass?userid=${userid}&year=${new Date().getFullYear()}&month=${new Date().getMonth() + 1}&type=1`);
+        const response = await fetch(
+          SERVER_ROOT_PATH +
+            `/gym/swim_pass?userid=${userid}&year=${new Date().getFullYear()}&month=${
+              new Date().getMonth() + 1
+            }&type=1`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch membership details");
         }
@@ -35,18 +54,22 @@ const ShowPass = () => {
           </div>
           <div className="month">
             <p style={{ fontWeight: "bold" }}>Valid for the month:</p>
-            <p>{monthNames[new Date().getMonth()]}  {new Date().getFullYear()}</p>
+            <p>
+              {monthNames[new Date().getMonth()]} {new Date().getFullYear()}
+            </p>
           </div>
           <div className="timings">
-            <p style={{ fontWeight: "bold", paddingTop: "0px"}}>Time-Slots:</p>
+            <p style={{ fontWeight: "bold", paddingTop: "0px" }}>Time-Slots:</p>
             {membershipDetails && membershipDetails.length > 0 ? (
-              <ul style={{ paddingTop: "1.5%"}}>
+              <ul style={{ paddingTop: "1.5%" }}>
                 {membershipDetails.map((slot, index) => (
                   <li key={index}>{slot}</li>
                 ))}
               </ul>
             ) : (
-              <p style={{ paddingTop: "1.0%"}}>you haven't booked any slot yet...</p>
+              <p style={{ paddingTop: "1.0%" }}>
+                you haven't booked any slot yet...
+              </p>
             )}
           </div>
         </div>

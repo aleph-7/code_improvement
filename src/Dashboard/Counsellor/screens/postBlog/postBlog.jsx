@@ -1,15 +1,16 @@
 import React from "react";
 import "./postBlog.css";
-import { useState } from 'react';
+import { useState } from "react";
 import Articles from "../articles/Articles";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 const PostBlog = () => {
-    const [input,setInput] = useState({
+  const [input, setInput] = useState({
     content: "",
     title: "",
     counsellor_username: localStorage.getItem("userId"),
   });
-  const [error,setError] = useState({
+  const [error, setError] = useState({
     content: "",
     title: "",
     counsellor_username: "",
@@ -57,7 +58,7 @@ const PostBlog = () => {
       setError((prev) => ({ ...prev, date: "Title is required." }));
     }
     try {
-      const response = await fetch("http://localhost:6300/counsellor/postBlog", {
+      const response = await fetch(SERVER_ROOT_PATH + "/counsellor/postBlog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +81,12 @@ const PostBlog = () => {
       <div className="new-post">
         <div className="box-1">
           <h3>Title:</h3>
-          <input name="title" value={input.title} onChange={onInputChange} onBlur={validateInput}></input>
+          <input
+            name="title"
+            value={input.title}
+            onChange={onInputChange}
+            onBlur={validateInput}
+          ></input>
           {/* <h3>Type:</h3>
           <input></input> */}
         </div>
@@ -90,7 +96,12 @@ const PostBlog = () => {
       </div>
       <div className="content">
         {/* <input type="text"></input> */}
-        <textarea name="content" value={input.content} onChange={onInputChange} onBlur={validateInput}/>
+        <textarea
+          name="content"
+          value={input.content}
+          onChange={onInputChange}
+          onBlur={validateInput}
+        />
       </div>
       <div className="post-button">
         <button onClick={onClickButtonPost}>Post</button>

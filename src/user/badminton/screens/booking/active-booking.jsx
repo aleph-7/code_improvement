@@ -64,7 +64,7 @@ function ActiveBooking() {
     }
 
     const bookingRes = await fetch(
-      SERVER_ROOT_PATH + "/badminton/active_booking",
+      SERVER_ROOT_PATH + "/active_booking",
       {
         method: "POST",
         headers: {
@@ -146,12 +146,12 @@ function ActiveBooking() {
       const data = await response.json();
 
       if (data.exists) {
-        if (users.length < 4) {
+        if (users.length < 3) {
           setUsers([...users, inputValue]);
           setInputValue("");
         } else {
-          setShowWarning(true);
-        }
+            alert("Maximum number of entries reached!");
+          }
       } else {
         setInputValue("");
         alert("User doesn't exist!");
@@ -159,10 +159,7 @@ function ActiveBooking() {
     }
   };
 
-  const handleCloseWarning = () => {
-    setShowWarning(false);
-  };
-
+  
   return (
     <form
       className="active-booking-form-badminton"
@@ -219,16 +216,6 @@ function ActiveBooking() {
                 <li key={index}>{user}</li>
               ))}
             </ul>
-            {showWarning && (
-              <div className="modal">
-                <div className="modal-content">
-                  <span className="close" onClick={handleCloseWarning}>
-                    &times;
-                  </span>
-                  <p>Maximum number of entries reached!</p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 

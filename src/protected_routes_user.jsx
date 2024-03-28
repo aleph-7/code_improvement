@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "./useAuth"; // Replace with your auth hook
-import Signup from "./login/signup";
 
 const ProtectedRoute_User = () => {
   const { isAuthenticated } = useAuth();

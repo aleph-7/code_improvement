@@ -16,7 +16,7 @@ import "./screens/home/home.css";
 /* The rest of the code is not to be altered */
 
 const CARD_INDICES = ["1", "2", "3"];
-const BUTTON_LABELS = ["home", "workshops", "tutorials"];
+const BUTTON_LABELS = ["home", "sessions", "tutorials"];
 
 /*INTERNAL WORKING*/
 const CARD_OFFSET = 6;
@@ -111,8 +111,9 @@ const CardStack = () => {
                       {/* click image functionality */}
                     </div>
                     <div class="booknow-line1">avail all facilities!</div>
-                    <div class="workshops-line1">coaches teach!</div>
-                    <div class="workshops-line2">workshops</div>
+                    
+                    <div class="workshops-line1" style={{width:"25%",marginLeft:"70%"}}>instructors teach!</div>
+                    <div class="workshops-line2">sessions</div>
                     <div class="tutorials-line1">tutorials</div>
                     <div class="tutorials-line2">you can learn too!</div>
                   </div>

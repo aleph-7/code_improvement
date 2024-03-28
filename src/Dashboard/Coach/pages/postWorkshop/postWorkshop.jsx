@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./postWorkshop.css";
+import SERVER_ROOT_PATH from "../../../../../config";
 
 const PostWorkshop = () => {
   const [input, setInput] = useState({
@@ -177,7 +178,7 @@ const PostWorkshop = () => {
       }));
     }
     try {
-      const response = await fetch("http://localhost:6300/coach/postWorkshop", {
+      const response = await fetch(SERVER_ROOT_PATH + "/coach/postWorkshop", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

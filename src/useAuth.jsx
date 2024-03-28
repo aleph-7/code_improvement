@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SERVER_ROOT_PATH from "../config";
 
 let category = 0;
 async function getProtectedData() {
@@ -8,7 +9,7 @@ async function getProtectedData() {
       throw new Error("Token not found");
     }
 
-    const response = await fetch("http://localhost:6300/protected", {
+    const response = await fetch(SERVER_ROOT_PATH + "/protected", {
       method: "GET",
       headers: {
         Authorization: token,
