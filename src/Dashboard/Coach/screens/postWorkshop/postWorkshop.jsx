@@ -312,5 +312,4 @@ const PostWorkshop = () => {
     </div>
   );
 };
-// style={{ left: "33px", top: "93px" }}
 export default PostWorkshop;

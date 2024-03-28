@@ -63,29 +63,37 @@ function Statistics() {
           height={300}
         />
       </div>
-      <h1>pie chart</h1>
-      <PieChart
-        series={[
-          {
-            data: [
-              { id: 0, value: message[0], label: "january" },
-              { id: 1, value: message[1], label: "february" },
-              { id: 2, value: message[2], label: "march" },
-              { id: 3, value: message[3], label: "april" },
-              { id: 4, value: message[4], label: "may" },
-              { id: 5, value: message[5], label: "june" },
-              { id: 6, value: message[6], label: "july" },
-              { id: 7, value: message[7], label: "august" },
-              { id: 8, value: message[8], label: "september" },
-              { id: 9, value: message[9], label: "october" },
-              { id: 10, value: message[10], label: "november" },
-              { id: 11, value: message[11], label: "december" },
-            ],
-          },
-        ]}
-        width={1000}
-        height={200}
-      />
+      <div className="gymstatistics-charts">
+        <h2>pie chart</h2>
+        <PieChart
+          series={[
+            {
+              data: [
+                { id: 0, value: message[0], label: "january" },
+                { id: 1, value: message[1], label: "february" },
+                { id: 2, value: message[2], label: "march" },
+                { id: 3, value: message[3], label: "april" },
+                { id: 4, value: message[4], label: "may" },
+                { id: 5, value: message[5], label: "june" },
+                { id: 6, value: message[6], label: "july" },
+                { id: 7, value: message[7], label: "august" },
+                { id: 8, value: message[8], label: "september" },
+                { id: 9, value: message[9], label: "october" },
+                { id: 10, value: message[10], label: "november" },
+                { id: 11, value: message[11], label: "december" },
+              ],
+              highlightScope: { faded: "global", highlighted: "item" },
+              faded: {
+                innerRadius: 30,
+                additionalRadius: -30,
+                color: "gray",
+              },
+            },
+          ]}
+          width={1000}
+          height={200}
+        />
+      </div>
     </div>
   );
 }
