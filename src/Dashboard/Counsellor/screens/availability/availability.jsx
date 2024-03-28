@@ -139,14 +139,14 @@ const Availability = () => {
       .then((data) => setMessage(data.message));
   };
   function isValidDate(dateString) {
-    const dateParts = dateString.split("-");
+    const dateParts = dateString.split("/");
     let isValid = true;
     let err = "";
 
     // Check if the date string has three parts
     if (dateParts.length !== 3) {
       isValid = false;
-      err = "Invalid date format. Please use DD-MM-YYYY format.";
+      err = "Invalid date format. Please use DD/MM/YYYY format.";
       return { isValid, err };
     }
     const day = parseInt(dateParts[0]);
@@ -214,7 +214,7 @@ const Availability = () => {
     }
 
     // Split the date into day, month, and year
-    const parts = dateString.split("-");
+    const parts = dateString.split("/");
 
     // Rearrange the parts to form the new date format (mm/dd/yyyy)
     const invertedDateString = `${parts[1]}/${parts[0]}/${parts[2]}`;
@@ -437,23 +437,7 @@ const Availability = () => {
       console.log(err);
     }
   };
-  // {message && message.length > 0 && (
-  //   message.map((msg, index) => (
-  //     <Dateitems
-  //       // key={index}
-  //       isDay={!msg.day_vector.every(element => element === 0)}
-  //       dateOrDay={msg.day_vector.every(element => element === 0) ? msg.date_slot : getDaysOfWeek(msg.day_vector)}
-  //       timeSlots={msg.day_vector.every(element => element === 0) ? msg.date_slot_time_vector
-  //         .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //         .filter((str) => str !== "")
-  //         .join(", ") : msg.date_slot_time_vector
-  //         .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //         .filter((str) => str !== "")
-  //         .join(", ")}
-  //     />
-  //   ))
-  // )}
-  // {(!message || message.length === 0) && <div>No messages available</div>}
+
   return (
     <div className="counsellor-availability">
       <div className="notify start">
@@ -547,7 +531,7 @@ const Availability = () => {
           <input
             type="text"
             className="date"
-            placeholder="DD-MM-YYYY"
+            placeholder="DD/MM/YYYY"
             name="date_slot"
             value={inputDate.date_slot}
             onChange={onInputChange}
