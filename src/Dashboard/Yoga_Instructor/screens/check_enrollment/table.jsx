@@ -6,7 +6,7 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
         const rows = [];
         for (let i = 0; i < 1; i++) {
           rows.push(
-            <tr key={i} id="tableHeaderRow">
+            <tr key={i} id="tableHeaderRowYogaDashboard">
               {generateColumns(i)}
             </tr>
           );
@@ -16,12 +16,22 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
       };
     const generateRows = () => {
       const rows = [];
-      for (let i = 1; i < noOfRows; i++) {
+      if(rowEntries.length === 1) {
         rows.push(
-          <tr key={i}>
-            {generateColumns(i)}
+          <tr key={0}>
+            <td colSpan={noOfColumns} style={{ textAlign: 'center' }}>No enrollments yet!</td>
           </tr>
         );
+      }
+      else
+      {
+        for (let i = 1; i < noOfRows; i++) {
+          rows.push(
+            <tr key={i}>
+              {generateColumns(i)}
+            </tr>
+          );
+        }
       }
   
       return rows;
@@ -42,13 +52,13 @@ const Table = ({ noOfRows, noOfColumns, rowEntries }) => {
     };
   
     return (
-      <div id="mainTableDiv">
-            <table id="websiteTableHeader" style={{ fontFamily: 'Junge, Poppins, sans-serif' }}>
+      <div id="mainTableDivYogaDashboard">
+            <table id="websiteTableHeaderYogaDashboard" style={{ fontFamily: 'Junge, Poppins, sans-serif' }}>
                 <tbody>
                 {generateTableHeader()}
                 </tbody>            
             </table>
-            <table id="websiteTableContent">
+            <table id="websiteTableContentYogaDashboard">
                 <tbody>
                 {generateRows()}
                 </tbody>
