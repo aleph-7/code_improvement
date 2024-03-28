@@ -137,7 +137,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="login-container-master">
+    <div className="login-container-master-div">
       <div className="login-container">
         <div className="login-content">
           <div className="login-inputs">

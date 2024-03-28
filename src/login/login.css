@@ -7,6 +7,16 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.login-container-master-div {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20vh;
+  width: 60vw;
+  background-color: #faf0f8;
+  height: 60vh;
+}
+
 .login-container-master {
   margin: auto;
   display: flex;
@@ -30,7 +40,7 @@ body {
 }
 
 .login-content {
-  margin-top: 28vh;
+  margin-top: 30vh;
 }
 .login-inputs {
   display: flex;
@@ -40,21 +50,21 @@ body {
   text-align: left;
   margin-left: 5%;
 }
-.login-select{
-  background-color:rgb(215, 215, 215);
+.login-select {
+  background-color: rgb(215, 215, 215);
   border-radius: 25px;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  opacity:1;
+  opacity: 1;
   font-size: 20px;
   line-height: 15px;
   border: none;
   padding-left: 20px;
   color: #1b1a1a;
-  opacity:80%;
-  margin-left:5%;
-  margin-bottom:2%;
+  opacity: 80%;
+  margin-left: 5%;
+  margin-bottom: 2%;
 }
 
 .login-inputs input {
@@ -140,11 +150,11 @@ form {
   font-size: 20px;
 }
 
-.superadmin-drop-down{
+.superadmin-drop-down {
   margin-bottom: 3vw;
   margin-left: 4vw;
-  height:40%;
+  height: 40%;
   background-color: rgb(215, 215, 215);
-  border-radius:20px;
-  font-family:"Poppins";
+  border-radius: 20px;
+  font-family: "Poppins";
 }

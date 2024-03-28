@@ -94,7 +94,9 @@ const Login = () => {
           console.log("User MongoID:", data.userMongoId);
           console.log("Type of Sport:", data.type_of_sport);
           // Redirect to home page
-          if (data.category == "6") {
+          if (data.category == "7") {
+            window.location.href = "/admin/dashboard";
+          } else if (data.category == "6") {
             window.location.href = "/admin/attendance";
           } else if (data.category == "5") {
             if (data.type_of_sport == "swimming") {
@@ -123,7 +125,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container-master">
+    <div className="login-container-master-div">
       <div className="login-container">
         <div className="login-content">
           <div className="login-inputs">

@@ -52,12 +52,11 @@ import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
 import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
-
 //Superadmin Pages
-
 import Superadmin from "./Dashboard/Super_admin/superadmin.jsx";
 
 import Error from "./error/Error.jsx";
+import ProtectedRoute_SuperAdmin from "./protected_routes_super.jsx";
 
 function App() {
   useEffect(() => {
@@ -115,6 +114,10 @@ function App() {
               path="/admin/counsellor"
               element={<Counsellor_Dashboard />}
             />
+          </Route>
+
+          <Route element={<ProtectedRoute_SuperAdmin />}>
+            <Route path="/admin/dashboard" element={<Superadmin />} />
           </Route>
 
           <Route element={<ProtectedRoute_Admin />}>

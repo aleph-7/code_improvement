@@ -32,7 +32,7 @@ router.get("/sport_booking", async (req, res) => {
   console.log(formattedDate);
 
   await sportBooking
-    .find({ booking_status: 0, type_of_booking: 0 , date_slot: formattedDate})
+    .find({ booking_status: 0, type_of_booking: 0, date_slot: formattedDate })
     .then((results) => {
       attributeList = results.map((doc) => [
         doc._id,
@@ -133,9 +133,11 @@ router.get("/sport_booking", async (req, res) => {
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "badminton", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "badminton",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -173,18 +175,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -201,20 +202,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -229,7 +228,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -337,7 +337,6 @@ router.get("/sport_booking", async (req, res) => {
     workshopslist = [];
   }
 
-
   //tennis
   for (let i = 0; i < 24; i++) {
     for (let j = 0; j < attributeList.length; j++) {
@@ -391,9 +390,11 @@ router.get("/sport_booking", async (req, res) => {
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "tennis", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "tennis",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -431,18 +432,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -459,20 +459,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -487,7 +485,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -648,9 +647,11 @@ router.get("/sport_booking", async (req, res) => {
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "squash", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "squash",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -688,18 +689,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -716,20 +716,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -744,7 +742,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -865,21 +864,23 @@ router.get("/sport_booking", async (req, res) => {
 
     //sorting based on leaderboard position
     temp_pairing.sort(async (a, b) => {
-      await tabletennisLeaderboard.findOne({ user_id: a[3] }).then(async (A) => {
-        console.log(A);
-        await tabletennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
-          console.log(B);
+      await tabletennisLeaderboard
+        .findOne({ user_id: a[3] })
+        .then(async (A) => {
+          console.log(A);
+          await tabletennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
+            console.log(B);
 
-          if (A === null) a_pos = 1000000;
-          else a_pos = A.position;
-          if (B === null) b_pos = 1000000;
-          else b_pos = B.position;
-          return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
+            if (A === null) a_pos = 1000000;
+            else a_pos = A.position;
+            if (B === null) b_pos = 1000000;
+            else b_pos = B.position;
+            return a_pos - b_pos;
+            //   a_pos = A.position;
+            //   b_pos = B.position;
+            //   return a_pos - b_pos;
+          });
         });
-      });
       //assuming INT_MAX is the maximum possible value of position
       //REVIEW!!!
     });
@@ -905,9 +906,11 @@ router.get("/sport_booking", async (req, res) => {
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "table_tennis", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "table_tennis",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -945,18 +948,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -973,20 +975,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -1001,7 +1001,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -1108,7 +1109,6 @@ router.get("/sport_booking", async (req, res) => {
     temp_rest = [];
     workshopslist = [];
   }
-
 
   res.json({ message: attributeList });
 });
