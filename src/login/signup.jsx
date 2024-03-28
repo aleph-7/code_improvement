@@ -118,6 +118,8 @@ const Signup = () => {
           username: input.username,
           password: input.password,
           email_id: input.email_id,
+          user_category: 1,
+          sport: "",
         }),
       });
 

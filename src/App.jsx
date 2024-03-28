@@ -52,6 +52,11 @@ import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
 import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
+
+//Superadmin Pages
+
+import Superadmin from "./Dashboard/Super_admin/superadmin.jsx";
+
 import Error from "./error/Error.jsx";
 
 function App() {

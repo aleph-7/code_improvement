@@ -30,47 +30,48 @@ router.post("/signup", async (req, res) => {
 
     // Hashing the passwords before saving them to the database
     const hashed_password = await bcrypt.hash(req.body.password, 10);
-
     // Creating a new user
     const new_user = new User({
       username: req.body.username,
       email_id: req.body.email_id,
-      user_category: 1,
+      user_category: req.body.user_category,
       password: hashed_password,
       profile_pic: "",
-      type_of_sport: "",
+      type_of_sport: req.body.sport,
     });
     // Saving the user to the database
     const doc = await new_user.save();
+    if(req.body.user_category==1)
+    {
+      badminton_db_length = await Leaderboard_Badminton.find().countDocuments();
+      const badminton_leaderboard = new Leaderboard_Badminton({
+        user_id: doc._id,
+        position: badminton_db_length + 1,
+      });
+      await badminton_leaderboard.save();
 
-    badminton_db_length = await Leaderboard_Badminton.find().countDocuments();
-    const badminton_leaderboard = new Leaderboard_Badminton({
-      user_id: doc._id,
-      position: badminton_db_length + 1,
-    });
-    await badminton_leaderboard.save();
+      squash_db_length = await Leaderboard_Squash.find().countDocuments();
+      const squash_leaderboard = new Leaderboard_Squash({
+        user_id: doc._id,
+        position: squash_db_length + 1,
+      });
+      await squash_leaderboard.save();
 
-    squash_db_length = await Leaderboard_Squash.find().countDocuments();
-    const squash_leaderboard = new Leaderboard_Squash({
-      user_id: doc._id,
-      position: squash_db_length + 1,
-    });
-    await squash_leaderboard.save();
+      table_tennis_db_length =
+        await Leaderboard_TableTennis.find().countDocuments();
+      const table_tennis_leaderboard = new Leaderboard_TableTennis({
+        user_id: doc._id,
+        position: table_tennis_db_length + 1,
+      });
+      await table_tennis_leaderboard.save();
 
-    table_tennis_db_length =
-      await Leaderboard_TableTennis.find().countDocuments();
-    const table_tennis_leaderboard = new Leaderboard_TableTennis({
-      user_id: doc._id,
-      position: table_tennis_db_length + 1,
-    });
-    await table_tennis_leaderboard.save();
-
-    tennis_db_length = await Leaderboard_Tennis.find().countDocuments();
-    const tennis_leaderboard = new Leaderboard_Tennis({
-      user_id: doc._id,
-      position: tennis_db_length + 1,
-    });
-    await tennis_leaderboard.save();
+      tennis_db_length = await Leaderboard_Tennis.find().countDocuments();
+      const tennis_leaderboard = new Leaderboard_Tennis({
+        user_id: doc._id,
+        position: tennis_db_length + 1,
+      });
+      await tennis_leaderboard.save();
+    }
     // Sending the response to the frontend
     res.status(201).json({ message: "Registration successful" });
   } catch (err) {
@@ -129,5 +130,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Authentication failed" });
   }
 });
+
 
 module.exports = router;
