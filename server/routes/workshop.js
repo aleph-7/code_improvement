@@ -5,20 +5,40 @@ const router = express.Router();
 
 router.get("/badminton", async (req, res) => {
   let attributeList;
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
   await Workshop.find({ type_of_sport: "badminton" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
+    attributeList = results.map((doc) => {
+      console.log(
+        Number(doc.date_slot.substring(3, 5)) > currentDate.getMonth()
+      );
+      console.log(
+        Number(doc.date_slot.substring(0, 2)) > currentDate.getDate()
+      );
+      if (
+        Number(doc.date_slot.substring(3, 5)) > currentDate.getMonth() ||
+        Number(doc.date_slot.substring(0, 2)) > currentDate.getDate()
+      ) {
+        return [
+          doc.date_slot +
+            "\n" +
+            doc.time_slot_start.toString() +
+            "hrs to " +
+            doc.time_slot_end.toString() +
+            "hrs",
+          doc.content,
+          doc.max_strength.toString() + " slots",
+          doc.id,
+          doc.participants_id,
+          doc.max_strength,
+        ];
+      }
+    });
   });
   res.json({ message: attributeList });
 });
