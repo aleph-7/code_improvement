@@ -21,6 +21,9 @@ router.get("/counsellor_appointments", async (req, res) => {
 });
 
 router.get("/get_booking_history", async (req, res) => {
+  console.log("sdfhk");
+  // const { user_id } = req.body.user_id;
+  // console.log(user_id);
   // const { user_id } = req.body.user_id;
   // console.log(user_id);
   // let doc;
@@ -164,7 +167,7 @@ function getDate(date) {
   let year = new_date.getFullYear();
   let month = (new_date.getMonth() + 1).toString().padStart(2, "0");
   let dayOfMonth = new_date.getDate().toString().padStart(2, "0");
-  return dayOfMonth + "-" + month + "-" + year;
+  return dayOfMonth + "/" + month + "/" + year;
 }
 
 async function check_booking(

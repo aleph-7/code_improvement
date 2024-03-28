@@ -12,7 +12,7 @@ const History = () => {
   const [message, setMessage] = useState("");
   console.log(localStorage.getItem("userMongoId"));
   const fetchInfo = async () => {
-    return await fetch(SERVER_ROOT_PATH + "user/get_booking_history", {
+    return await fetch(SERVER_ROOT_PATH + "/user/get_booking_history", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
