@@ -102,6 +102,8 @@ const Login = () => {
             } else {
               window.location.href = "/admin/gyminstructor";
             }
+          } else if (data.category == "4") {
+            window.location.href = "/admin/yoga";
           } else if (data.category == "3") {
             window.location.href = "/admin/coach";
           } else if (data.category == "2") {

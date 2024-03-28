@@ -39,19 +39,20 @@ import ProtectedRoute_Admin from "./protected_routes_admin.jsx";
 import Attendance from "./admin/attendance.jsx";
 
 //Yoga Instructor
+import Yoga_Instructor from "./Dashboard/Yoga_Instructor/Yoga_Instructor.jsx";
+import ProtectedRoute_Yoga from "./protected_routes_yoga.jsx";
 
 //Gym/Swimiming Instructor
 import Gym_Instructor from "./Dashboard/gym_instructor/Gym_Instructor.jsx";
 import Swimming_Instructor from "./Dashboard/swimming_instructor/Swimming_Instructor.jsx";
+import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
+import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
 
 //Counsellor page
 import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
 import Error from "./error/Error.jsx";
-import ProtectedRoute_Gym from "./protected_routes_gym.jsx";
-import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
-// import Coach from "./Dashboard/Coach/Coach.jsx";
 
 function App() {
   useEffect(() => {
@@ -98,6 +99,10 @@ function App() {
               path="/admin/swiminstructor"
               element={<Swimming_Instructor />}
             />
+          </Route>
+
+          <Route element={<ProtectedRoute_Yoga />}>
+            <Route path="/admin/yoga" element={<Yoga_Instructor />} />
           </Route>
 
           <Route element={<ProtectedRoute_Counsellor />}>
