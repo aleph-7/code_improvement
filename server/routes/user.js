@@ -6,6 +6,8 @@ const WorkshopsBookings =
   require("../models/bookingsDB").yogaSessionsSportsWorkshops;
 const Counsellor_availability =
   require("../models/contentDB").counsellor_availabilitySchema;
+const Yoga_Sessions = require("../models/contentDB").yoga_sessionSchema;
+const SportsWorkshops = require("../models/contentDB").sport_workshopSchema;
 const Counsellor_Appointments =
   require("../models/bookingsDB").counsellorAppointmentsSchema;
 const User = require("../models/userDB").userSchema;
@@ -21,29 +23,41 @@ router.get("/counsellor_appointments", async (req, res) => {
 });
 
 router.get("/get_booking_history", async (req, res) => {
-  console.log("sdfhk");
-  // const { user_id } = req.body.user_id;
-  // console.log(user_id);
-  // const { user_id } = req.body.user_id;
-  // console.log(user_id);
-  // let doc;
-  // doc = await SportsBookings.find({ user_id: user_id });
-  // await SportsBookings.find({ user_id: user_id }).then((results) => {
-  //   attributeList = results.map((doc) => [
-  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
-  //     doc.date_slot,
-  //     doc.booking_status,
-  //   ]);
-  // });
-  // await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
-  //   attributeList2 = results.map((doc) => [
-  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
-  //     doc.session_id,
-  //     doc.booking_status,
-  //   ]);
-  // });
-  // console.log(attributeList2);
-  // res.status(200).json({ message: attributeList });
+  let user_id = req.query.user_id;
+  console.log(user_id);
+  let doc;
+  let attributeList = [];
+  doc = await SportsBookings.find({ user_id: user_id });
+  await SportsBookings.find({ user_id: user_id }).then((results) => {
+    attributeList = results.map((doc) => [
+      doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+      doc.date_slot,
+      doc.booking_status,
+    ]);
+  });
+  await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
+    attributeList2 = results.map((doc) => [
+      doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+      doc.session_id,
+      doc.booking_status,
+    ]);
+  });
+
+  for (let i = 0; i < attributeList2.length; i++) {
+    let session_id = attributeList2[i][1];
+    if (attributeList2[i][0] == "yoga") {
+      attributeList2[i][0] = "yoga session";
+      let session = await Yoga_Sessions.findOne({ _id: session_id });
+      if (session != null) attributeList2[i][1] = session.date_slot;
+    } else {
+      attributeList2[i][0] = attributeList2[i][0] + " workshop";
+      let session = await SportsWorkshops.findOne({ _id: session_id });
+      if (session != null) attributeList2[i][1] = session.date_slot;
+    }
+  }
+  console.log(attributeList2);
+  attributeList = attributeList.concat(attributeList2);
+  res.status(200).json({ message: attributeList });
 });
 
 // =================================

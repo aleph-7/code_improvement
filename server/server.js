@@ -250,10 +250,10 @@ app.post("/active_booking", async (req, res) => {
     const current_date =
       (date.getDate() < 10 ? "0" : "") +
       date.getDate() +
-      "-" +
+      "/" +
       (date.getMonth() < 9 ? "0" : "") +
       (date.getMonth() + 1) +
-      "-" +
+      "/" +
       date.getFullYear();
     const booking = new SportsBookings({
       user_id: req.body.user_id,
@@ -314,7 +314,7 @@ app.post("/pre_booking", async (req, res) => {
     day = day < 10 ? "0" + day : day;
     month = month < 10 ? "0" + month : month;
 
-    let nextDateFormatted = day + "-" + month + "-" + year;
+    let nextDateFormatted = day + "/" + month + "/" + year;
 
     const booking = new SportsBookings({
       user_id: req.body.user_id,
