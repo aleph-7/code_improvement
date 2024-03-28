@@ -131,7 +131,7 @@ function PostSession() {
     } else if (endTime === undefined || startTime === undefined) {
       alert("Please select start and end time");
       return;
-    } else if (startTime >= endTime) {
+    } else if (Number(startTime) >= Number(endTime)) {
       console.log(startTime, endTime);
       alert("Start time should be less than end time");
       return;

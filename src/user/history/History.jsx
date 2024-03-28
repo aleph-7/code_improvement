@@ -29,6 +29,7 @@ const History = () => {
   useEffect(() => {
     fetchInfo();
   }, []);
+
   return (
     <div>
       <Header />

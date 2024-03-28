@@ -21,27 +21,26 @@ router.get("/counsellor_appointments", async (req, res) => {
 });
 
 router.get("/get_booking_history", async (req, res) => {
-  const { user_id } = req.body.user_id;
-  console.log(user_id);
-
-  let doc;
-  doc = await SportsBookings.find({ user_id: user_id });
-  await SportsBookings.find({ user_id: user_id }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
-      doc.date_slot,
-      doc.booking_status,
-    ]);
-  });
-  await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
-    attributeList2 = results.map((doc) => [
-      doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
-      doc.session_id,
-      doc.booking_status,
-    ]);
-  });
-  console.log(attributeList2);
-  res.status(200).json({ message: attributeList });
+  // const { user_id } = req.body.user_id;
+  // console.log(user_id);
+  // let doc;
+  // doc = await SportsBookings.find({ user_id: user_id });
+  // await SportsBookings.find({ user_id: user_id }).then((results) => {
+  //   attributeList = results.map((doc) => [
+  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+  //     doc.date_slot,
+  //     doc.booking_status,
+  //   ]);
+  // });
+  // await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
+  //   attributeList2 = results.map((doc) => [
+  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+  //     doc.session_id,
+  //     doc.booking_status,
+  //   ]);
+  // });
+  // console.log(attributeList2);
+  // res.status(200).json({ message: attributeList });
 });
 
 // =================================
