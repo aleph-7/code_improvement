@@ -8,6 +8,7 @@ const Leaderboard_Tennis =
   require("../models/leaderboardDB").tennisLeaderboardSchema;
 const Leaderboard_TableTennis =
   require("../models/leaderboardDB").tabletennisLeaderboardSchema;
+const Record = require("../models/userDB").recordSchema;
 const router = express.Router();
 const jsw = require("jsonwebtoken");
 const secretKey =
@@ -71,6 +72,13 @@ router.post("/signup", async (req, res) => {
       position: tennis_db_length + 1,
     });
     await tennis_leaderboard.save();
+
+    const new_record = new Record({
+      user_id: doc._id,
+      acceptances: 0,
+      rejections: 0,
+    });
+    await new_record.save();
     // Sending the response to the frontend
     res.status(201).json({ message: "Registration successful" });
   } catch (err) {

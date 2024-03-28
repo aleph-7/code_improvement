@@ -1,9 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import move from "lodash-move";
-import Page2 from "./screens/check_enrollment/check_enrollment.jsx";
+import CheckEnrolment from "./screens/checkEnrollment/checkEnrolment.jsx";
 import Page3 from "./screens/statistics/statistics.jsx";
-import PostBlog from "./screens/PostBlog/PostBlogs.jsx";
 import PostSession from "./screens/PostSession/PostSession.jsx";
 import "./CardStack.css";
 
@@ -14,11 +13,7 @@ import "./CardStack.css";
 /* The rest of the code is not to be altered */
 
 const CARD_INDICES = ["1", "2", "3"];
-const BUTTON_LABELS = [
-  "post session",
-  "check enrollment",
-  "statistics "
-];
+const BUTTON_LABELS = ["post session", "check enrollment", "statistics "];
 
 /*INTERNAL WORKING*/
 const CARD_OFFSET = 6;
@@ -84,7 +79,7 @@ const CardStack = () => {
               >
                 {/* //CHANGE THE PAGES HERE */}
                 {color == "1" ? <PostSession /> : null}
-                {color == "2" ? <Page2></Page2> : null}
+                {color == "2" ? <CheckEnrolment /> : null}
                 {color == "3" ? <Page3></Page3> : null}
 
                 {/* //CHANGE THE PAGES HERE */}

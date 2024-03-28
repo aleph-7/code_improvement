@@ -7,7 +7,7 @@ function PostSession() {
   const [location, setLocation] = useState("");
   const [batchsize, setBatchsize] = useState("");
   const [date, setDate] = useState("");
-  const [startTime, setStartTime] =useState();
+  const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 
   function containsOnlyIntegers(str) {
@@ -15,73 +15,74 @@ function PostSession() {
   }
 
   const validateBatchsize = (batchsize) => {
-    if(batchsize === "") {
+    if (batchsize === "") {
       alert("Batch size cannot be empty");
-    }
-    else if(!containsOnlyIntegers(batchsize)) {
+    } else if (!containsOnlyIntegers(batchsize)) {
       alert("Batch size should contain only integers");
       return false;
-    }
-    else if(parseInt(batchsize) < 1) {
+    } else if (parseInt(batchsize) < 1) {
       alert("Batch size should be greater than 0");
       return false;
-    }
-    else if(parseInt(batchsize) > 200) {
+    } else if (parseInt(batchsize) > 200) {
       alert("Batch size should be less than 200");
       return false;
     }
     return true;
-  }
+  };
 
   const dayDifference = (date1, date2) => {
-    let dateArray1 = date1.split("/").map((x) => parseInt(x));
-    let dateArray2 = date2.split("/").map((x) => parseInt(x));
+    let dateArray1 = date1.split("-").map((x) => parseInt(x));
+    let dateArray2 = date2.split("-").map((x) => parseInt(x));
     let date1Obj = new Date(dateArray1[2], dateArray1[1] - 1, dateArray1[0]);
     let date2Obj = new Date(dateArray2[2], dateArray2[1] - 1, dateArray2[0]);
     let timeDifference = date2Obj.getTime() - date1Obj.getTime();
     let dayDifference = timeDifference / (1000 * 3600 * 24);
     return dayDifference;
-  }
+  };
   const validateDate = (date) => {
-    if(date === "") {
+    if (date === "") {
       alert("Date cannot be empty");
       return false;
     }
-    let dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-    if(!dateRegex.test(date)) {
-      alert("Invalid date format. Please enter date in dd/mm/yyyy format");
+    let dateRegex = /^(\d{1,2})-(\d{1,2})-(\d{4})$/;
+    if (!dateRegex.test(date)) {
+      alert("Invalid date format. Please enter date in dd-mm-yyyy format");
       return false;
     }
     let dateArray = date.split("/");
     let day = parseInt(dateArray[0]);
     let month = parseInt(dateArray[1]);
     let year = parseInt(dateArray[2]);
-    if(month < 1 || month > 12) {
+    if (month < 1 || month > 12) {
       alert("Invalid month. Please enter month between 1 and 12");
       return false;
-    }
-    else if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12) {
-      if(day < 1 || day > 31) {
+    } else if (
+      month == 1 ||
+      month == 3 ||
+      month == 5 ||
+      month == 7 ||
+      month == 8 ||
+      month == 10 ||
+      month == 12
+    ) {
+      if (day < 1 || day > 31) {
         alert("Invalid day. Please enter day between 1 and 31");
         return false;
       }
-    }
-    else if(month==2) {
-      if(year % 4 == 0) {
-        if(day < 1 || day > 29) {
+    } else if (month == 2) {
+      if (year % 4 == 0) {
+        if (day < 1 || day > 29) {
           alert("Invalid day. Please enter day between 1 and 29");
           return false;
         }
-      }
-      else {
-        if(day < 1 || day > 28) {
+      } else {
+        if (day < 1 || day > 28) {
           alert("Invalid day. Please enter day between 1 and 28");
           return false;
         }
       }
-    }
-    else if(month==4 || month==6 || month==9 || month==11) {
-      if(day < 1 || day > 30) {
+    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+      if (day < 1 || day > 30) {
         alert("Invalid day. Please enter day between 1 and 30");
         return false;
       }
@@ -89,101 +90,136 @@ function PostSession() {
 
     let currentDate = new Date();
 
-    if(year < currentDate.getFullYear()) {
-      alert("Invalid year. Please enter year greater than or equal to current year");
+    if (year < currentDate.getFullYear()) {
+      alert(
+        "Invalid year. Please enter year greater than or equal to current year"
+      );
       return false;
-    }
-    else if(year == currentDate.getFullYear() && month < currentDate.getMonth() + 1) {
-      alert("Invalid month. Please enter month greater than or equal to current month");
+    } else if (
+      year == currentDate.getFullYear() &&
+      month < currentDate.getMonth() + 1
+    ) {
+      alert(
+        "Invalid month. Please enter month greater than or equal to current month"
+      );
       return false;
-    }
-    else if(year == currentDate.getFullYear() && month == currentDate.getMonth() + 1 && day < currentDate.getDate()) {
-      alert("Invalid day. Please enter day greater than or equal to current day");
+    } else if (
+      year == currentDate.getFullYear() &&
+      month == currentDate.getMonth() + 1 &&
+      day < currentDate.getDate()
+    ) {
+      alert(
+        "Invalid day. Please enter day greater than or equal to current day"
+      );
       return false;
     }
     return true;
-  }
+  };
 
-
-  const postSession = () =>{
+  const postSession = () => {
     console.log(content, location, batchsize, date, startTime, endTime);
-    if(content === "") {
+    if (content === "") {
       alert("Content cannot be empty");
       return;
-    }
-    else if(location === "") {
+    } else if (location === "") {
       alert("Location cannot be empty");
       return;
-    }
-    else if(!validateBatchsize(batchsize)) {
+    } else if (!validateBatchsize(batchsize)) {
       return;
-    }
-    else if(!validateDate(date)){
+    } else if (!validateDate(date)) {
       return;
-    }
-    else if(endTime === undefined || startTime === undefined) {
+    } else if (endTime === undefined || startTime === undefined) {
       alert("Please select start and end time");
       return;
-    }
-    else if(startTime >= endTime) {
+    } else if (startTime >= endTime) {
       console.log(startTime, endTime);
       alert("Start time should be less than end time");
       return;
     }
-    try{
-      const response = fetch(SERVER_ROOT_PATH+'/post_yoga_session', {
+    try {
+      const response = fetch(SERVER_ROOT_PATH + "/post_yoga_session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          yoga_instructor_id:localStorage.getItem("userMongoId"),
+          yoga_instructor_id: localStorage.getItem("userMongoId"),
           content: content,
           location: location,
           batch_size: batchsize,
           date: date,
           start_time: startTime,
-          end_time: endTime
-        })}).then((response) => response.json())
+          end_time: endTime,
+        }),
+      })
+        .then((response) => response.json())
         .then((data) => {
           console.log(data);
           alert(data.message);
-        })
-    }
-    catch(error){
+        });
+    } catch (error) {
       console.error("Error occurred:", error);
       throw error;
     }
-  }
+  };
 
   return (
     <div className="yoga-postSession-container">
       <div className="input-container">
-
         <div>
-          <h3 >content:</h3>
-          <input type="text" className="Yoga_Session_Content" placeholder="content" name="content" onChange={(e) => setContent(e.target.value)}/>
+          <h3>content:</h3>
+          <input
+            type="text"
+            className="Yoga_Session_Content"
+            placeholder="content"
+            name="content"
+            onChange={(e) => setContent(e.target.value)}
+          />
         </div>
 
         <div>
           <h3>location:</h3>
-          <input type="text" className="Yoga_Session_Location" placeholder="location" name="location" onChange={(e) => setLocation(e.target.value)}/>
+          <input
+            type="text"
+            className="Yoga_Session_Location"
+            placeholder="location"
+            name="location"
+            onChange={(e) => setLocation(e.target.value)}
+          />
         </div>
 
         <div>
-          <h3 >batch size:</h3>
-          <input type="text" className="Yoga_Session_Batchsize" placeholder="batch size" name="batch_size" onChange={(e) => setBatchsize(e.target.value)}/>
+          <h3>batch size:</h3>
+          <input
+            type="text"
+            className="Yoga_Session_Batchsize"
+            placeholder="batch size"
+            name="batch_size"
+            onChange={(e) => setBatchsize(e.target.value)}
+          />
         </div>
 
-        <div >
-          <h3 >date:</h3>
-          <input type="text" className="Yoga_Session_Date" placeholder="start date" name="startDate" onChange={(e) => setDate(e.target.value)}/>
+        <div>
+          <h3>date:</h3>
+          <input
+            type="text"
+            className="Yoga_Session_Date"
+            placeholder="start date"
+            name="startDate"
+            onChange={(e) => setDate(e.target.value)}
+          />
         </div>
 
         <div>
           <h3>start time:</h3>
-          <select className="Yoga_Session_Start_Time" name="startTime" onChange={(e)=> setStartTime(e.target.value)}>
-            <option value="" selected>Select start time</option>
+          <select
+            className="Yoga_Session_Start_Time"
+            name="startTime"
+            onChange={(e) => setStartTime(e.target.value)}
+          >
+            <option value="" selected>
+              Select start time
+            </option>
             <option value="0">12 midnight</option>
             <option value="1">1 am</option>
             <option value="2">2 am</option>
@@ -211,8 +247,14 @@ function PostSession() {
           </select>
 
           <h3>end time:</h3>
-          <select className="Yoga_Session_End_Time" name="endTime" onChange={(e)=> setEndTime(e.target.value)}>
-            <option value="" selected>Select end time</option>
+          <select
+            className="Yoga_Session_End_Time"
+            name="endTime"
+            onChange={(e) => setEndTime(e.target.value)}
+          >
+            <option value="" selected>
+              Select end time
+            </option>
             <option value="0">12 midnight</option>
             <option value="1">1 am</option>
             <option value="2">2 am</option>

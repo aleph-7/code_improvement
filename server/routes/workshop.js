@@ -4,7 +4,7 @@ const Yoga_Sessions = require("../models/contentDB").yoga_sessionSchema;
 const router = express.Router();
 
 router.get("/badminton", async (req, res) => {
-  let attributeList;
+  let finalAttributeList = [];
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, "0");
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -12,215 +12,434 @@ router.get("/badminton", async (req, res) => {
   const formattedDate = `${day}-${month}-${year}`;
   console.log(formattedDate);
 
-  await Workshop.find({ type_of_sport: "badminton" }).then((results) => {
-    attributeList = results.map((doc) => {
-      console.log(
-        Number(doc.date_slot.substring(3, 5)) > currentDate.getMonth()
-      );
-      console.log(
-        Number(doc.date_slot.substring(0, 2)) > currentDate.getDate()
-      );
-      if (
-        Number(doc.date_slot.substring(3, 5)) > currentDate.getMonth() ||
-        Number(doc.date_slot.substring(0, 2)) > currentDate.getDate()
-      ) {
-        return [
-          doc.date_slot +
-            "\n" +
-            doc.time_slot_start.toString() +
-            "hrs to " +
-            doc.time_slot_end.toString() +
-            "hrs",
-          doc.content,
-          doc.max_strength.toString() + " slots",
-          doc.id,
-          doc.participants_id,
-          doc.max_strength,
-        ];
-      }
+  try {
+    const results = await Workshop.find({ type_of_sport: "badminton" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
     });
-  });
-  res.json({ message: attributeList });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/basketball", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "basketball" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "basketball" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/cricket", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "cricket" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "cricket" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/football", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "football" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "football" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/hockey", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "hockey" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "hockey" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/squash", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "squash" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "squash" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/table_tennis", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "table_tennis" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "table_tennis" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/tennis", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "tennis" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "tennis" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/volleyball", async (req, res) => {
-  let attributeList;
-  await Workshop.find({ type_of_sport: "volleyball" }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        "\n" +
-        doc.time_slot_start.toString() +
-        "hrs to " +
-        doc.time_slot_end.toString() +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
+
+  try {
+    const results = await Workshop.find({ type_of_sport: "volleyball" });
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/yoga", async (req, res) => {
-  //Creating a new user
-  let attributeList;
-  await Yoga_Sessions.find().then((results) => {
-    attributeList = results.map((doc) => [
-      doc.date_slot +
-        doc.time_slot_start +
-        "hrs to " +
-        doc.time_slot_end +
-        "hrs",
-      doc.content,
-      doc.max_strength.toString() + " slots",
-      doc.id,
-      doc.participants_id,
-      doc.max_strength,
-    ]);
-  });
-  res.json({ message: attributeList });
-});
+  let finalAttributeList = [];
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  console.log(formattedDate);
 
+  try {
+    const results = await Yoga_Sessions.find();
+    const attributeList = results.map((doc) => {
+      return [
+        doc.date_slot +
+          "\n" +
+          doc.time_slot_start.toString() +
+          "hrs to " +
+          doc.time_slot_end.toString() +
+          "hrs",
+        doc.content,
+        doc.max_strength.toString() + " slots",
+        doc.id,
+        doc.participants_id,
+        doc.max_strength,
+      ];
+    });
+    for (let i = 0; i < attributeList.length; i++) {
+      if (
+        (Number(attributeList[i][0].substring(3, 5)) ===
+          currentDate.getMonth() + 1 &&
+          Number(attributeList[i][0].substring(0, 2)) >=
+            currentDate.getDate()) ||
+        Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
+      ) {
+        finalAttributeList.push(attributeList[i]);
+      }
+    }
+    res.status(200).json({ message: finalAttributeList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 module.exports = router;

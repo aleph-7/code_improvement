@@ -39,7 +39,7 @@ import ProtectedRoute_Admin from "./protected_routes_admin.jsx";
 import Attendance from "./admin/attendance.jsx";
 
 //Yoga Instructor
-import Yoga_Instructor from "./Dashboard/Yoga_Instructor/Yoga_Instructor.jsx";
+import Yoga_Instructor from "./Dashboard/yoga_instructor/Yoga_Instructor.jsx";
 import ProtectedRoute_Yoga from "./protected_routes_yoga.jsx";
 
 //Gym/Swimiming Instructor
