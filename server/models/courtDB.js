@@ -10,8 +10,8 @@ const courtsSchema = mongoose.Schema({
 
 const { CourtDB } = connectCourtsDBs();
 module.exports = {
-  badmintonCourtsSchema: CourtDB.model("badminton", courtsSchema),
-  squashCourtsSchema: CourtDB.model("squash", courtsSchema),
+  badmintonCourtsSchema: CourtDB.model("badmintons", courtsSchema),
+  squashCourtsSchema: CourtDB.model("squashes", courtsSchema),
   tabletennisCourtsSchema: CourtDB.model("table_tennis", courtsSchema),
   tennisCourtsSchema: CourtDB.model("tennis", courtsSchema),
 };

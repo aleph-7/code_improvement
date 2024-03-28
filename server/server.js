@@ -15,8 +15,6 @@ const User = require("./models/userDB").userSchema;
 const SportsBookings = require("./models/bookingsDB").sportBookingsSchema;
 const Yoga_Sessions = require("./models/contentDB").yoga_sessionSchema;
 const Workshop = require("./models/contentDB").sport_workshopSchema;
-// which leaderboard is being imported, why are there different leaderboards for games
-const Leaderboard = require("./models/leaderboardDB").leaderboardSchema;
 const Blog = require("./models/contentDB").blog_counsellorSchema;
 // which court is being imported, why are there different leaderboards for games
 const Court = require("./models/courtDB").courtsSchema;
@@ -27,14 +25,6 @@ const Counsellor_Appointments =
   require("./models/bookingsDB").counsellorAppointmentsSchema;
 const Blogs_Posted_By_Counsellors =
   require("./models/contentDB").blog_counsellorSchema;
-
-app.get("/badminton/leaderboard", async (req, res) => {
-  let attributeList;
-  await Leaderboard.find({}).then((results) => {
-    attributeList = results.map((doc) => [doc.position]);
-  });
-  res.json({ message: attributeList });
-});
 
 //Authentication
 const authRoutes = require("./routes/auth");
