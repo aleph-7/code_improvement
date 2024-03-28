@@ -23,6 +23,12 @@ const Details = ({ rowEntries }) => {
       <div className="workshop-details">
         {index != 0 ? (
           <div>
+            <div className="workshop-detailed">
+              <h2>Workshop Details</h2>
+              <h3>start time : {rowEntries[index - 1][4]}</h3>
+              <h3>end time : {rowEntries[index - 1][5]}</h3>
+              <h3>location : {rowEntries[index - 1][6]}</h3>
+            </div>
             <Table_Participants
               noOfRows={rowEntries[index - 1][3].length}
               noOfColumns={1}

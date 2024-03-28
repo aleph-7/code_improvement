@@ -10,11 +10,7 @@ function CheckEnrolment() {
   let [index, setIndex] = useState(0);
   const [message, setMessage] = useState("");
   const fetchInfo = async () => {
-    return await fetch(
-      SERVER_ROOT_PATH +
-        "/coach/getWorkshops/?type_of_sport=" +
-        localStorage.getItem("type_of_sport")
-    )
+    return await fetch(SERVER_ROOT_PATH + "/yoga/getWorkshops/")
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };

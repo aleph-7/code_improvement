@@ -54,3 +54,13 @@
   min-height: 5vh;
   max-height: 5vh;
 }
+
+.workshop-detailed {
+  background-color: rgb(254, 221, 221);
+  border-radius: 25px;
+  padding-left: 5vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  margin-right: 5vw;
+  margin-left: 5vw;
+}

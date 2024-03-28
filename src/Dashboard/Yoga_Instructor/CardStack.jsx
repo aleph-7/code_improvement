@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import move from "lodash-move";
 import CheckEnrolment from "./screens/checkEnrollment/checkEnrolment.jsx";
-import Page3 from "./screens/statistics/statistics.jsx";
+import Statistics from "./screens/statistics/statistics.jsx";
 import PostSession from "./screens/PostSession/PostSession.jsx";
 import "./CardStack.css";
 
@@ -80,7 +80,7 @@ const CardStack = () => {
                 {/* //CHANGE THE PAGES HERE */}
                 {color == "1" ? <PostSession /> : null}
                 {color == "2" ? <CheckEnrolment /> : null}
-                {color == "3" ? <Page3></Page3> : null}
+                {color == "3" ? <Statistics /> : null}
 
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
