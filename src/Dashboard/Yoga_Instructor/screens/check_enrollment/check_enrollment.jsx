@@ -1,57 +1,82 @@
 import Table from "./table";
 import "./check_enrollment.css";
+import { useState, useEffect } from "react";
+import SERVER_ROOT_PATH from "../../../../../config";
+
 
 function CheckEnrollment() {
-  const rows = 3;
-  const columns = 2;
-  const rowEntries = [
-    ["name", "email-id"],
-    ["Akanksha", "akankshawb22@iitk.ac.in"],
-    ["Sankalp", "sankalpm22@iitk.ac.in"],
-  ];
+
+  const [message, setMessage]=useState([""]);
+  const [yogaSessionData, setYogaSessionData] = useState([""]);
+  const [selectedYogaSession, setSelectedYogaSession] =useState("");
+
+  const fetchYogaSessionData = async () => {
+    try {
+      const response = await fetch(SERVER_ROOT_PATH + "/yoga_sessions_yoga_dashboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify({ yoga_instructor_id: localStorage.getItem("userMongoId") }),
+      });
+      const data = await response.json();
+      console.log(data);
+      const yogaSessionOptions = data.message.map((yogaSession) => yogaSession);
+      setYogaSessionData(yogaSessionOptions);
+    } catch (error) {
+      console.error("Error occurred:", error);
+      throw error;
+    }
+  }
+
+  useEffect(() => {
+    fetchYogaSessionData();
+  }, []);
+
+  const viewEnrollment =()=>{
+    console.log(selectedYogaSession);
+    if(selectedYogaSession === ""){
+      alert("Please select a session to view enrollment");
+      return;
+    }
+    try{
+      const response=fetch(SERVER_ROOT_PATH+'/view_enrollment_yoga_dashboard', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          yoga_instructor_id:localStorage.getItem("userMongoId"),
+          yoga_session_day_date: selectedYogaSession
+        }),
+      }).then((response) => response.json())
+      .then((data) => {
+      const messages=data.message;
+      setMessage(messages);
+      console.log(message);
+      })
+    }
+    catch(error){
+      console.error("Error occurred:", error);
+      throw error;
+    }
+  }
+
   return (
-    <div className="yoga-check-enrollment-container">
-      <div className="dropdown">
-        <select>
-          <option>5:00pm</option>
-          <option>4:00pm</option>
-          <option>3:00pm</option>
-          <option>2:00pm</option>
-          <option>1:00pm</option>
-        </select>
-      </div>
-      <div className="enrollment-container">
-        <div className="enrollback"></div>
-        <h3>number of enrollments : 2</h3>
-        <Table noOfRows={rows} noOfColumns={columns} rowEntries={rowEntries} />
-        <div className="second-table">
-          <h3>pending requests</h3>
-          <Table
-            noOfRows={3}
-            noOfColumns={3}
-            rowEntries={[
-              ["name", "transaction-id", "action"],
-              [
-                "Ritesh",
-                "1AHW90249923842",
-                <div className="buttons_en">
-                  <div className="b1">Verify</div>
-                  <div className="b2">Reject</div>
-                </div>,
-              ],
-              [
-                "Animesh",
-                "1BJS209342803490",
-                <div className="buttons_en">
-                  <div className="b1">Verify</div>
-                  <div className="b2">Reject</div>
-                </div>,
-              ],
-            ]}
-          />
-        </div>
-      </div>
+    <div className="Yoga_Check_Enrollment">
+      <h3>Select the date and start time of the session you wish to view:</h3>
+      <select className="Yoga_Session_Date" name="sessionDate" onChange={(e)=>setSelectedYogaSession(e.target.value)}>
+        <option value="" selected>Select Yoga Session via date and time</option>
+        {yogaSessionData.map((yogaSession) => {
+          return (
+            <option value={yogaSession}>{yogaSession}</option>
+          );
+      })}
+      </select>
+      <button onClick={viewEnrollment}>View Session Enrollment</button>
+      <Table noOfRows={message.length} noOfColumns={1} rowEntries={message} />
     </div>
+    
   );
 }
 

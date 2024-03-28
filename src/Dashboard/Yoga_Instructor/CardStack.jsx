@@ -13,12 +13,11 @@ import "./CardStack.css";
 /* The linked pages in the function also need to be changed, that is, the pages that are to be displayed on the cards. Please do so only at the indicated spot.*/
 /* The rest of the code is not to be altered */
 
-const CARD_INDICES = ["1", "2", "3", "4"];
+const CARD_INDICES = ["1", "2", "3"];
 const BUTTON_LABELS = [
   "post session",
   "check enrollment",
-  "statistics ",
-  "post blog",
+  "statistics "
 ];
 
 /*INTERNAL WORKING*/
@@ -87,7 +86,6 @@ const CardStack = () => {
                 {color == "1" ? <PostSession /> : null}
                 {color == "2" ? <Page2></Page2> : null}
                 {color == "3" ? <Page3></Page3> : null}
-                {color == "4" ? <PostBlog /> : null}
 
                 {/* //CHANGE THE PAGES HERE */}
               </motion.li>
