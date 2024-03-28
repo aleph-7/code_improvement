@@ -8,6 +8,7 @@ const Leaderboard_Tennis =
   require("../models/leaderboardDB").tennisLeaderboardSchema;
 const Leaderboard_TableTennis =
   require("../models/leaderboardDB").tabletennisLeaderboardSchema;
+const Record = require("../models/userDB").recordSchema;
 const router = express.Router();
 const jsw = require("jsonwebtoken");
 const secretKey =
@@ -57,21 +58,29 @@ router.post("/signup", async (req, res) => {
       });
       await squash_leaderboard.save();
 
-      table_tennis_db_length =
-        await Leaderboard_TableTennis.find().countDocuments();
-      const table_tennis_leaderboard = new Leaderboard_TableTennis({
-        user_id: doc._id,
-        position: table_tennis_db_length + 1,
-      });
-      await table_tennis_leaderboard.save();
+      
+    table_tennis_db_length =
+      await Leaderboard_TableTennis.find().countDocuments();
+    const table_tennis_leaderboard = new Leaderboard_TableTennis({
+      user_id: doc._id,
+      position: table_tennis_db_length + 1,
+    });
+    await table_tennis_leaderboard.save();
 
-      tennis_db_length = await Leaderboard_Tennis.find().countDocuments();
-      const tennis_leaderboard = new Leaderboard_Tennis({
-        user_id: doc._id,
-        position: tennis_db_length + 1,
-      });
-      await tennis_leaderboard.save();
-    }
+    tennis_db_length = await Leaderboard_Tennis.find().countDocuments();
+    const tennis_leaderboard = new Leaderboard_Tennis({
+      user_id: doc._id,
+      position: tennis_db_length + 1,
+    });
+    await tennis_leaderboard.save();
+
+    const new_record = new Record({
+      user_id: doc._id,
+      acceptances: 0,
+      rejections: 0,
+    });
+    await new_record.save();
+  }
     // Sending the response to the frontend
     res.status(201).json({ message: "Registration successful" });
   } catch (err) {

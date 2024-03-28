@@ -20,10 +20,13 @@ const Leaderboard = require("./models/leaderboardDB").leaderboardSchema;
 const Blog = require("./models/contentDB").blog_counsellorSchema;
 // which court is being imported, why are there different leaderboards for games
 const Court = require("./models/courtDB").courtsSchema;
-const Availability = require("./models/contentDB").counsellor_availabilitySchema;
+const Availability =
+  require("./models/contentDB").counsellor_availabilitySchema;
 const Gymbook = require("./models/bookingsDB").swimGymMembershipsSchema;
-const Counsellor_Appointments = require("./models/bookingsDB").counsellorAppointmentsSchema;
-const Blogs_Posted_By_Counsellors = require("./models/contentDB").blog_counsellorSchema;
+const Counsellor_Appointments =
+  require("./models/bookingsDB").counsellorAppointmentsSchema;
+const Blogs_Posted_By_Counsellors =
+  require("./models/contentDB").blog_counsellorSchema;
 
 app.get("/badminton/leaderboard", async (req, res) => {
   let attributeList;
@@ -58,7 +61,7 @@ app.use("/coach", CoachRoutes);
 const leaderboardRoutes = require("./routes/leaderboard");
 app.use("/leaderboard", leaderboardRoutes);
 const gymSwimmingRoutes = require("./routes/gyminstuctor");
-app.use("",gymSwimmingRoutes);
+app.use("", gymSwimmingRoutes);
 //Listening to the server.
 app.listen(process.env.PORT || 6300, () => {
   console.log(`Server is running on port ${process.env.PORT}.`);
@@ -180,7 +183,7 @@ app.get("/checkUser/:username", async (req, res) => {
   // console.log(req.body);
   try {
     const username = req.params.username;
-    const user = await User.findOne({ username:username,user_category:1 }); // Assuming username is the field in your database that stores usernames
+    const user = await User.findOne({ username: username, user_category: 1 }); // Assuming username is the field in your database that stores usernames
 
     if (user) {
       // User exists
@@ -245,13 +248,13 @@ app.post("/active_booking", async (req, res) => {
     const hour = parseInt(name.split(":")[0], 10);
     var date = new Date();
     const current_date =
- (date.getDate() < 10 ? "0" : "") +
+      (date.getDate() < 10 ? "0" : "") +
       date.getDate() +
       "-" +
       (date.getMonth() < 9 ? "0" : "") +
       (date.getMonth() + 1) +
       "-" +
-      date.getFullYear(); 
+      date.getFullYear();
     const booking = new SportsBookings({
       user_id: req.body.user_id,
       time_slot: hour,
@@ -272,7 +275,6 @@ app.post("/active_booking", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 //////Pre-booking
 app.post("/pre_booking", async (req, res) => {
@@ -335,12 +337,15 @@ app.post("/pre_booking", async (req, res) => {
   }
 });
 
-
 app.post("/getAvailableSlots", async (req, res) => {
-  const { date, type_of_sport,capacity } = req.body;
+  const { date, type_of_sport, capacity } = req.body;
   console.log(req.body);
   try {
-    const bookings = await SportsBookings.find({ date_slot: date, type_of_sport: type_of_sport, booking_status: 1 });
+    const bookings = await SportsBookings.find({
+      date_slot: date,
+      type_of_sport: type_of_sport,
+      booking_status: 1,
+    });
     const bookedSlots = bookings.reduce((acc, booking) => {
       if (!acc[booking.time_slot]) {
         acc[booking.time_slot] = 1;
@@ -351,13 +356,10 @@ app.post("/getAvailableSlots", async (req, res) => {
     }, {});
     console.log(bookedSlots);
     // Generate all possible slots
-    const allSlots = [
-      "6", "7", "8","16", "17", 
-      "18", "19", "20"
-    ];
+    const allSlots = ["6", "7", "8", "16", "17", "18", "19", "20"];
 
     // Determine available slots
-    const availableSlots = allSlots.filter(slot => {
+    const availableSlots = allSlots.filter((slot) => {
       return !bookedSlots.hasOwnProperty(slot) || bookedSlots[slot] < capacity;
     });
 
@@ -368,24 +370,21 @@ app.post("/getAvailableSlots", async (req, res) => {
   }
 });
 
-
-
 ///////////Gym and Pool membership pass
-app.get('/gym/swim_pass', async (req, res) => {
+app.get("/gym/swim_pass", async (req, res) => {
   try {
-    const { userid, year, month,type } = req.query;
+    const { userid, year, month, type } = req.query;
     console.log(req.query);
     // Fetch membership details from the database based on the provided parameters
     const membershipDetails = await Gymbook.find({
       user_id: userid,
       year: year,
       month: month,
-      type:type,
-      booking_status:1,
+      type: type,
+      booking_status: 1,
     });
 
-
-    const formattedTimeSlots = membershipDetails.map(detail => {
+    const formattedTimeSlots = membershipDetails.map((detail) => {
       const startTime = `${detail.time_slot}:00 `; // Assuming slots are in AM
       const endTime = `${detail.time_slot + 1}:00`; // Assuming each slot is 1 hour
       return `${startTime}-${endTime}`;
@@ -395,11 +394,11 @@ app.get('/gym/swim_pass', async (req, res) => {
     res.json(formattedTimeSlots);
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "An error occurred while fetching membership details." });
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching membership details." });
   }
 });
-
-
 
 ///////////////////Gym and Pool Booking
 app.post("/gym/swim_booking", async (req, res) => {
@@ -417,13 +416,15 @@ app.post("/gym/swim_booking", async (req, res) => {
       time_slot: time_slot,
       user_id: user_id,
       year: year,
-      type:type,
+      type: type,
     });
 
     if (existingBooking) {
       // User has already booked the slot
       console.log("booked");
-      return res.status(400).json({ error: "You have already booked this slot." });
+      return res
+        .status(400)
+        .json({ error: "You have already booked this slot." });
     }
 
     // Check if the maximum capacity for the slot has been reached
@@ -431,7 +432,7 @@ app.post("/gym/swim_booking", async (req, res) => {
       month: month,
       time_slot: time_slot,
       year: year,
-      booking_status:1,
+      booking_status: 1,
       type: type,
     });
 
@@ -448,7 +449,9 @@ app.post("/gym/swim_booking", async (req, res) => {
       });
 
       await unsuccessfulBooking.save();
-      return res.status(400).json({ error: "Maximum capacity for this slot has been reached." });
+      return res
+        .status(400)
+        .json({ error: "Maximum capacity for this slot has been reached." });
     }
 
     // If all checks pass, proceed with booking
@@ -466,186 +469,13 @@ app.post("/gym/swim_booking", async (req, res) => {
     res.json(doc);
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "An error occurred while processing your request." });
+    res
+      .status(500)
+      .json({ error: "An error occurred while processing your request." });
   }
 });
-
 
 //////////////////////Yoga instructor page
-app.post("/post_yoga_session", async (req, res) => {
-  const yoga_instructor_id = req.body.yoga_instructor_id;
-  const content=req.body.content;
-  const location=req.body.location;
-  let batchsize=req.body.batch_size;
-  batchsize=parseInt(batchsize);
-  const date=req.body.date;
-  const startTime=req.body.start_time;
-  const endTime=req.body.end_time;
 
-  let attributeList=[];
-  //dont allow to post session if already a session is posted on the same date and time
-  await Yoga_Sessions.find({yoga_instructor_user_id:yoga_instructor_id,date_slot:date,time_slot_start:startTime}).then((results) => {
-    attributeList = results.map((doc) => [doc.date_slot, doc.time_slot_start]);
-  });
-  if(attributeList.length>0)
-  {
-    res.json({message:"Session already posted on the same date and time"});
-    return;
-  }
-  const doc=Yoga_Sessions({
-    yoga_instructor_user_id:yoga_instructor_id,
-    content:content,
-    location:location,
-    max_strength:batchsize,
-    date_slot:date,
-    time_slot_start:startTime,
-    time_slot_end:endTime
-  });
-  await doc.save();
-  res.json({message:"Session posted successfully"});
-});
-  
-
-app.post('/yoga_sessions_yoga_dashboard', async (req, res) => {
-  yoga_instructor_id = req.body.yoga_instructor_id;
-  let attributeList;
-  await Yoga_Sessions.find({yoga_instructor_user_id:yoga_instructor_id}).then((results) => {
-    attributeList = results.map((doc) => [doc.date_slot, doc.time_slot_start]);
-  });
-  let finalAttributeList=[];
-  for (let i = 0; i < attributeList.length; i++) {
-    let time;
-    if (attributeList[i][1] < 12) {
-      time = attributeList[i][1].toString() + " AM";
-    } else {
-      time = (attributeList[i][1]-12).toString() + " PM";
-    }
-    finalAttributeList.push(attributeList[i][0]+ " " + time);
-  }
-  res.json({ message: finalAttributeList });
-});
-
-
-app.post('/view_enrollment_yoga_dashboard',async(req, res) => {
-  const yoga_instructor_id = req.body.yoga_instructor_id;
-  const yoga_session_day_date = req.body.yoga_session_day_date;
-  let date_slot=yoga_session_day_date.split(" ")[0];
-  let time=yoga_session_day_date.split(" ")[1]+" "+yoga_session_day_date.split(" ")[2];
-  console.log(date_slot,time);
-  let time_slot_start;
-  if(time=="0 AM")
-  {
-    time_slot_start=0;
-  }
-  else if(time=="1 AM")
-  {
-    time_slot_start=1;
-  }
-  else if(time=="2 AM")
-  {
-    time_slot_start=2;
-  }
-  else if(time=="3 AM")
-  {
-    time_slot_start=3;
-  }
-  else if(time=="4 AM")
-  {
-    time_slot_start=4;
-  }
-  else if(time=="5 AM")
-  {
-    time_slot_start=5;
-  }
-  else if(time=="6 AM")
-  {
-    time_slot_start=6;
-  }
-  else if(time=="7 AM")
-  {
-    time_slot_start=7;
-  }
-  else if(time=="8 AM")
-  {
-    time_slot_start=8;
-  }
-  else if(time=="9 AM")
-  {
-    time_slot_start=9;
-  }
-  else if(time=="10 AM")
-  {
-    time_slot_start=10;
-  }
-  else if(time=="11 AM")
-  {
-    time_slot_start=11;
-  }
-  else if(time=="0 PM")
-  {
-    time_slot_start=12;
-  }
-  else if(time=="1 PM")
-  {
-    time_slot_start=13;
-  }
-  else if(time=="2 PM")
-  {
-    time_slot_start=14;
-  }
-  else if(time=="3 PM")
-  {
-    time_slot_start=15;
-  }
-  else if(time=="4 PM")
-  {
-    time_slot_start=16;
-  }
-  else if(time=="5 PM")
-  {
-    time_slot_start=17;
-  }
-  else if(time=="6 PM")
-  {
-    time_slot_start=18;
-  }
-  else if(time=="7 PM")
-  {
-    time_slot_start=19;
-  }
-  else if(time=="8 PM")
-  {
-    time_slot_start=20;
-  }
-  else if(time=="9 PM")
-  {
-    time_slot_start=21;
-  }
-  else if(time=="10 PM")
-  {
-    time_slot_start=22;
-  }
-  else if(time=="11 PM")
-  {
-    time_slot_start=23;
-  }
-  let attributeList;
-  await Yoga_Sessions.find({yoga_instructor_user_id:yoga_instructor_id,date_slot:date_slot,time_slot_start:time_slot_start}).then((results) => {
-    attributeList = results.map((doc) => [doc.participants_id]);
-  });
-  console.log(attributeList);
-  let finalAttributeList=[];
-  let templist=[];
-  templist.push('name of participant');
-  finalAttributeList.push(templist);
-  for(let i=0;i<attributeList[0][0].length;i++)
-  {
-    let user_id=attributeList[0][0][i];
-    console.log(user_id);
-    let username=await User.findOne({_id:user_id});
-    let templist=[];
-    templist.push(username.username);
-    finalAttributeList.push(templist);
-  }
-  res.json({message:finalAttributeList});
-})
+const yoga = require("./routes/yoga");
+app.use("", yoga);

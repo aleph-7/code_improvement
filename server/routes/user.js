@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 const SportsBookings = require("../models/bookingsDB").sportBookingsSchema;
-const Counsellor_availability = require("../models/contentDB").counsellor_availabilitySchema;
-const Counsellor_Appointments = require("../models/bookingsDB").counsellorAppointmentsSchema;
-const User=require("../models/userDB").userSchema;
-
+const WorkshopsBookings =
+  require("../models/bookingsDB").yogaSessionsSportsWorkshops;
+const Counsellor_availability =
+  require("../models/contentDB").counsellor_availabilitySchema;
+const Counsellor_Appointments =
+  require("../models/bookingsDB").counsellorAppointmentsSchema;
+const User = require("../models/userDB").userSchema;
 
 //GET COUNSELLOR APPOINTMENTS
 // doesnt seem to be called anywhere in front end currently
@@ -17,20 +20,30 @@ router.get("/counsellor_appointments", async (req, res) => {
   res.json({ message: attributeList });
 });
 
-
 router.get("/get_booking_history", async (req, res) => {
-  const { user_id } = req.body.user_id;
-
-  let doc;
-  doc = await SportsBookings.find({ user_id: user_id });
-  await SportsBookings.find({ user_id: user_id }).then((results) => {
-    attributeList = results.map((doc) => [
-      doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
-      doc.date_slot,
-      doc.booking_status,
-    ]);
-  });
-  res.status(200).json({ message: attributeList });
+  console.log("sdfhk");
+  // const { user_id } = req.body.user_id;
+  // console.log(user_id);
+  // const { user_id } = req.body.user_id;
+  // console.log(user_id);
+  // let doc;
+  // doc = await SportsBookings.find({ user_id: user_id });
+  // await SportsBookings.find({ user_id: user_id }).then((results) => {
+  //   attributeList = results.map((doc) => [
+  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+  //     doc.date_slot,
+  //     doc.booking_status,
+  //   ]);
+  // });
+  // await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
+  //   attributeList2 = results.map((doc) => [
+  //     doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
+  //     doc.session_id,
+  //     doc.booking_status,
+  //   ]);
+  // });
+  // console.log(attributeList2);
+  // res.status(200).json({ message: attributeList });
 });
 
 // =================================
@@ -116,8 +129,7 @@ router.post("/get_available_days", async (req, res) => {
   counsellor_user_id = (await User.findOne({ username: counsellor_username }))
     ._id;
   let attributeList;
-  await Counsellor_availability
-    .find({ counsellor_user_id: counsellor_user_id })
+  await Counsellor_availability.find({ counsellor_user_id: counsellor_user_id })
     .then((results) => {
       attributeList = results.map((doc) => [doc.day_vector, doc.date_slot]);
     })
@@ -155,52 +167,44 @@ function getDate(date) {
   let year = new_date.getFullYear();
   let month = (new_date.getMonth() + 1).toString().padStart(2, "0");
   let dayOfMonth = new_date.getDate().toString().padStart(2, "0");
-  return dayOfMonth + "-" + month + "-" + year;
+  return dayOfMonth + "/" + month + "/" + year;
 }
 
-async function check_booking (counsellor_user_id, date, parameter, attributeList) {
-  if(parameter)
-  {
-    if(date==0){
-      date=getDate("Monday");
-    }
-    else if(date==1)
-    {
-      date=getDate("Tuesday");
-    }
-    else if(date==2)
-    {
-      date=getDate("Wednesday");
-    }
-    else if(date==3)
-    {
-      date=getDate("Thursday");
-    }
-    else if(date==4)
-    {
-      date=getDate("Friday");
-    }
-    else if(date==5)
-    {
-      date=getDate("Saturday");
-    }
-    else if(date==6)
-    {
-      date=getDate("Sunday");
+async function check_booking(
+  counsellor_user_id,
+  date,
+  parameter,
+  attributeList
+) {
+  if (parameter) {
+    if (date == 0) {
+      date = getDate("Monday");
+    } else if (date == 1) {
+      date = getDate("Tuesday");
+    } else if (date == 2) {
+      date = getDate("Wednesday");
+    } else if (date == 3) {
+      date = getDate("Thursday");
+    } else if (date == 4) {
+      date = getDate("Friday");
+    } else if (date == 5) {
+      date = getDate("Saturday");
+    } else if (date == 6) {
+      date = getDate("Sunday");
     }
   }
-  let attributeListFinal=[];
-  for(let i=0; i<23;i++){
-    if(attributeList[0][0][i]==1)
-    {
-      query={counsellor_user_id: counsellor_user_id, date_slot: date, time_slot: i, booking_status:1};
-      let result=await Counsellor_Appointments.find(query);
-      if(result.length>0)
-      {
-        ;
-      }
-      else
-      {
+  let attributeListFinal = [];
+  for (let i = 0; i < 23; i++) {
+    if (attributeList[0][0][i] == 1) {
+      query = {
+        counsellor_user_id: counsellor_user_id,
+        date_slot: date,
+        time_slot: i,
+        booking_status: 1,
+      };
+      let result = await Counsellor_Appointments.find(query);
+      if (result.length > 0) {
+      } else {
         attributeListFinal.push(i);
       }
     }
@@ -244,13 +248,19 @@ router.post("/get_available_time_slots", async (req, res) => {
       attributeList = results.map((doc) => [doc.hour_vector]);
     });
   } else {
-    await Counsellor_availability
-      .find({ counsellor_user_id: counsellor_user_id, date_slot: date })
-      .then((results) => {
-        attributeList = results.map((doc) => [doc.date_slot_time_vector]);
-      });
+    await Counsellor_availability.find({
+      counsellor_user_id: counsellor_user_id,
+      date_slot: date,
+    }).then((results) => {
+      attributeList = results.map((doc) => [doc.date_slot_time_vector]);
+    });
   }
-  let messageAttributeList = await check_booking(counsellor_user_id, date, parameter, attributeList);
+  let messageAttributeList = await check_booking(
+    counsellor_user_id,
+    date,
+    parameter,
+    attributeList
+  );
   console.log(messageAttributeList);
   res.json({ message: messageAttributeList });
 });
@@ -281,7 +291,7 @@ router.post("/book_counsellor_appointment", async (req, res) => {
   const hall = req.body.hall;
   const contact_number = req.body.contact_number;
   console.log(contact_number);
-  const final_contact_number = Number(contact_number)
+  const final_contact_number = Number(contact_number);
   const counsellor_user_id = (
     await User.findOne({ username: counsellor_username })
   )._id;

@@ -11,11 +11,7 @@ function Statistics() {
   let labels = [];
 
   const fetchInfo = async () => {
-    return await fetch(
-      SERVER_ROOT_PATH +
-        "/coach/statistics/?type_of_sport=" +
-        localStorage.getItem("type_of_sport")
-    )
+    return await fetch(SERVER_ROOT_PATH + "/yoga/statistics/")
       .then((response) => response.json())
       .then((data) => setMessage(data.message))
       .then(() => setLength(message[0].length))
@@ -84,35 +80,6 @@ function Statistics() {
         />
 
         {generatePie()}
-        {/* <h3>{message[1].length ? message[0][0] : ""}</h3>
-        <div className="workshop-details-pie">
-          <PieChart
-            series={[
-              {
-                data: [
-                  {
-                    id: 0,
-                    value: message[1].length ? message[1][0] : 0,
-                    label: "vacant",
-                  },
-                  {
-                    id: 1,
-                    value: message[1].length ? message[2][0] : 0,
-                    label: "participants",
-                  },
-                ],
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: {
-                  innerRadius: 30,
-                  additionalRadius: -30,
-                  color: "gray",
-                },
-              },
-            ]}
-            width={500}
-            height={200}
-          />
-        </div> */}
       </div>
     </div>
   );
