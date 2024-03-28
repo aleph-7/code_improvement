@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+#mainTableDiv {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4vh;
+  font-family: Poppins;
+  margin-top: 5vh;
+  align-items: center;
+}
+
+#websiteTable-Workshop-Participants {
+  width: 60%;
+  text-align: center;
+  gap: 4vh;
+  border-collapse: collapse;
+}
+
+#websiteTable-Workshop-Participants td {
+  width: 10vw;
+}
+
+#websiteTable-Workshop-Participants td:nth-child(2) {
+  width: 38vw;
+}
+
+.websiteTableHeader-Workshop-Participants {
+  font-size: 20px;
+  background-color: rgba(237, 186, 186, 0.68);
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.websiteTableHeader-Workshop-Participants thead {
+  position: center;
+  font-weight: bold;
+  line-height: 3rem;
+  font-family: "Poppins";
+}
+.websiteTableContent-Workshop-Participants {
+  overflow-y: scroll;
+  max-height: 45vh;
+  margin-top: 40px;
+  border: 1px solid #ff0000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.websiteTableContent-Workshop-Participants tr {
+  transition: 0.2s;
+  height: 4vh;
+}
+
+.websiteTableContent-Workshop-Participants tr:hover {
+  background-color: rgb(242, 200, 200);
+}
+
+.websiteTableContent-Workshop-Participants td {
+  line-height: 1.6rem;
+}
+
+.book_workshop_tableentry ul {
+  list-style: none;
+}
+
+/*KS*/
