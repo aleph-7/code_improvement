@@ -217,7 +217,7 @@ const Availability = () => {
     const parts = dateString.split("/");
 
     // Rearrange the parts to form the new date format (mm/dd/yyyy)
-    const invertedDateString = `${parts[1]}-${parts[0]}-${parts[2]}`;
+    const invertedDateString = `${parts[1]}/${parts[0]}/${parts[2]}`;
 
     const inputDate = new Date(invertedDateString);
     const currentDate = new Date();
