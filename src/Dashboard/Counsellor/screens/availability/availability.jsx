@@ -139,14 +139,14 @@ const Availability = () => {
       .then((data) => setMessage(data.message));
   };
   function isValidDate(dateString) {
-    const dateParts = dateString.split("/");
+    const dateParts = dateString.split("-");
     let isValid = true;
     let err = "";
 
     // Check if the date string has three parts
     if (dateParts.length !== 3) {
       isValid = false;
-      err = "Invalid date format. Please use DD/MM/YYYY format.";
+      err = "Invalid date format. Please use DD-MM-YYYY format.";
       return { isValid, err };
     }
     const day = parseInt(dateParts[0]);
@@ -217,7 +217,7 @@ const Availability = () => {
     const parts = dateString.split("/");
 
     // Rearrange the parts to form the new date format (mm/dd/yyyy)
-    const invertedDateString = `${parts[1]}/${parts[0]}/${parts[2]}`;
+    const invertedDateString = `${parts[1]}-${parts[0]}-${parts[2]}`;
 
     const inputDate = new Date(invertedDateString);
     const currentDate = new Date();
