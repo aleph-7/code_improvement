@@ -187,7 +187,27 @@ const Signup = () => {
               <option value="6">admin</option>
             </select>
 
-            {input.type === "3" || input.type === "6" ? (
+            {input.type === "3"  ? (
+            <select
+              className="login-select"
+              style={{ width: "19vw", height: "5vh" }}
+              value={input.sport}
+              onChange={onInputChange}
+              name="sport"
+            >
+              <option value="">Select the type of sport</option>
+              <option value="badminton">badminton</option>
+              <option value="squash">squash</option>
+              <option value="tennis">tennis</option>
+              <option value="table_tennis">table tennis</option>
+              <option value="basketball">basketball</option>
+              <option value="football">football</option>
+              <option value="volleyball">volleyball</option>
+              <option value="hockey">hockey</option>
+              <option value="cricket">cricket</option>
+            </select>
+          ) : null}
+          {input.type === "6"  ? (
             <select
               className="login-select"
               style={{ width: "19vw", height: "5vh" }}

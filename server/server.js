@@ -6,6 +6,7 @@ const jsw = require("jsonwebtoken");
 const secretKey =
   "a3e31fd2b7ed999b65ee2653024297b9f737e282afb9b686d8401e10c617a591";
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,11 @@ const Counsellor_Appointments =
   require("./models/bookingsDB").counsellorAppointmentsSchema;
 const Blogs_Posted_By_Counsellors =
   require("./models/contentDB").blog_counsellorSchema;
+
+const BadmintonCourts = require("./models/courtDB").badmintonCourtsSchema;
+const TennisCourts = require("./models/courtDB").tennisCourtsSchema;
+const TabletennisCourts = require("./models/courtDB").tabletennisCourtsSchema;
+const SquashCourts = require("./models/courtDB").squashCourtsSchema;
 
 //Authentication
 const authRoutes = require("./routes/auth");
@@ -169,18 +175,43 @@ function verifyToken(req, res, next) {
   });
 }
 
-app.get("/checkUser/:username", async (req, res) => {
-  // console.log(req.body);
+app.post("/checkUser", async (req, res) => {
+   
   try {
-    const username = req.params.username;
+    const username = req.body.user_name;
+    //console.log(username);
     const user = await User.findOne({ username: username, user_category: 1 }); // Assuming username is the field in your database that stores usernames
-
+    //console.log(user);
     if (user) {
-      // User exists
-      res.json({ exists: true });
+      const userId = user._id;
+      const date = req.body.date;
+      const timeSlot = req.body.time_slot;
+
+      // Check if the user is enrolled in any activity for the specified slot and date
+      const booking = await SportsBookings.findOne({
+        $and: [
+          { date_slot: date },
+          { time_slot: timeSlot },
+          { $or: [
+              { booking_status: 0 },
+              { booking_status: 1 }
+            ]
+          },
+          { $or: [
+              { user_id: userId },
+              { partners_id: { $all: [userId] } }
+            ]
+          }
+        ]
+      });
+      
+      if (!booking) {
+        res.status(200).json({ message: "User is available for booking" });
+      } else {
+        res.status(400).json({ message: "User is already booked for this slot" });
+      }
     } else {
-      // User doesn't exist
-      res.json({ exists: false });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     console.error("Error checking user:", error);
@@ -215,7 +246,7 @@ app.post("/checkappliedTimeslots", async (req, res) => {
 });
 
 app.post("/active_booking", async (req, res) => {
-  console.log(req.body);
+ 
 
   //Searching for players mongoDB Ids
   let mongodbIds = [];
@@ -235,8 +266,6 @@ app.post("/active_booking", async (req, res) => {
 
     const name = req.body.slot;
     const type_book = req.body.type;
-    let book = 1;
-    if (type_book == "active") book = 0;
     const hour = parseInt(name.split(":")[0], 10);
     var date = new Date();
     const current_date =
@@ -253,9 +282,9 @@ app.post("/active_booking", async (req, res) => {
       type_of_sport: req.body.sport_type,
       time_of_booking: new Date(),
       date_slot: current_date,
-      type_of_booking: book,
+      type_of_booking: 1,
       show_up_status: 0,
-      court_id: null,
+      court_id: req.body.court_id,
       partners_id: mongodbIds,
       no_partners: length,
       booking_status: 1,
@@ -291,7 +320,6 @@ app.post("/pre_booking", async (req, res) => {
 
     const name = req.body.slot;
     const type_book = req.body.type;
-    let book = 1;
     const hour = parseInt(name.split(":")[0], 10);
     // Get the current date
     let currentDate = new Date();
@@ -317,7 +345,7 @@ app.post("/pre_booking", async (req, res) => {
       type_of_sport: req.body.sport_type,
       time_of_booking: new Date(),
       date_slot: nextDateFormatted,
-      type_of_booking: book,
+      type_of_booking: 0,
       show_up_status: 0,
       court_id: null,
       partners_id: mongodbIds,
@@ -331,6 +359,7 @@ app.post("/pre_booking", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 app.post("/getAvailableSlots", async (req, res) => {
   const { date, type_of_sport, capacity } = req.body;
@@ -349,7 +378,7 @@ app.post("/getAvailableSlots", async (req, res) => {
       }
       return acc;
     }, {});
-    console.log(bookedSlots);
+    
     // Generate all possible slots
     const allSlots = ["6", "7", "8", "16", "17", "18", "19", "20"];
 
@@ -357,7 +386,7 @@ app.post("/getAvailableSlots", async (req, res) => {
     const availableSlots = allSlots.filter((slot) => {
       return !bookedSlots.hasOwnProperty(slot) || bookedSlots[slot] < capacity;
     });
-
+    console.log(availableSlots);
     res.json({ availableSlots });
   } catch (error) {
     console.error("Error fetching available slots for date:", error);
@@ -470,7 +499,40 @@ app.post("/gym/swim_booking", async (req, res) => {
   }
 });
 
+
+app.post("/getAvailableCourts", async (req, res) => {
+  const { selectedTime,date,sport } = req.body;
+  console.log(req.body);
+  try {
+    // Fetch bookings for the selected time slot
+    const bookings = await SportsBookings.find({
+      time_slot: selectedTime,
+      booking_status: 1,
+      date_slot: date,
+      type_of_sport: sport, // Assuming 1 means booked, adjust this based on your database schema
+    });
+
+    const bookedCourtIds = bookings.map(booking => booking.court_id);
+    let CourtCollection = "";
+    if(sport==="badminton") CourtCollection = BadmintonCourts;
+    else if (sport==="squash") CourtCollection = SquashCourts;
+    else if(sport === "tennis") CourtCollection = TennisCourts;
+    else CourtCollection = TabletennisCourts;
+    const availableCourts = await CourtCollection.find({
+      _id: { $nin: bookedCourtIds }
+    });
+    console.log(availableCourts);
+    // Send the available courts back to the client
+    res.json({ availableCourts });
+  } catch (error) {
+    console.error("Error fetching available courts:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 //////////////////////Yoga instructor page
 
 const yoga = require("./routes/yoga");
 app.use("", yoga);
+

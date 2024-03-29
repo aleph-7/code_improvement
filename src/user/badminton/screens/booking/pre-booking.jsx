@@ -9,6 +9,9 @@ function PreBooking() {
   const [inputValue, setInputValue] = useState("");
   const [showWarning, setShowWarning] = useState(false);
   const [allowPlayerSelection, setAllowPlayerSelection] = useState(false);
+  var date = new Date();
+  const current_date = (date.getDate() < 10 ? "0" : "") + date.getDate() + "/" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "/" +date.getFullYear(); 
+
 
   const handleChange = (e) => {
     setData({
@@ -27,6 +30,12 @@ function PreBooking() {
       alert("Please add at least one playmate!");
       return;
     }
+
+    if (!selectedTime) {
+      alert("Please select a time slot!");
+      return;
+    }
+
 
     const res = await fetch(`${SERVER_ROOT_PATH}/checkAppliedTimeslots`, {
       method: "POST",
@@ -93,7 +102,13 @@ function PreBooking() {
     setInputValue(e.target.value);
   };
 
+  
   const handleAddUser = async () => {
+    if (!selectedTime) {
+      alert("Please select a time slot!");
+      return;
+    }
+
     const loggedInUsername = localStorage.getItem("userId");
 
     if (inputValue === loggedInUsername) {
@@ -105,26 +120,41 @@ function PreBooking() {
 
     if (inputValue.trim() !== "") {
       const response = await fetch(
-        SERVER_ROOT_PATH + "/checkUser/" + `${inputValue}`
+        SERVER_ROOT_PATH +"/checkUser",
+        {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_name: inputValue,
+          date : current_date,
+          time_slot: selectedTime,
+        })
+        }
       );
       const data = await response.json();
 
-      if (data.exists) {
-        if (users.length < 4) {
+      if (data.message==="User is available for booking") {
+        if (users.length < 3) {
           setUsers([...users, inputValue]);
           setInputValue("");
         } else {
-          setShowWarning(true);
+          alert("Maximum number of entries reached!");
         }
-      } else {
+      } else if(data.message==="User is already booked for this slot"){
         setInputValue("");
-        alert("User doesn't exist!");
+        alert("He/she has some other booking at this slot.");
+      }
+      else if(data.message === "User not found"){
+        setInputValue("");
+        alert("This user doesn't exist.");
+      }
+      else {
+        setInputValue("");
+        alert("Something went wrong..");
       }
     }
-  };
-
-  const handleCloseWarning = () => {
-    setShowWarning(false);
   };
 
   return (
@@ -141,19 +171,18 @@ function PreBooking() {
             <p className="labeeels">Time-Slot</p>
             <select
               className="drop-down"
-              style={{ width: "200px" }}
+              style={{ width: "200px",marginTop:"2vh" }}
               value={selectedTime}
               onChange={handleSelectChange}
-            >
-              <option value="">select a time slot</option>
-              <option value="6:00 - 7:00">6:00 - 7:00</option>
-              <option value="7:00 - 8:00">7:00 - 8:00</option>
-              <option value="8:00 - 9:00">8:00 - 9:00</option>
-              <option value="16:00 - 17:00">16:00 - 17:00</option>
-              <option value="17:00 - 18:00">17:00 - 18:00</option>
-              <option value="18:00 - 19:00">18:00 - 19:00</option>
-              <option value="19:00 - 20:00">19:00 - 20:00</option>
-              <option value="20:00 - 21:00">20:00 - 21:00</option>
+              > <option value="">select a time slot</option>
+              <option value="6">6:00 - 7:00</option>
+              <option value="7">7:00 - 8:00</option>
+              <option value="8">8:00 - 9:00</option>
+              <option value="16">16:00 - 17:00</option>
+              <option value="17">17:00 - 18:00</option>
+              <option value="18">18:00 - 19:00</option>
+              <option value="19">19:00 - 20:00</option>
+              <option value="20">20:00 - 21:00</option>
             </select>
           </div>
         </div>
