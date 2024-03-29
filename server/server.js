@@ -129,7 +129,7 @@ const endpointUrl = "http://localhost:6300/booking/sport_booking";
 
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "01 0 * * *",
+  "46 11 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
@@ -230,7 +230,9 @@ app.post("/active_booking", async (req, res) => {
     let length = mongodbIds.length;
     const remainingSlots = 3 - mongodbIds.length;
     if (remainingSlots > 0) {
-      mongodbIds = mongodbIds.concat(Array(remainingSlots).fill("000000000000000000000000"));
+      mongodbIds = mongodbIds.concat(
+        Array(remainingSlots).fill("000000000000000000000000")
+      );
     }
 
     const name = req.body.slot;
@@ -285,9 +287,10 @@ app.post("/pre_booking", async (req, res) => {
     let length = mongodbIds.length;
     const remainingSlots = 3 - mongodbIds.length;
     if (remainingSlots > 0) {
-      mongodbIds = mongodbIds.concat(Array(remainingSlots).fill("000000000000000000000000"));
+      mongodbIds = mongodbIds.concat(
+        Array(remainingSlots).fill("000000000000000000000000")
+      );
     }
-
 
     const name = req.body.slot;
     const type_book = req.body.type;
@@ -321,7 +324,7 @@ app.post("/pre_booking", async (req, res) => {
       show_up_status: 0,
       court_id: null,
       partners_id: mongodbIds,
-      no_partners:length,
+      no_partners: length,
       booking_status: 0,
     });
     const doc = await booking.save();
