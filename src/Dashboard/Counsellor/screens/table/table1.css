@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+.counsellor-table1 {
+  position: relative;
+  left: 10vw;
+}
 .counsellor-table1 #mainTableDiv1 {
   width: 50vw;
   display: flex;
@@ -8,14 +11,13 @@
   justify-content: center;
   gap: 15px;
   font-family: "Poppins";
-  /* height: 16vh; */
   margin-top: 10vh;
   margin-left: 20px;
   align-items: center;
   color: black;
 }
 .counsellor-table1 #websiteTableHeader1 {
-  width: 50vw;
+  width: 70vw;
   background-color: rgba(237, 186, 186, 0.68);
   text-align: center;
   border-radius: 25px;
@@ -25,7 +27,8 @@
 
 
 .counsellor-table1 #websiteTableContent1 {
-  width: 50vw;
+  position: relative;
+  width: 70vw;
   background-color: rgba(224, 217, 217, 0.7);
   text-align: start;
   border: 1px solid #ff0000;

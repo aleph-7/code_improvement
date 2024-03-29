@@ -93,31 +93,33 @@ const AcceptAppointments = () => {
 
   return (
     <div className="Acceptappointments">
-      <Table2
-        noOfColumns={6}
-        noOfRows={1 + pendingAppointments.length}
-        // noOfRows={1 + upcomingAppointments.length}
-        rowEntries={[
-          ["name", "time", "date", "action", " "],
-          ...pendingAppointments.map((msg) => [
-            msg.username,
-            getTimeSlot(msg.time_slot),
-            msg.date_slot,
-            <button
-              className="accept-button"
-              onClick={() => onClickButton(1, msg.booking_id)}
-            >
-              Accept
-            </button>,
-            <button
-              onClick={() => onClickButton(-1, msg.booking_id)}
-              className="reject-button"
-            >
-              Reject
-            </button>,
-          ]),
-        ]}
-      ></Table2>
+      <div className="table1">
+        <Table2
+          noOfColumns={6}
+          noOfRows={1 + pendingAppointments.length}
+          // noOfRows={1 + upcomingAppointments.length}
+          rowEntries={[
+            ["name", "time", "date", "action", " "],
+            ...pendingAppointments.map((msg) => [
+              msg.username,
+              getTimeSlot(msg.time_slot),
+              msg.date_slot,
+              <button
+                className="accept-button"
+                onClick={() => onClickButton(1, msg.booking_id)}
+              >
+                Accept
+              </button>,
+              <button
+                onClick={() => onClickButton(-1, msg.booking_id)}
+                className="reject-button"
+              >
+                Reject
+              </button>,
+            ]),
+          ]}
+        ></Table2>
+      </div>
       {/* <Table2
         noOfColumns={6}
         noOfRows={4}
@@ -145,7 +147,7 @@ const AcceptAppointments = () => {
           ],
         ]}
       ></Table2> */}
-      <div className="table1">
+      <div className="table2">
         <Table1
           noOfColumns={3}
           noOfRows={1 + upcomingAppointments.length}
