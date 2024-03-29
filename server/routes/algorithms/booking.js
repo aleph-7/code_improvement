@@ -28,7 +28,7 @@ router.get("/sport_booking", async (req, res) => {
   //get bookings of a specific day!!! TO DO!!!
   let currentDate = new Date().toLocaleDateString("en-GB");
   console.log(currentDate);
-  let formattedDate = currentDate.split("/").join("-");
+  let formattedDate = currentDate;
   console.log(formattedDate);
 
   await sportBooking
@@ -54,7 +54,7 @@ router.get("/sport_booking", async (req, res) => {
     await Record.findOne({ user_id: attributeList[i][3] })
       .then((foundDocument) => {
         if (foundDocument) {
-          //   console.log("Found document:", foundDocument);
+          console.log("Found document:", foundDocument);
           if (foundDocument.acceptances + foundDocument.rejections === 0) {
             attributeList[i].push(0.5);
           } else {
@@ -64,15 +64,15 @@ router.get("/sport_booking", async (req, res) => {
             );
           }
         } else {
-          //   console.log("Document not found");
+          console.log("Document not found");
         }
       })
       .catch((error) => {
-        // console.error("Error finding document:", error);
+        console.error("Error finding document:", error);
       });
   }
 
-  //   console.log(attributeList);
+  console.log(attributeList);
 
   let temp_pairing = [];
   let temp_rest = [];
@@ -108,7 +108,7 @@ router.get("/sport_booking", async (req, res) => {
       //REVIEW!!!
     });
 
-    //console.log(temp_pairing);
+    console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -251,7 +251,7 @@ router.get("/sport_booking", async (req, res) => {
       temp_rest.push(temp_pairing[temp_pairing.length - 1]);
     }
 
-    //console.log(temp_rest);
+    console.log(temp_rest);
     size = temp_rest.length;
 
     //updating the sport_booking database

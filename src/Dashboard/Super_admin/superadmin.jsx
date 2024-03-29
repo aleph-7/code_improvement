@@ -15,7 +15,6 @@ function logout() {
 
 
 const Signup = () => {
-  //const [type,setType] = useState("")
   const [input, setInput] = useState({
     username: "",
     password: "",

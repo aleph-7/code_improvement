@@ -44,7 +44,7 @@ const get_slots = () => {
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(), // <-- You missed the parentheses here
         time: new Date(),
-        type: 1,
+        type: 0,
       }),
     });
 
