@@ -7,6 +7,46 @@ import { useEffect } from "react";
 import SERVER_ROOT_PATH from "../../../../../config";
 
 const AcceptAppointments = () => {
+  function getTimeSlot(time) {
+    if (time < 10) {
+      return `${time + 1} am to ${time + 2} am`;
+    } else if (time > 11) {
+      return `${time - 11} pm to ${time - 10} pm`;
+    } else if (time === 11) {
+      return `12 pm to 1 pm`;
+    } else if (time === 10) {
+      return `11 am to 12pm`;
+    } else {
+      return `1 pm to 2 pm`;
+    }
+  }
+  const [message, setMessage] = useState([]);
+  const [upcomingAppointments, SetUpcomingAppointments] = useState([]);
+  const [pendingAppointments, SetPendingAppointments] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch(SERVER_ROOT_PATH + "/counsellor/getAppointments", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    counsellor_user_id: localStorage.getItem("userMongoId"),
+                }),
+            });
+            const data = await response.json();
+            setMessage(data.message);
+            SetUpcomingAppointments(data.message.filter(msg => msg.booking_status === 1));
+            SetPendingAppointments(data.message.filter(msg => msg.booking_status === 0));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    fetchData();
+}, []);
   const onClickButton = async (isAccept, appointment_id) => {
     //isAccept is 1 for accepting and -1 for rejecting
     console.log("button pressed");
@@ -37,87 +77,36 @@ const AcceptAppointments = () => {
       throw error;
     }
   };
-  function getTimeSlot(time) {
-    if (time < 10) {
-      return `${time + 1} am to ${time + 2} am`;
-    } else if (time > 11) {
-      return `${time - 11} pm to ${time - 10} pm`;
-    } else if (time === 11) {
-      return `12 pm to 1 pm`;
-    } else if (time === 10) {
-      return `11 am to 12pm`;
-    } else {
-      return `1 pm to 2 pm`;
-    }
-  }
-  const [user, setUser] = useState([]);
-  const [message, setMessage] = useState([]);
-  const [upcomingAppointments, SetUpcomingAppointments] = useState([]);
-  const [pendingAppointments, SetPendingAppointments] = useState([]);
-
-  useEffect(() => {
-    const getAppointments = async () => {
-      try {
-        return await fetch(SERVER_ROOT_PATH + "/counsellor/getAppointments", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            counsellor_user_id: localStorage.getItem("userMongoId"),
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => setMessage(data.message))
-          .then(console.log(message));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAppointments()
-      .then(
-        SetUpcomingAppointments(
-          message.filter((msg) => msg.booking_status === 1)
-        )
-      )
-      .then(
-        SetPendingAppointments(
-          message.filter((msg) => msg.booking_status === 0)
-        )
-      )
-      // console.log(upcomingAppointments);
-      // Fetch user data based on user_id
-      // getUser("65eb03840d088803c56ed53f").then(console.log(user[0].username))
-      .then(console.log(message.length));
-  }, []);
 
   return (
     <div className="Acceptappointments">
-      <Table2
-        noOfColumns={6}
-        noOfRows={1 + pendingAppointments.length}
-        // noOfRows={1 + upcomingAppointments.length}
-        rowEntries={[
-          ["name", "time", "date", "action", " "],
-          ...pendingAppointments.map((msg) => [
-            msg.username,
-            getTimeSlot(msg.time_slot),
-            msg.date_slot,
-            <button
-              className="accept-button"
-              onClick={() => onClickButton(1, msg.booking_id)}
-            >
-              Accept
-            </button>,
-            <button
-              onClick={() => onClickButton(-1, msg.booking_id)}
-              className="reject-button"
-            >
-              Reject
-            </button>,
-          ]),
-        ]}
-      ></Table2>
+      <div className="table1">
+        <Table2
+          noOfColumns={6}
+          noOfRows={1 + pendingAppointments.length}
+          // noOfRows={1 + upcomingAppointments.length}
+          rowEntries={[
+            ["name", "time", "date", "action", " "],
+            ...pendingAppointments.map((msg) => [
+              msg.username,
+              getTimeSlot(msg.time_slot),
+              msg.date_slot,
+              <button
+                className="accept-button"
+                onClick={() => onClickButton(1, msg.booking_id)}
+              >
+                Accept
+              </button>,
+              <button
+                onClick={() => onClickButton(-1, msg.booking_id)}
+                className="reject-button"
+              >
+                Reject
+              </button>,
+            ]),
+          ]}
+        ></Table2>
+      </div>
       {/* <Table2
         noOfColumns={6}
         noOfRows={4}
@@ -145,7 +134,7 @@ const AcceptAppointments = () => {
           ],
         ]}
       ></Table2> */}
-      <div className="table1">
+      <div className="table2">
         <Table1
           noOfColumns={3}
           noOfRows={1 + upcomingAppointments.length}
