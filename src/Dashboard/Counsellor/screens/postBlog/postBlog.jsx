@@ -6,7 +6,7 @@ import SERVER_ROOT_PATH from "../../../../../config";
 
 const PostBlog = () => {
   const titleCap = 50;
-  const contentCap = 1000;
+  const contentCap = 10000;
   const [input, setInput] = useState({
     content: "",
     title: "",
