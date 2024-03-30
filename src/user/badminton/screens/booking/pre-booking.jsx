@@ -80,17 +80,20 @@ function PreBooking() {
       setInputValue("");
       setAllowPlayerSelection(false);
       setShowWarning(false);
-      // Reset form after successful submission
-
-      // Show alert for successful booking
     } else {
+      const errorMessage = await bookingRes.json();
+      if (errorMessage.error === "Court is full") {
+        alert("Court is full. Please select another timeslot.");
+      } else if(errorMessage.error === "You have applied for some other booking at this time."){
+        alert("You have applied for some other booking at this time.");
+      }
+      else{
+        alert("Booking failed. Please try again.");
+      }
       setSelectedTime("");
       setUsers([]);
       setInputValue("");
-      setAllowPlayerSelection(false);
       setShowWarning(false);
-      // Handle error case
-      alert("Booking failed. Please try again.");
     }
   };
 

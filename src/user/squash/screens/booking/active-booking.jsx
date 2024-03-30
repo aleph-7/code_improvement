@@ -130,7 +130,10 @@ function ActiveBooking() {
       const errorMessage = await bookingRes.json();
       if (errorMessage.error === "Court is full") {
         alert("Court is full. Please select another timeslot.");
-      } else {
+      } else if(errorMessage.error === "You have applied for some other booking at this time."){
+        alert("You have applied for some other booking at this time.");
+      }
+      else{
         alert("Booking failed. Please try again.");
       }
       setSelectedTime("");

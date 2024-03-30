@@ -246,11 +246,39 @@ app.post("/checkappliedTimeslots", async (req, res) => {
 });
 
 app.post("/active_booking", async (req, res) => {
- 
-
+  var date = new Date();
+  const current_date =
+    (date.getDate() < 10 ? "0" : "") +
+    date.getDate() +
+    "/" +
+    (date.getMonth() < 9 ? "0" : "") +
+    (date.getMonth() + 1) +
+    "/" +
+    date.getFullYear();
   //Searching for players mongoDB Ids
   let mongodbIds = [];
   try {
+ 
+    const isavailable = await SportsBookings.findOne({
+      $and: [
+        { date_slot: current_date },
+        { time_slot: req.body.slot },
+        { $or: [
+            { booking_status: 0 },
+            { booking_status: 1 }
+          ]
+        },
+        { $or: [
+            { user_id: req.body.user_id },
+            { partners_id: { $all: [req.body.user_id] } }
+          ]
+        }
+      ]
+    });
+    if(isavailable){
+      res.status(500).json({ error:"You have applied for some other booking at this time."});
+    }
+    else {
     const players = await User.find(
       { username: { $in: req.body.players } },
       "_id username"
@@ -269,15 +297,7 @@ app.post("/active_booking", async (req, res) => {
     const name = req.body.slot;
     const type_book = req.body.type;
     const hour = parseInt(name.split(":")[0], 10);
-    var date = new Date();
-    const current_date =
-      (date.getDate() < 10 ? "0" : "") +
-      date.getDate() +
-      "/" +
-      (date.getMonth() < 9 ? "0" : "") +
-      (date.getMonth() + 1) +
-      "/" +
-      date.getFullYear();
+    
     const booking = new SportsBookings({
       user_id: req.body.user_id,
       time_slot: hour,
@@ -293,6 +313,7 @@ app.post("/active_booking", async (req, res) => {
     });
     const doc = await booking.save();
     res.json(doc);
+  }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -301,11 +322,46 @@ app.post("/active_booking", async (req, res) => {
 
 //////Pre-booking
 app.post("/pre_booking", async (req, res) => {
-  console.log(req.body);
+  let currentDate = new Date();
+
+    // Get the next date
+    let nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
+
+    // Format the next date as DD-MM-YYYY
+    let day = nextDate.getDate();
+    let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
+    let year = nextDate.getFullYear();
+
+    // Pad the day and month with leading zeros if needed
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    let nextDateFormatted = day + "/" + month + "/" + year;
 
   //Searching for players mongoDB Ids
   let mongodbIds = [];
   try {
+    const isavailable = await SportsBookings.findOne({
+      $and: [
+        { date_slot: nextDateFormatted },
+        { time_slot: req.body.slot },
+        { $or: [
+            { booking_status: 0 },
+            { booking_status: 1 }
+          ]
+        },
+        { $or: [
+            { user_id: req.body.user_id },
+            { partners_id: { $all: [req.body.user_id] } }
+          ]
+        }
+      ]
+    });
+    if(isavailable){
+      res.status(500).json({ error:"You have applied for some other booking at this time."});
+    }
+    else {
     const players = await User.find(
       { username: { $in: req.body.players } },
       "_id username"
@@ -325,22 +381,7 @@ app.post("/pre_booking", async (req, res) => {
     const type_book = req.body.type;
     const hour = parseInt(name.split(":")[0], 10);
     // Get the current date
-    let currentDate = new Date();
-
-    // Get the next date
-    let nextDate = new Date(currentDate);
-    nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
-
-    // Format the next date as DD-MM-YYYY
-    let day = nextDate.getDate();
-    let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
-    let year = nextDate.getFullYear();
-
-    // Pad the day and month with leading zeros if needed
-    day = day < 10 ? "0" + day : day;
-    month = month < 10 ? "0" + month : month;
-
-    let nextDateFormatted = day + "/" + month + "/" + year;
+    
 
     const booking = new SportsBookings({
       user_id: req.body.user_id,
@@ -357,6 +398,7 @@ app.post("/pre_booking", async (req, res) => {
     });
     const doc = await booking.save();
     res.json(doc);
+  }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
