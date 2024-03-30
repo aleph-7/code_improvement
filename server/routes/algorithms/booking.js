@@ -1,11 +1,3 @@
-//Animesh took a big fat dump //
-//gross
-//will still take more time to complete
-//will take a dump again
-//will take a dump again
-//will take a dump again
-//wtf is this shit
-
 const express = require("express");
 const router = express.Router();
 
@@ -99,16 +91,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -119,17 +104,38 @@ router.get("/sport_booking", async (req, res) => {
       temp_pairing[k + 1][10] = temp_pairing[k][3];
       temp_rest.push(temp_pairing[k]);
       dict[temp_pairing[k][0]] = k;
-      //consider average!!!
     }
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
@@ -360,16 +366,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -381,12 +380,34 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
@@ -617,16 +638,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -638,12 +652,34 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
@@ -876,16 +912,9 @@ router.get("/sport_booking", async (req, res) => {
             if (B === null) b_pos = 1000000;
             else b_pos = B.position;
             return a_pos - b_pos;
-            //   a_pos = A.position;
-            //   b_pos = B.position;
-            //   return a_pos - b_pos;
           });
         });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -897,12 +926,34 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
