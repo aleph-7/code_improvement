@@ -8,16 +8,14 @@ import SERVER_ROOT_PATH from "../../../../../config";
 
 const AcceptAppointments = () => {
   function getTimeSlot(time) {
-    if (time < 10) {
-      return `${time + 1} am to ${time + 2} am`;
-    } else if (time > 11) {
-      return `${time - 11} pm to ${time - 10} pm`;
+    if (time < 11) {
+      return `${time} am to ${time + 1} am`;
+    } else if (time > 12) {
+      return `${time - 12} pm to ${time - 11} pm`;
     } else if (time === 11) {
+      return `11 am to 12 pm`;
+    } else if (time === 12) {
       return `12 pm to 1 pm`;
-    } else if (time === 10) {
-      return `11 am to 12pm`;
-    } else {
-      return `1 pm to 2 pm`;
     }
   }
   const [message, setMessage] = useState([]);
@@ -47,8 +45,17 @@ const AcceptAppointments = () => {
 
     fetchData();
 }, []);
-  const onClickButton = async (isAccept, appointment_id) => {
-    //isAccept is 1 for accepting and -1 for rejecting
+  const onClickButton = async (isAccept, currAppointment) => {
+    // isAccept is 1 for accepting and -1 for rejecting
+    // here if the appointment is being accepted, we reject the other appointments
+    if (isAccept === 1) {
+      pendingAppointments.forEach(appointment => {
+        if (appointment.date_slot === currAppointment.date_slot && appointment.time_slot === currAppointment.time_slot) {
+            // Update the appointment as needed
+            onClickButton(-1,appointment);
+        }
+      });
+    }
     console.log("button pressed");
     try {
       const response = await fetch(
@@ -61,7 +68,7 @@ const AcceptAppointments = () => {
           },
           body: JSON.stringify({
             isAccept: isAccept,
-            appointment_id: appointment_id,
+            appointment_id: currAppointment.booking_id,
           }),
         }
       );
@@ -93,12 +100,12 @@ const AcceptAppointments = () => {
               msg.date_slot,
               <button
                 className="accept-button"
-                onClick={() => onClickButton(1, msg.booking_id)}
+                onClick={() => onClickButton(1, msg)}
               >
                 Accept
               </button>,
               <button
-                onClick={() => onClickButton(-1, msg.booking_id)}
+                onClick={() => onClickButton(-1, msg)}
                 className="reject-button"
               >
                 Reject
@@ -107,33 +114,6 @@ const AcceptAppointments = () => {
           ]}
         ></Table2>
       </div>
-      {/* <Table2
-        noOfColumns={6}
-        noOfRows={4}
-        rowEntries={[
-          ["name", "time", "date", "action", " "],
-          [
-            "Kushagra",
-            "1pm-2pm",
-            "03/05/2024",
-            <Button4 text={"Accept"} backgroundColor={"#Ffa500"}></Button4>,
-            <Button4 text={"Reject"} backgroundColor={"#Ff0000"}></Button4>,
-          ],
-          [
-            "Kushagra",
-            "1pm-2pm",
-            "03/05/2024",
-            <Button4 text={"Accept"} backgroundColor={"#Ffa500"}></Button4>,
-            <Button4 text={"Reject"} backgroundColor={"#Ff0000"}></Button4>,
-          ],
-          [
-            "Kushagra",
-            "1pm-2pm",
-            "03/05/2024",
-            <Button4 text={"Accept"} backgroundColor={"#Ffa500"}></Button4>,
-          ],
-        ]}
-      ></Table2> */}
       <div className="table2">
         <Table1
           noOfColumns={3}
