@@ -15,6 +15,7 @@ const PostBlog = () => {
     title: "",
     counsellor_username: "",
   });
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
