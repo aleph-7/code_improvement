@@ -86,6 +86,7 @@ router.post("/court_name_entry", async (req, res) => {
 
 router.post("/fill_entries", async (req, res) => {
   const { court_name, type_of_sport } = req.body;
+  console.log("request raised for " + court_name);
   console.log(court_name);
   console.log(type_of_sport);
   let doc;
@@ -132,6 +133,10 @@ router.post("/fill_entries", async (req, res) => {
       if (user_id_4 != "000000000000000000000000")
         username_4 = (await User.findOne({ _id: user_id_4 })).username;
       else username_4 = "";
+      console.log(username_1);
+      console.log(username_2);
+      console.log(username_3);
+      console.log(username_4);
       res.json({
         user_1: username_1,
         user_2: username_2,
