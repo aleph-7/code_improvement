@@ -5,6 +5,8 @@ import Articles from "../articles/Articles";
 import SERVER_ROOT_PATH from "../../../../../config";
 
 const PostBlog = () => {
+  const titleCap = 50;
+  const contentCap = 1000;
   const [input, setInput] = useState({
     content: "",
     title: "",
@@ -53,10 +55,23 @@ const PostBlog = () => {
         ...prev,
         content: "Content is required.",
       }));
+      return;
     }
     if (!input.title) {
       alert("Title is required.");
-      setError((prev) => ({ ...prev, date: "Title is required." }));
+      setError((prev) => ({ ...prev, title: "Title is required." }));
+      return;
+    }
+    
+    if (input.title.length > titleCap){
+      alert(`Title must be less than ${titleCap} characters long.`);
+      setError((prev) => ({ ...prev, title: `Title must be less than ${titleCap} characters long.` }));
+      return;
+    }
+    if (input.content.length > contentCap){
+      alert(`Content must be less than ${contentCap} characters long.`);
+      setError((prev) => ({ ...prev, content: `Title must be less than ${contentCap} characters long.` }));
+      return;
     }
     try {
       const response = await fetch(SERVER_ROOT_PATH + "/counsellor/postBlog", {
