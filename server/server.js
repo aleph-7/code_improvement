@@ -183,19 +183,50 @@ app.post("/checkUser", async (req, res) => {
     //console.log(user);
     if (user) {
       const userId = user._id;
-      const date = req.body.date;
       const timeSlot = req.body.time_slot;
+      const type = req.body.type;
+      let datetobechecked ="";
+      if(type===1){
+        var date = new Date();
+        datetobechecked =
+          (date.getDate() < 10 ? "0" : "") +
+          date.getDate() +
+          "/" +
+          (date.getMonth() < 9 ? "0" : "") +
+          (date.getMonth() + 1) +
+          "/" +
+          date.getFullYear();
+      }
+      else {
 
+        let currentDate = new Date();
+
+    // Get the next date
+    let nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
+
+    // Format the next date as DD-MM-YYYY
+    let day = nextDate.getDate();
+    let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
+    let year = nextDate.getFullYear();
+
+    // Pad the day and month with leading zeros if needed
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    datetobechecked = day + "/" + month + "/" + year;
+
+      }
       // Check if the user is enrolled in any activity for the specified slot and date
       const booking = await SportsBookings.findOne({
         $and: [
-          { date_slot: date },
+          { date_slot: datetobechecked },
           { time_slot: timeSlot },
           { $or: [{ booking_status: 0 }, { booking_status: 1 }] },
           { $or: [{ user_id: userId }, { partners_id: { $all: [userId] } }] },
         ],
       });
-
+      console.log(booking);
       if (!booking) {
         res.status(200).json({ message: "User is available for booking" });
       } else {
@@ -352,6 +383,7 @@ app.post("/pre_booking", async (req, res) => {
       ]
     });
     if(isavailable){
+      console.log("HIII");
       res.status(500).json({ error:"You have applied for some other booking at this time."});
     }
     else {
@@ -474,10 +506,10 @@ app.post("/gym/swim_booking", async (req, res) => {
     // Check if the user has already booked the same slot
     const existingBooking = await Gymbook.findOne({
       month: month,
-      time_slot: time_slot,
       user_id: user_id,
       year: year,
       type: type,
+      booking_status:1,
     });
 
     if (existingBooking) {

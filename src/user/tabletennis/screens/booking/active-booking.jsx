@@ -200,6 +200,7 @@ function ActiveBooking() {
           user_name: inputValue,
           date : current_date,
           time_slot: selectedTime,
+          type: 1
         })
         }
       );

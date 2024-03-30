@@ -59,7 +59,7 @@ const get_slots = () => {
     } else {
       const errorMessage = await bookingRes.json();
       if (errorMessage.error === "You have already booked this slot.") {
-        alert("You have already applied for this slot.");
+        alert("You have already booked a slot for this month.");
       } else if (
         errorMessage.error ===
         "Maximum capacity for this slot has been reached."
