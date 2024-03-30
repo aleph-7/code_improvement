@@ -211,4 +211,31 @@ router.post("/getAvailability", async (req, res) => {
   }
 });
 
+router.post("/deleteOldDateAvailability", async (req, res) => {
+  try {
+    const counsellor_user_id = req.body.counsellor_user_id;
+    const curr_date = req.body.curr_date;
+    // console.log(date_slot);
+    try {
+      const deletedRecord = await Availability.deleteMany({
+        $where: `new Date(dateString.split('/').reverse().join('-')); < ${curr_date}')`,
+        counsellor_user_id: counsellor_user_id,
+      });
+      // console.log("why is this called");
+      if (deletedRecord) {
+        console.log("Deleted record:", deletedRecord);
+      } else {
+        console.log("No record found matching the date slot.");
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Availabilty deletion failed" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Availabilty updating failed" });
+  }
+});
+
+
 module.exports = router;

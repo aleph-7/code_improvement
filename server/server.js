@@ -135,7 +135,7 @@ const endpointUrl = "http://localhost:6300/booking/sport_booking";
 
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "46 11 * * *",
+  "30 11 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
@@ -176,7 +176,6 @@ function verifyToken(req, res, next) {
 }
 
 app.post("/checkUser", async (req, res) => {
-   
   try {
     const username = req.body.user_name;
     //console.log(username);
@@ -192,23 +191,17 @@ app.post("/checkUser", async (req, res) => {
         $and: [
           { date_slot: date },
           { time_slot: timeSlot },
-          { $or: [
-              { booking_status: 0 },
-              { booking_status: 1 }
-            ]
-          },
-          { $or: [
-              { user_id: userId },
-              { partners_id: { $all: [userId] } }
-            ]
-          }
-        ]
+          { $or: [{ booking_status: 0 }, { booking_status: 1 }] },
+          { $or: [{ user_id: userId }, { partners_id: { $all: [userId] } }] },
+        ],
       });
-      
+
       if (!booking) {
         res.status(200).json({ message: "User is available for booking" });
       } else {
-        res.status(400).json({ message: "User is already booked for this slot" });
+        res
+          .status(400)
+          .json({ message: "User is already booked for this slot" });
       }
     } else {
       res.status(404).json({ message: "User not found" });
@@ -405,7 +398,6 @@ app.post("/pre_booking", async (req, res) => {
   }
 });
 
-
 app.post("/getAvailableSlots", async (req, res) => {
   const { date, type_of_sport, capacity } = req.body;
   console.log(req.body);
@@ -423,7 +415,7 @@ app.post("/getAvailableSlots", async (req, res) => {
       }
       return acc;
     }, {});
-    
+
     // Generate all possible slots
     const allSlots = ["6", "7", "8", "16", "17", "18", "19", "20"];
 
@@ -544,9 +536,8 @@ app.post("/gym/swim_booking", async (req, res) => {
   }
 });
 
-
 app.post("/getAvailableCourts", async (req, res) => {
-  const { selectedTime,date,sport } = req.body;
+  const { selectedTime, date, sport } = req.body;
   console.log(req.body);
   try {
     // Fetch bookings for the selected time slot
@@ -557,14 +548,14 @@ app.post("/getAvailableCourts", async (req, res) => {
       type_of_sport: sport, // Assuming 1 means booked, adjust this based on your database schema
     });
 
-    const bookedCourtIds = bookings.map(booking => booking.court_id);
+    const bookedCourtIds = bookings.map((booking) => booking.court_id);
     let CourtCollection = "";
-    if(sport==="badminton") CourtCollection = BadmintonCourts;
-    else if (sport==="squash") CourtCollection = SquashCourts;
-    else if(sport === "tennis") CourtCollection = TennisCourts;
+    if (sport === "badminton") CourtCollection = BadmintonCourts;
+    else if (sport === "squash") CourtCollection = SquashCourts;
+    else if (sport === "tennis") CourtCollection = TennisCourts;
     else CourtCollection = TabletennisCourts;
     const availableCourts = await CourtCollection.find({
-      _id: { $nin: bookedCourtIds }
+      _id: { $nin: bookedCourtIds },
     });
     console.log(availableCourts);
     // Send the available courts back to the client
@@ -575,9 +566,7 @@ app.post("/getAvailableCourts", async (req, res) => {
   }
 });
 
-
 //////////////////////Yoga instructor page
 
 const yoga = require("./routes/yoga");
 app.use("", yoga);
-

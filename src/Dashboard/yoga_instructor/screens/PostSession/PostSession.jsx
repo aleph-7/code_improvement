@@ -23,8 +23,8 @@ function PostSession() {
     } else if (parseInt(batchsize) < 1) {
       alert("Batch size should be greater than 0");
       return false;
-    } else if (parseInt(batchsize) > 200) {
-      alert("Batch size should be less than 200");
+    } else if (parseInt(batchsize) > 100) {
+      alert("Batch size should be less than 100");
       return false;
     }
     return true;
@@ -44,7 +44,7 @@ function PostSession() {
       alert("Date cannot be empty");
       return false;
     }
-    let dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+    let dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
     if (!dateRegex.test(date)) {
       alert("Invalid date format. Please enter date in dd/mm/yyyy format");
       return false;
@@ -86,6 +86,10 @@ function PostSession() {
         alert("Invalid day. Please enter day between 1 and 30");
         return false;
       }
+    }
+    if (year < 2024 || year > 2025) {
+      alert("Invalid year. Please enter year between 2024 and 2025");
+      return false;
     }
 
     let currentDate = new Date();
@@ -156,6 +160,7 @@ function PostSession() {
         .then((data) => {
           console.log(data);
           alert(data.message);
+          window.location.reload();
         });
     } catch (error) {
       console.error("Error occurred:", error);

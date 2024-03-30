@@ -1,5 +1,6 @@
 .Acceptappointments .table1 {
-  position: relative;
+  max-height: 30vh;
+  overflow-y: scroll;
 }
 
 .Acceptappointments {
