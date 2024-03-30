@@ -129,14 +129,14 @@ body {
 }
 .container-master_ad .attendanceDropDown_ad {
   background-color: rgb(146, 197, 226, 1) !important;
-  width: 50% !important;
+  width: 70% !important;
 }
 .container-master_ad .positionDropDown_ad {
   background-color: rgb(146, 197, 226, 1) !important;
-  width: 50% !important;
+  width: 60% !important;
 }
 .container-master_ad .courtNameDropDown_ad {
-  width: 50% !important;
+  width: 60% !important;
 }
 
 .container-master_ad .username_div_ad {

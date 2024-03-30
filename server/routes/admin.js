@@ -86,6 +86,7 @@ router.post("/court_name_entry", async (req, res) => {
 
 router.post("/fill_entries", async (req, res) => {
   const { court_name, type_of_sport } = req.body;
+  console.log("request raised for " + court_name);
   console.log(court_name);
   console.log(type_of_sport);
   let doc;
@@ -99,19 +100,31 @@ router.post("/fill_entries", async (req, res) => {
     doc = await TennisCourt.findOne({ court_name: court_name });
   }
   court_id = doc._id;
-  const currentTime = new Date().getHours();
+  console.log(court_id);
+
+  const kolkataTime = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    hour12: false,
+  });
+  const currentTime = parseInt(kolkataTime);
+
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
-  const TodayDate = currentDay + "-" + currentMonth + "-" + currentYear;
+  const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
+  console.log(currentTime);
+  console.log(TodayDate);
   let booking_doc;
   try {
     booking_doc = await SportsBookings.find({
       court_id: court_id,
       time_slot: currentTime,
       date_slot: TodayDate,
+      booking_status: 1,
     });
+    console.log(booking_doc);
     if (booking_doc.length == 0) {
       res.status(400).json({ user_1: "", user_2: "", user_3: "", user_4: "" });
     } else {
@@ -131,6 +144,10 @@ router.post("/fill_entries", async (req, res) => {
       if (user_id_4 != "000000000000000000000000")
         username_4 = (await User.findOne({ _id: user_id_4 })).username;
       else username_4 = "";
+      console.log(username_1);
+      console.log(username_2);
+      console.log(username_3);
+      console.log(username_4);
       res.json({
         user_1: username_1,
         user_2: username_2,
@@ -378,12 +395,18 @@ router.post("/mark_attendance", async (req, res) => {
   position_3 = req.body.position_3;
   position_4 = req.body.position_4;
   type_of_sport = req.body.type_of_sport;
-  const currentTime = new Date().getHours();
+  const kolkataTime = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    hour12: false,
+  });
+  const currentTime = parseInt(kolkataTime);
+
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
-  const TodayDate = currentDay + "-" + currentMonth + "-" + currentYear;
+  const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
   let user_id_1;
   user_id_1 = (await User.findOne({ username: user_1 }))._id;
   console.log(user_id_1);

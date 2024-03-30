@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   password: String,
   profile_pic: String,
   type_of_sport: String,
+  validity: String,
 });
 
 const recordSchema = mongoose.Schema({

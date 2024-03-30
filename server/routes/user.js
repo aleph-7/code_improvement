@@ -91,10 +91,27 @@ router.get("/counsellor_page_user", async (req, res) => {
     let available_time_slots_12hour = "";
     if (attributeList[i][3] !== "none") {
       available_day_or_date = attributeList[i][3];
-      for (let j = 0; j < 24; j++) {
-        if (attributeList[i][4][j] === 1)
-          available_time_slots_12hour +=
-            (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + " ";
+      let no_of_slots=0;
+      for (let j = 0; j < 24; j++) 
+      {
+        if (attributeList[i][4][j] === 1) 
+        {
+          no_of_slots++;
+        }
+      }
+      let ite=1;
+      for (let j = 0; j < 24; j++) 
+      {
+        if (attributeList[i][4][j] === 1 && ite<no_of_slots)
+        {
+          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + ", ";
+          ite++;
+        }
+        else if(attributeList[i][4][j] === 1 && ite==no_of_slots)
+        {
+          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm");
+          ite++;
+        }
       }
     } else {
       available_day_or_date += attributeList[i][0][0] === 1 ? "M" : "";
@@ -104,10 +121,27 @@ router.get("/counsellor_page_user", async (req, res) => {
       available_day_or_date += attributeList[i][0][4] === 1 ? "F" : "";
       available_day_or_date += attributeList[i][0][5] === 1 ? "Sa" : "";
       available_day_or_date += attributeList[i][0][6] === 1 ? "Su" : "";
-      for (let j = 0; j < 24; j++) {
+      let no_of_slots=0;
+      for (let j = 0; j < 24; j++)
+      {
         if (attributeList[i][1][j] === 1)
-          available_time_slots_12hour +=
-            (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + " ";
+        {
+          no_of_slots++;
+        }
+      }
+      let ite=1;
+      for (let j = 0; j < 24; j++) 
+      {
+        if (attributeList[i][1][j] === 1 && ite<no_of_slots)
+        {
+          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + ", ";
+          ite++;
+        } 
+        else if(attributeList[i][1][j] === 1 && ite==no_of_slots) 
+        {
+          available_time_slots_12hour +=(j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + "   ";
+          ite++;
+        }
       }
     }
     attributeList[i][7] = available_day_or_date;

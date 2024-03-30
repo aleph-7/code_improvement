@@ -55,72 +55,77 @@ const Login = () => {
     if (!input.password) {
       setError((prev) => ({ ...prev, password: "Password is required." }));
     }
-    try {
-      const response = await fetch(SERVER_ROOT_PATH + "/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: input.username,
-          password: input.password,
-        }),
-      })
-        .then((response) => {
-          // Check status code
-          if (response.status == 200) {
-            return response.json(); // Parse JSON response on success
-          } else if (response.status == 401) {
-            alert("Invalid username or password");
-          } else {
-            throw new Error("Login failed"); // Handle errors
-          }
+    if (
+      localStorage.getItem("userId") != input.username &&
+      localStorage.getItem("userId") != null
+    ) {
+      alert(
+        localStorage.getItem("userId") +
+          " is already logged in. Logout first to login with another account."
+      );
+    } else {
+      try {
+        const response = await fetch(SERVER_ROOT_PATH + "/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: input.username,
+            password: input.password,
+          }),
         })
-        .then((data) => {
-          // Success
-          console.log("Login successful:", data);
-
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userId", data.userId);
-          localStorage.setItem("category", data.category);
-          localStorage.setItem("user_email:", data.email);
-          localStorage.setItem("userMongoId", data.userMongoId);
-          localStorage.setItem("type_of_sport", data.type_of_sport);
-
-          console.log("token:", data.token);
-          console.log("category:", data.category);
-          console.log("userId:", data.userId);
-          console.log("User Email:", data.email);
-          console.log("User MongoID:", data.userMongoId);
-          console.log("Type of Sport:", data.type_of_sport);
-          // Redirect to home page
-          if (data.category == "7") {
-            window.location.href = "/admin/dashboard";
-          } else if (data.category == "6") {
-            window.location.href = "/admin/attendance";
-          } else if (data.category == "5") {
-            if (data.type_of_sport == "swimming") {
-              window.location.href = "/admin/swiminstructor";
+          .then((response) => {
+            // Check status code
+            if (response.status == 200) {
+              return response.json(); // Parse JSON response on success
+            } else if (response.status == 401) {
+              alert("Invalid username or password");
+            } else if (response.status == 403) {
+              alert("Please verify your email address first.");
             } else {
-              window.location.href = "/admin/gyminstructor";
+              throw new Error("Login failed"); // Handle errors
             }
-          } else if (data.category == "4") {
-            window.location.href = "/admin/yoga";
-          } else if (data.category == "3") {
-            window.location.href = "/admin/coach";
-          } else if (data.category == "2") {
-            window.location.href = "/admin/counsellor";
-          } else {
-            window.location.href = "/home";
-          }
-        })
-        .catch((error) => {
-          // Handle errors (401, 400, 500, network errors, etc.)
-          console.error("Login error:", error);
-          // Display appropriate error message to the user
-        });
-    } catch (error) {
-      console.error("Error during Login:", error);
+          })
+          .then((data) => {
+            // Success
+            console.log("Login successful:", data);
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("category", data.category);
+            localStorage.setItem("user_email:", data.email);
+            localStorage.setItem("userMongoId", data.userMongoId);
+            localStorage.setItem("type_of_sport", data.type_of_sport);
+            // Redirect to home page
+            if (data.category == "7") {
+              window.location.href = "/admin/dashboard";
+            } else if (data.category == "6") {
+              window.location.href = "/admin/attendance";
+            } else if (data.category == "5") {
+              if (data.type_of_sport == "swimming") {
+                window.location.href = "/admin/swiminstructor";
+              } else {
+                window.location.href = "/admin/gyminstructor";
+              }
+            } else if (data.category == "4") {
+              window.location.href = "/admin/yoga";
+            } else if (data.category == "3") {
+              window.location.href = "/admin/coach";
+            } else if (data.category == "2") {
+              window.location.href = "/admin/counsellor";
+            } else {
+              window.location.href = "/home";
+            }
+          })
+          .catch((error) => {
+            // Handle errors (401, 400, 500, network errors, etc.)
+            console.error("Login error:", error);
+            // Display appropriate error message to the user
+          });
+      } catch (error) {
+        console.error("Error during Login:", error);
+      }
     }
   };
 

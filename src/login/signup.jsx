@@ -108,6 +108,14 @@ const Signup = () => {
       alert("Please enter valid details.");
       return;
     }
+    if (
+      input.username === "" ||
+      input.password === "" ||
+      input.email_id === ""
+    ) {
+      alert("Please enter valid details.");
+      return;
+    }
     try {
       const response = await fetch(SERVER_ROOT_PATH + "/signup", {
         method: "POST",
@@ -126,7 +134,9 @@ const Signup = () => {
       if (response.status === 400) {
         alert("Username or email ID already exists");
       } else if (response.status === 201) {
-        alert("Registered successfully!");
+        alert(
+          "Registered successfully! An Email has been sent to your email ID. Please verify your email ID to login."
+        );
         window.location.href = "/login";
       } else {
         alert("Error in registering");
