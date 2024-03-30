@@ -185,8 +185,8 @@ app.post("/checkUser", async (req, res) => {
       const userId = user._id;
       const timeSlot = req.body.time_slot;
       const type = req.body.type;
-      let datetobechecked ="";
-      if(type===1){
+      let datetobechecked = "";
+      if (type === 1) {
         var date = new Date();
         datetobechecked =
           (date.getDate() < 10 ? "0" : "") +
@@ -196,26 +196,23 @@ app.post("/checkUser", async (req, res) => {
           (date.getMonth() + 1) +
           "/" +
           date.getFullYear();
-      }
-      else {
-
+      } else {
         let currentDate = new Date();
 
-    // Get the next date
-    let nextDate = new Date(currentDate);
-    nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
+        // Get the next date
+        let nextDate = new Date(currentDate);
+        nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
 
-    // Format the next date as DD-MM-YYYY
-    let day = nextDate.getDate();
-    let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
-    let year = nextDate.getFullYear();
+        // Format the next date as DD-MM-YYYY
+        let day = nextDate.getDate();
+        let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
+        let year = nextDate.getFullYear();
 
-    // Pad the day and month with leading zeros if needed
-    day = day < 10 ? "0" + day : day;
-    month = month < 10 ? "0" + month : month;
+        // Pad the day and month with leading zeros if needed
+        day = day < 10 ? "0" + day : day;
+        month = month < 10 ? "0" + month : month;
 
-    datetobechecked = day + "/" + month + "/" + year;
-
+        datetobechecked = day + "/" + month + "/" + year;
       }
       // Check if the user is enrolled in any activity for the specified slot and date
       const booking = await SportsBookings.findOne({
@@ -376,25 +373,27 @@ app.post("/pre_booking", async (req, res) => {
         },
       ],
     });
-    if(isavailable){
-      
-      res.status(500).json({ error:"You have applied for some other booking at this time."});
-    }
-    else {
-    const players = await User.find(
-      { username: { $in: req.body.players } },
-      "_id username"
-    );
-    players.forEach((player) => {
-      mongodbIds.push(player._id.toString());
-    });
-    let length = mongodbIds.length;
-    const remainingSlots = 3 - mongodbIds.length;
-    if (remainingSlots > 0) {
-      mongodbIds = mongodbIds.concat(
-        Array(remainingSlots).fill("000000000000000000000000")
+    if (isavailable) {
+      res
+        .status(500)
+        .json({
+          error: "You have applied for some other booking at this time.",
+        });
+    } else {
+      const players = await User.find(
+        { username: { $in: req.body.players } },
+        "_id username"
       );
-    }
+      players.forEach((player) => {
+        mongodbIds.push(player._id.toString());
+      });
+      let length = mongodbIds.length;
+      const remainingSlots = 3 - mongodbIds.length;
+      if (remainingSlots > 0) {
+        mongodbIds = mongodbIds.concat(
+          Array(remainingSlots).fill("000000000000000000000000")
+        );
+      }
 
       const name = req.body.slot;
       const type_book = req.body.type;
@@ -502,7 +501,7 @@ app.post("/gym/swim_booking", async (req, res) => {
       user_id: user_id,
       year: year,
       type: type,
-      booking_status:1,
+      booking_status: 1,
     });
 
     if (existingBooking) {
