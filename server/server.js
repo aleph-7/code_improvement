@@ -474,10 +474,10 @@ app.post("/gym/swim_booking", async (req, res) => {
     // Check if the user has already booked the same slot
     const existingBooking = await Gymbook.findOne({
       month: month,
-      time_slot: time_slot,
       user_id: user_id,
       year: year,
       type: type,
+      booking_status:1,
     });
 
     if (existingBooking) {
