@@ -104,13 +104,14 @@ router.post("/fill_entries", async (req, res) => {
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
-  const TodayDate = currentDay + "-" + currentMonth + "-" + currentYear;
+  const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
   let booking_doc;
   try {
     booking_doc = await SportsBookings.find({
       court_id: court_id,
       time_slot: currentTime,
       date_slot: TodayDate,
+      booking_status: 1,
     });
     if (booking_doc.length == 0) {
       res.status(400).json({ user_1: "", user_2: "", user_3: "", user_4: "" });
@@ -383,7 +384,7 @@ router.post("/mark_attendance", async (req, res) => {
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
-  const TodayDate = currentDay + "-" + currentMonth + "-" + currentYear;
+  const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
   let user_id_1;
   user_id_1 = (await User.findOne({ username: user_1 }))._id;
   console.log(user_id_1);

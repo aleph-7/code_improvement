@@ -151,15 +151,14 @@ function page2() {
     <div id="page" className="page-container">
       {/* Counsellor sec */}
       <div className="sec">
-        <p className="labels">counsellor</p>
+        <p className="labelsCounsellorPage">counsellor</p>
         <select
           value={counsellorUsername}
           onChange={(e) => {
             setCounsellorUsername(e.target.value);
             fillDaysDates(e.target.value);
           }}
-          className="input"
-          style={{ width: "500px" }}
+          className="inputCounsellorPage"
         >
           <option value="" selected>
             Select counsellor name
@@ -172,7 +171,7 @@ function page2() {
 
       {/* Date of appointment sec */}
       <div className="sec">
-        <p className="labels">date/day of appointment</p>
+        <p className="labelsCounsellorPage">date/day of appointment</p>
         <select
           value={selectedDate}
           onClick={(e) => {
@@ -183,8 +182,7 @@ function page2() {
             setSelectedDate(e.target.value);
             fillTimeSlots(counsellorUsername, e.target.value);
           }}
-          className="input"
-          style={{ width: "200px" }}
+          className="inputCounsellorPage"
         >
           <option value="" selected>
             Select day/date
@@ -197,14 +195,13 @@ function page2() {
 
       {/* Preferred time sec */}
       <div className="sec">
-        <p className="labels">preferred time</p>
+        <p className="labelsCounsellorPage">preferred time</p>
         <select
           value={selectedTime}
           onChange={(e) => {
             setSelectedTime(e.target.value);
           }}
-          className="input"
-          style={{ width: "200px" }}
+          className="inputCounsellorPage"
           defaultValue="3pm"
         >
           <option value="" selected>
@@ -218,14 +215,13 @@ function page2() {
 
       {/* Program, Department, Hall sec */}
       <div className="sec">
-        <p className="labels">program:</p>
+        <p className="labelsCounsellorPage">program:</p>
         <select
           value={selectedProgram}
           onChange={(e) => {
             setSelectedProgram(e.target.value);
           }}
-          className="input"
-          style={{ width: "150px" }}
+          className="inputCounsellorPage"
         >
           <option value="" selected>
             Select program
@@ -236,7 +232,9 @@ function page2() {
           <option key="MSc">MSc</option>
           <option key="BSc">BSc</option>
         </select>
-        <p className="labels" style={{ marginLeft: "100px" }}>
+      </div>
+      <div className="sec">
+        <p className="labelsCounsellorPage" >
           department:
         </p>
         <select
@@ -244,8 +242,7 @@ function page2() {
           onChange={(e) => {
             setDepartment(e.target.value);
           }}
-          className="input"
-          style={{ width: "150px" }}
+          className="inputCounsellorPage"
         >
           <option value="" selected>
             Select department
@@ -266,7 +263,9 @@ function page2() {
           <option key="HSS">Humanities and Social Sciences</option>
           <option key="CHEM">Chemical</option>
         </select>
-        <p className="labels" style={{ marginLeft: "100px" }}>
+        </div>
+        <div className="sec">
+        <p className="labelsCounsellorPage">
           hall:
         </p>
         <select
@@ -274,8 +273,7 @@ function page2() {
           onChange={(e) => {
             setSelectedHall(e.target.value);
           }}
-          className="input"
-          style={{ width: "150px" }}
+          className="inputCounsellorPage"
         >
           <option value="" selected>
             Select hall
@@ -299,10 +297,10 @@ function page2() {
 
       {/* Contact number sec */}
       <div className="sec">
-        <p className="labels">contact number</p>
+        <p className="labelsCounsellorPage">contact number</p>
         <input
           type="text"
-          className="input"
+          className="inputCounsellorPage"
           onChange={(e) => {
             setContactNumber(e.target.value);
           }}
