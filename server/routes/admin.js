@@ -107,6 +107,7 @@ router.post("/fill_entries", async (req, res) => {
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
   const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
+  console.log(currentTime);
   console.log(TodayDate);
   let booking_doc;
   try {
