@@ -148,6 +148,9 @@ const Attendance = (type_of_sport) => {
   };
 
   const sendCourtNameToServer = async () => {
+    if(input.court_name === ""){
+      return;
+    }
     console.log(input.court_name);
     console.log(type_of_sport.type_of_sport);
     try {
@@ -319,7 +322,12 @@ const Attendance = (type_of_sport) => {
     }
     position_min = Math.min(...valid_positions);
     position_max = Math.max(...valid_positions);
-    if (no_present != position_max) {
+    if(position_min != 1){
+      alert("positions should start from 1");
+      setError(prev => ({ ...prev, position_1: "", position_2: "", position_3: "", position_4: "" }));
+    }
+    else if (no_present != position_max) 
+    {
       alert("positions should be continuous");
       setError((prev) => ({
         ...prev,
@@ -328,16 +336,9 @@ const Attendance = (type_of_sport) => {
         position_3: "",
         position_4: "",
       }));
-    } else if (position_min != 1) {
-      alert("positions should start from 1");
-      setError((prev) => ({
-        ...prev,
-        position_1: "",
-        position_2: "",
-        position_3: "",
-        position_4: "",
-      }));
-    } else if (no_present === 2) {
+    } 
+    else if (no_present === 2) 
+    {
       try {
         const response = await fetch(
           SERVER_ROOT_PATH + "/match_metric_marking",
@@ -367,9 +368,9 @@ const Attendance = (type_of_sport) => {
         );
 
         if (response.ok) {
-          alert("Attendance marked successfully");
+          alert("Leaderboard updated successfully");
         } else {
-          console.error("Failed to mark attendance");
+          console.error("Failed to update leaderboard");
         }
       } catch (error) {
         console.error("Error during signup:", error);
@@ -406,7 +407,9 @@ const Attendance = (type_of_sport) => {
       } catch (error) {
         console.error("Error during signup:", error);
       }
-    } else {
+    } 
+    else 
+    {
       try {
         const response = await fetch(SERVER_ROOT_PATH + "/mark_attendance", {
           method: "POST",
@@ -451,6 +454,7 @@ const Attendance = (type_of_sport) => {
           <div className="inputs_ad">
             <div className="input2_ad">
               <form>
+                <p>time slot:</p>
                 <input
                   type="text"
                   name="time_slot"
@@ -458,6 +462,8 @@ const Attendance = (type_of_sport) => {
                   value={input.time_slot}
                   onChange={onInputChange}
                   onBlur={validateInput}
+                  readOnly={true}
+                  style={{height:"40px"}}
                 />
                 {error.time_slot && (
                   <span className="err_ad">{error.time_slot}</span>
@@ -471,7 +477,7 @@ const Attendance = (type_of_sport) => {
                 onBlur={validateInput}
                 className="courtNameDropDown_ad"
               >
-                <option value="" disabled selected>
+                <option value="" selected>
                   court name
                 </option>
                 <option value="Court_1_New_SAC">court 1 new sac</option>
