@@ -81,6 +81,8 @@ const Login = () => {
               return response.json(); // Parse JSON response on success
             } else if (response.status == 401) {
               alert("Invalid username or password");
+            } else if (response.status == 403) {
+              alert("Please verify your email address first.");
             } else {
               throw new Error("Login failed"); // Handle errors
             }
@@ -95,13 +97,6 @@ const Login = () => {
             localStorage.setItem("user_email:", data.email);
             localStorage.setItem("userMongoId", data.userMongoId);
             localStorage.setItem("type_of_sport", data.type_of_sport);
-
-            console.log("token:", data.token);
-            console.log("category:", data.category);
-            console.log("userId:", data.userId);
-            console.log("User Email:", data.email);
-            console.log("User MongoID:", data.userMongoId);
-            console.log("Type of Sport:", data.type_of_sport);
             // Redirect to home page
             if (data.category == "7") {
               window.location.href = "/admin/dashboard";
