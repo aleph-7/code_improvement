@@ -17,7 +17,7 @@ function BookingApp() {
   };
 
   return (
-    <div className="booking">
+    <div className="booking" style={{minHeight:"50%", maxHeight: "90%"}}>
       <ul className="booking-options">
         <li>
           <button
