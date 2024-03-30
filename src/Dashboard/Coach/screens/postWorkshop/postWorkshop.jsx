@@ -45,27 +45,11 @@ const PostWorkshop = () => {
           if (!value) {
             stateObj[name] = "";
           }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid time.";
-          } else {
-            if (Number(value) < 5)
-              stateObj[name] = "Please enter a valid time.";
-            if (Number(value) > 20)
-              stateObj[name] = "Please enter a valid time, less than 21.";
-          }
           break;
 
         case "max_participants":
           if (!value) {
             stateObj[name] = "";
-          }
-          if (isNaN(value)) {
-            stateObj[name] = "Please enter a valid number.";
-          } else {
-            if (Number(value) < 0)
-              stateObj[name] = "Please enter a valid number.";
-            if (Number(value) > 50)
-              stateObj[name] = "Please enter a valid number, less than 51.";
           }
           break;
 
@@ -74,6 +58,54 @@ const PostWorkshop = () => {
       }
       return stateObj;
     });
+  };
+
+  const validateDescription = (description) => {
+    if (description === "") {
+      alert("Description cannot be empty");
+      return false;
+    }
+    return true;
+  };
+
+  const validateMaxParticipants = (maxParticipants) => {
+    if (maxParticipants === "") {
+      alert("Max participants cannot be empty");
+      return false;
+    }
+    if (isNaN(maxParticipants)) {
+      alert("Please enter a valid number");
+      return false;
+    }
+    if (maxParticipants < 0) {
+      alert("Please enter a valid number");
+      return false;
+    }
+    if (maxParticipants > 50) {
+      alert("Please enter a valid number, less than 51");
+      return false;
+    }
+    return true;
+  };
+
+  const validateStartTime = (startTime) => {
+    if (startTime === "") {
+      alert("Start time cannot be empty");
+      return false;
+    }
+    if (isNaN(startTime)) {
+      alert("Please enter a valid time");
+      return false;
+    }
+    if (startTime < 5) {
+      alert("Please enter a valid time");
+      return false;
+    }
+    if (startTime > 20) {
+      alert("Please enter a valid time, less than 21");
+      return false;
+    }
+    return true;
   };
 
   const validateDate = (date) => {
@@ -158,35 +190,11 @@ const PostWorkshop = () => {
   };
 
   const onClickButton = async () => {
-    if (!input.description) {
-      alert("Description is required.");
-      setError((prev) => ({
-        ...prev,
-        description: "Description is required.",
-      }));
-    }
-    if (!input.date) {
-      alert("Date is required.");
-      setError((prev) => ({ ...prev, date: "Date is required." }));
-    }
-
-    if (!input.start_time) {
-      alert("Start time is required.");
-      setError((prev) => ({ ...prev, start_time: "Start time is required." }));
-    }
-    if (!input.max_participants) {
-      alert("Max participants is required.");
-      setError((prev) => ({
-        ...prev,
-        max_participants: "Max participants is required.",
-      }));
-    }
     input.end_time = parseInt(input.start_time) + 1;
     if (
-      error.description === "" &&
-      error.date === "" &&
-      error.start_time === "" &&
-      error.max_participants === "" &&
+      validateDescription(input.description) === true &&
+      validateMaxParticipants(input.max_participants) === true &&
+      validateStartTime(input.start_time) === true &&
       validateDate(input.date) === true
     ) {
       try {
