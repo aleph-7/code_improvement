@@ -135,7 +135,7 @@ const endpointUrl = "http://localhost:6300/booking/sport_booking";
 
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "30 11 * * *",
+  "01 00 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
@@ -251,62 +251,59 @@ app.post("/active_booking", async (req, res) => {
   //Searching for players mongoDB Ids
   let mongodbIds = [];
   try {
- 
     const isavailable = await SportsBookings.findOne({
       $and: [
         { date_slot: current_date },
         { time_slot: req.body.slot },
-        { $or: [
-            { booking_status: 0 },
-            { booking_status: 1 }
-          ]
-        },
-        { $or: [
+        { $or: [{ booking_status: 0 }, { booking_status: 1 }] },
+        {
+          $or: [
             { user_id: req.body.user_id },
-            { partners_id: { $all: [req.body.user_id] } }
-          ]
-        }
-      ]
+            { partners_id: { $all: [req.body.user_id] } },
+          ],
+        },
+      ],
     });
-    if(isavailable){
-      res.status(500).json({ error:"You have applied for some other booking at this time."});
-    }
-    else {
-    const players = await User.find(
-      { username: { $in: req.body.players } },
-      "_id username"
-    );
-    players.forEach((player) => {
-      mongodbIds.push(player._id.toString());
-    });
-    let length = mongodbIds.length;
-    const remainingSlots = 3 - mongodbIds.length;
-    if (remainingSlots > 0) {
-      mongodbIds = mongodbIds.concat(
-        Array(remainingSlots).fill("000000000000000000000000")
+    if (isavailable) {
+      res.status(500).json({
+        error: "You have applied for some other booking at this time.",
+      });
+    } else {
+      const players = await User.find(
+        { username: { $in: req.body.players } },
+        "_id username"
       );
-    }
+      players.forEach((player) => {
+        mongodbIds.push(player._id.toString());
+      });
+      let length = mongodbIds.length;
+      const remainingSlots = 3 - mongodbIds.length;
+      if (remainingSlots > 0) {
+        mongodbIds = mongodbIds.concat(
+          Array(remainingSlots).fill("000000000000000000000000")
+        );
+      }
 
-    const name = req.body.slot;
-    const type_book = req.body.type;
-    const hour = parseInt(name.split(":")[0], 10);
-    
-    const booking = new SportsBookings({
-      user_id: req.body.user_id,
-      time_slot: hour,
-      type_of_sport: req.body.sport_type,
-      time_of_booking: new Date(),
-      date_slot: current_date,
-      type_of_booking: 1,
-      show_up_status: 0,
-      court_id: req.body.court_id,
-      partners_id: mongodbIds,
-      no_partners: length,
-      booking_status: 1,
-    });
-    const doc = await booking.save();
-    res.json(doc);
-  }
+      const name = req.body.slot;
+      const type_book = req.body.type;
+      const hour = parseInt(name.split(":")[0], 10);
+
+      const booking = new SportsBookings({
+        user_id: req.body.user_id,
+        time_slot: hour,
+        type_of_sport: req.body.sport_type,
+        time_of_booking: new Date(),
+        date_slot: current_date,
+        type_of_booking: 1,
+        show_up_status: 0,
+        court_id: req.body.court_id,
+        partners_id: mongodbIds,
+        no_partners: length,
+        booking_status: 1,
+      });
+      const doc = await booking.save();
+      res.json(doc);
+    }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -317,20 +314,20 @@ app.post("/active_booking", async (req, res) => {
 app.post("/pre_booking", async (req, res) => {
   let currentDate = new Date();
 
-    // Get the next date
-    let nextDate = new Date(currentDate);
-    nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
+  // Get the next date
+  let nextDate = new Date(currentDate);
+  nextDate.setDate(currentDate.getDate() + 1); // Adding 1 day
 
-    // Format the next date as DD-MM-YYYY
-    let day = nextDate.getDate();
-    let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
-    let year = nextDate.getFullYear();
+  // Format the next date as DD-MM-YYYY
+  let day = nextDate.getDate();
+  let month = nextDate.getMonth() + 1; // Month is zero-based, so add 1
+  let year = nextDate.getFullYear();
 
-    // Pad the day and month with leading zeros if needed
-    day = day < 10 ? "0" + day : day;
-    month = month < 10 ? "0" + month : month;
+  // Pad the day and month with leading zeros if needed
+  day = day < 10 ? "0" + day : day;
+  month = month < 10 ? "0" + month : month;
 
-    let nextDateFormatted = day + "/" + month + "/" + year;
+  let nextDateFormatted = day + "/" + month + "/" + year;
 
   //Searching for players mongoDB Ids
   let mongodbIds = [];
@@ -339,59 +336,56 @@ app.post("/pre_booking", async (req, res) => {
       $and: [
         { date_slot: nextDateFormatted },
         { time_slot: req.body.slot },
-        { $or: [
-            { booking_status: 0 },
-            { booking_status: 1 }
-          ]
-        },
-        { $or: [
+        { $or: [{ booking_status: 0 }, { booking_status: 1 }] },
+        {
+          $or: [
             { user_id: req.body.user_id },
-            { partners_id: { $all: [req.body.user_id] } }
-          ]
-        }
-      ]
+            { partners_id: { $all: [req.body.user_id] } },
+          ],
+        },
+      ],
     });
-    if(isavailable){
-      res.status(500).json({ error:"You have applied for some other booking at this time."});
-    }
-    else {
-    const players = await User.find(
-      { username: { $in: req.body.players } },
-      "_id username"
-    );
-    players.forEach((player) => {
-      mongodbIds.push(player._id.toString());
-    });
-    let length = mongodbIds.length;
-    const remainingSlots = 3 - mongodbIds.length;
-    if (remainingSlots > 0) {
-      mongodbIds = mongodbIds.concat(
-        Array(remainingSlots).fill("000000000000000000000000")
+    if (isavailable) {
+      res.status(500).json({
+        error: "You have applied for some other booking at this time.",
+      });
+    } else {
+      const players = await User.find(
+        { username: { $in: req.body.players } },
+        "_id username"
       );
+      players.forEach((player) => {
+        mongodbIds.push(player._id.toString());
+      });
+      let length = mongodbIds.length;
+      const remainingSlots = 3 - mongodbIds.length;
+      if (remainingSlots > 0) {
+        mongodbIds = mongodbIds.concat(
+          Array(remainingSlots).fill("000000000000000000000000")
+        );
+      }
+
+      const name = req.body.slot;
+      const type_book = req.body.type;
+      const hour = parseInt(name.split(":")[0], 10);
+      // Get the current date
+
+      const booking = new SportsBookings({
+        user_id: req.body.user_id,
+        time_slot: hour,
+        type_of_sport: req.body.sport_type,
+        time_of_booking: new Date(),
+        date_slot: nextDateFormatted,
+        type_of_booking: 0,
+        show_up_status: 0,
+        court_id: null,
+        partners_id: mongodbIds,
+        no_partners: length,
+        booking_status: 0,
+      });
+      const doc = await booking.save();
+      res.json(doc);
     }
-
-    const name = req.body.slot;
-    const type_book = req.body.type;
-    const hour = parseInt(name.split(":")[0], 10);
-    // Get the current date
-    
-
-    const booking = new SportsBookings({
-      user_id: req.body.user_id,
-      time_slot: hour,
-      type_of_sport: req.body.sport_type,
-      time_of_booking: new Date(),
-      date_slot: nextDateFormatted,
-      type_of_booking: 0,
-      show_up_status: 0,
-      court_id: null,
-      partners_id: mongodbIds,
-      no_partners: length,
-      booking_status: 0,
-    });
-    const doc = await booking.save();
-    res.json(doc);
-  }
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -477,7 +471,7 @@ app.post("/gym/swim_booking", async (req, res) => {
       user_id: user_id,
       year: year,
       type: type,
-      booking_status:1,
+      booking_status: 1,
     });
 
     if (existingBooking) {

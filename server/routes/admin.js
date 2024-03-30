@@ -101,7 +101,14 @@ router.post("/fill_entries", async (req, res) => {
   }
   court_id = doc._id;
   console.log(court_id);
-  const currentTime = new Date().getHours();
+
+  const kolkataTime = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    hour12: false,
+  });
+  const currentTime = parseInt(kolkataTime);
+
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
@@ -388,7 +395,13 @@ router.post("/mark_attendance", async (req, res) => {
   position_3 = req.body.position_3;
   position_4 = req.body.position_4;
   type_of_sport = req.body.type_of_sport;
-  const currentTime = new Date().getHours();
+  const kolkataTime = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    hour12: false,
+  });
+  const currentTime = parseInt(kolkataTime);
+
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
