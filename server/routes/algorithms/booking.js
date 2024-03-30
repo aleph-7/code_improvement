@@ -1,11 +1,3 @@
-//Animesh took a big fat dump //
-//gross
-//will still take more time to complete
-//will take a dump again
-//will take a dump again
-//will take a dump again
-//wtf is this shit
-
 const express = require("express");
 const router = express.Router();
 
@@ -28,11 +20,11 @@ router.get("/sport_booking", async (req, res) => {
   //get bookings of a specific day!!! TO DO!!!
   let currentDate = new Date().toLocaleDateString("en-GB");
   console.log(currentDate);
-  let formattedDate = currentDate.split("/").join("-");
+  let formattedDate = currentDate;
   console.log(formattedDate);
 
   await sportBooking
-    .find({ booking_status: 0, type_of_booking: 0 , date_slot: formattedDate})
+    .find({ booking_status: 0, type_of_booking: 0, date_slot: formattedDate })
     .then((results) => {
       attributeList = results.map((doc) => [
         doc._id,
@@ -54,7 +46,7 @@ router.get("/sport_booking", async (req, res) => {
     await Record.findOne({ user_id: attributeList[i][3] })
       .then((foundDocument) => {
         if (foundDocument) {
-          //   console.log("Found document:", foundDocument);
+          console.log("Found document:", foundDocument);
           if (foundDocument.acceptances + foundDocument.rejections === 0) {
             attributeList[i].push(0.5);
           } else {
@@ -64,15 +56,15 @@ router.get("/sport_booking", async (req, res) => {
             );
           }
         } else {
-          //   console.log("Document not found");
+          console.log("Document not found");
         }
       })
       .catch((error) => {
-        // console.error("Error finding document:", error);
+        console.error("Error finding document:", error);
       });
   }
 
-  //   console.log(attributeList);
+  console.log(attributeList);
 
   let temp_pairing = [];
   let temp_rest = [];
@@ -99,16 +91,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -119,23 +104,46 @@ router.get("/sport_booking", async (req, res) => {
       temp_pairing[k + 1][10] = temp_pairing[k][3];
       temp_rest.push(temp_pairing[k]);
       dict[temp_pairing[k][0]] = k;
-      //consider average!!!
     }
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "badminton", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "badminton",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -173,18 +181,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -201,20 +208,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -229,7 +234,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -251,7 +257,7 @@ router.get("/sport_booking", async (req, res) => {
       temp_rest.push(temp_pairing[temp_pairing.length - 1]);
     }
 
-    //console.log(temp_rest);
+    console.log(temp_rest);
     size = temp_rest.length;
 
     //updating the sport_booking database
@@ -337,7 +343,6 @@ router.get("/sport_booking", async (req, res) => {
     workshopslist = [];
   }
 
-
   //tennis
   for (let i = 0; i < 24; i++) {
     for (let j = 0; j < attributeList.length; j++) {
@@ -361,16 +366,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -382,18 +380,42 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "tennis", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "tennis",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -431,18 +453,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -459,20 +480,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -487,7 +506,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -618,16 +638,9 @@ router.get("/sport_booking", async (req, res) => {
           if (B === null) b_pos = 1000000;
           else b_pos = B.position;
           return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
         });
       });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -639,18 +652,42 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "squash", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "squash",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -688,18 +725,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -716,20 +752,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -744,7 +778,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -865,26 +900,21 @@ router.get("/sport_booking", async (req, res) => {
 
     //sorting based on leaderboard position
     temp_pairing.sort(async (a, b) => {
-      await tabletennisLeaderboard.findOne({ user_id: a[3] }).then(async (A) => {
-        console.log(A);
-        await tabletennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
-          console.log(B);
+      await tabletennisLeaderboard
+        .findOne({ user_id: a[3] })
+        .then(async (A) => {
+          console.log(A);
+          await tabletennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
+            console.log(B);
 
-          if (A === null) a_pos = 1000000;
-          else a_pos = A.position;
-          if (B === null) b_pos = 1000000;
-          else b_pos = B.position;
-          return a_pos - b_pos;
-          //   a_pos = A.position;
-          //   b_pos = B.position;
-          //   return a_pos - b_pos;
+            if (A === null) a_pos = 1000000;
+            else a_pos = A.position;
+            if (B === null) b_pos = 1000000;
+            else b_pos = B.position;
+            return a_pos - b_pos;
+          });
         });
-      });
-      //assuming INT_MAX is the maximum possible value of position
-      //REVIEW!!!
     });
-
-    //console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -896,18 +926,42 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      if (a[12] === b[12]) {
+      let no_show_a = 0, no_show_b = 0;
+      let total_bookings_a = 0, total_bookings_b = 0;
+
+      for (let j = 0; j < attributeList.length; j++) {
+        if (attributeList[j][3] === a[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_a++;
+          }
+          total_bookings_a++;
+        }
+        if (attributeList[j][3] === b[3]) {
+          if (attributeList[j][1] === -1) {
+            no_show_b++;
+          }
+          total_bookings_b++;
+        }
+      }
+      if (total_bookings_a != 0) showup_record_a = no_show_a / total_bookings_a;
+      else showup_record_a = 0;
+      if (total_bookings_b != 0) showup_record_b = no_show_b / total_bookings_b;
+      else showup_record_b = 0;
+
+      if (a[12] - showup_record_a === b[12] - showup_record_b) {
         // If 'record' parameters are equal, use 'num_players' as tiebreaker
         return a[11] - b[11];
       }
       //record/history of rejections
-      return a[12] - b[12];
+      return a[12] - showup_record_a - b[12] + showup_record_b;
     });
 
     //list of workshops
-    await Workshops
-    .find({date_slot: formattedDate, type_of_sport: "table_tennis", time_slot_start: i})
-    .then((results) => {
+    await Workshops.find({
+      date_slot: formattedDate,
+      type_of_sport: "table_tennis",
+      time_slot_start: i,
+    }).then((results) => {
       workshopslist = results.map((doc) => [
         doc._id,
         doc.coach_user_id,
@@ -945,18 +999,17 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
       counter++;
     }
 
@@ -973,20 +1026,18 @@ router.get("/sport_booking", async (req, res) => {
       const options = {
         new: true, // Return the modified document rather than the original
       };
-      Workshops
-      .findOneAndUpdate(conditions, update, options)
-      .then((updatedDocument) => {
-        if (updatedDocument) {
-          console.log("Updated document:", updatedDocument);
-        } else {
-          console.log("Document not found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
-      });
+      Workshops.findOneAndUpdate(conditions, update, options)
+        .then((updatedDocument) => {
+          if (updatedDocument) {
+            console.log("Updated document:", updatedDocument);
+          } else {
+            console.log("Document not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating document:", error);
+        });
     }
-
 
     let size = temp_rest.length;
 
@@ -1001,7 +1052,8 @@ router.get("/sport_booking", async (req, res) => {
           temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
-          temp_pairing[dict[temp_rest[i][0]] + 1][2] = courts[size - i - 1 + counter][0];
+          temp_pairing[dict[temp_rest[i][0]] + 1][2] =
+            courts[size - i - 1 + counter][0];
           temp_pairing[dict[temp_rest[i][0]] + 1][10].push(temp_rest[i][0]);
           temp_pairing[dict[temp_rest[i][0]] + 1][11] = 1;
           temp_rest.push(temp_pairing[dict[temp_rest[i][0]] + 1]);
@@ -1108,7 +1160,6 @@ router.get("/sport_booking", async (req, res) => {
     temp_rest = [];
     workshopslist = [];
   }
-
 
   res.json({ message: attributeList });
 });

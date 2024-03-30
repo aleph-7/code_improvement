@@ -108,6 +108,14 @@ const Signup = () => {
       alert("Please enter valid details.");
       return;
     }
+    if (
+      input.username === "" ||
+      input.password === "" ||
+      input.email_id === ""
+    ) {
+      alert("Please enter valid details.");
+      return;
+    }
     try {
       const response = await fetch(SERVER_ROOT_PATH + "/signup", {
         method: "POST",
@@ -118,13 +126,17 @@ const Signup = () => {
           username: input.username,
           password: input.password,
           email_id: input.email_id,
+          user_category: 1,
+          sport: "",
         }),
       });
 
       if (response.status === 400) {
         alert("Username or email ID already exists");
       } else if (response.status === 201) {
-        alert("Registered successfully!");
+        alert(
+          "Registered successfully! An Email has been sent to your email ID. Please verify your email ID to login."
+        );
         window.location.href = "/login";
       } else {
         alert("Error in registering");
@@ -135,7 +147,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="login-container-master">
+    <div className="login-container-master-div">
       <div className="login-container">
         <div className="login-content">
           <div className="login-inputs">

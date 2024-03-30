@@ -86,25 +86,6 @@
   /* Rectangle 188 */
 }
 
-.coach_equipment_selector {
-  padding-top: 20px;
-  max-height: 200px;
-  min-height: 20vh;
-  overflow-y: scroll;
-}
-.coach_equipment_selector_equipment {
-  position: relative;
-  gap: 2vw;
-  margin-left: 10vw;
-  display: flex;
-}
-
-.coach_equipment_selector_equipment h3 {
-  min-width: 100px;
-  position: relative;
-  top: -1vh;
-}
-
 .coach-postworkshop-container button {
   margin: auto;
   text-align: center;

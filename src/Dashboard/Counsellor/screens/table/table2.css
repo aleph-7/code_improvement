@@ -10,17 +10,21 @@
   /* height: 160vh; */
   margin-left: 80px;
   align-items: center;
+  position: relative;
+  left: 6vw;
   color: black;
 }
 .counsellor-table2 #websiteTableHeader2 {
   width: 70vw;
+  position: relative;
+  left: -5vw;
   background-color: rgba(237, 186, 186, 0.68);
   text-align: center;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 .counsellor-table2 #websiteTableContent2 {
-  width: 70vw;
+  width: 80vw;
   background-color: rgba(224, 217, 217, 0.7);
   text-align: start;
   border: 1px solid #ff0000;
@@ -40,7 +44,5 @@
   height: 2vh;
   font-weight: 100px;
   font-size: 15px;
-  /* width: 400px; */
-  padding-left: 80px;
   padding-bottom: 20px;
 }

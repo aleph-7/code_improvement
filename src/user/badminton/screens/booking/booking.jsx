@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./booking.css";
+import "./booking_badminton.css";
 import Prebooking from "./pre-booking";
 import ActiveBooking from "./active-booking";
 
@@ -17,7 +17,7 @@ function BookingApp() {
   };
 
   return (
-    <div className="booking">
+    <div className="booking" >
       <ul className="booking-options">
         <li>
           <button

@@ -23,6 +23,23 @@ const Availability = () => {
   const [message, setMessage] = useState([]);
 
   useEffect(() => {
+    // const delPrevDates = async () => {
+    //   try {
+    //     return await fetch(SERVER_ROOT_PATH + "/counsellor/deleteOldDateAvailability",  {
+    //       method : "POST",
+    //       headers: {
+    //         "Content-Type" : "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         counsellor_user_id: inputDay.counsellor_user_id,
+    //       }),
+    //     })
+    //     .then((res) => res.json())
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // delPrevDates();
     const getAvailability = async () => {
       try {
         return await fetch(SERVER_ROOT_PATH + "/counsellor/getAvailability", {
@@ -40,7 +57,7 @@ const Availability = () => {
         console.log(err);
       }
     };
-    getAvailability().then(console.log(message.length));
+    getAvailability();
     // console.log(message.length);
   }, []);
 
@@ -80,34 +97,6 @@ const Availability = () => {
     return result;
   }
 
-  // const renderDateitems = async () => {
-  //   if (message) {
-  //     const isDay = !message[0].day_vector.every(element => element === 0);
-  //     const dateOrDay = isDay ? message[0].date_slot : getDaysOfWeek(message[0].day_vector);
-  //     const timeSlots = isDay ? message[0].date_slot_time_vector
-  //       .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //       .filter((str) => str !== "")
-  //       .join(", ") : message[0].date_slot_time_vector
-  //       .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //       .filter((str) => str !== "")
-  //       .join(", ");
-
-  //     // Create the Dateitems component with the calculated values
-  //     const DateitemsComponent = (
-  //       <Dateitems
-  //         isDay={isDay}
-  //         dateOrDay={dateOrDay}
-  //         timeSlots={timeSlots}
-  //       />
-  //     );
-
-  //     // Render the Dateitems component inside the 'added-dates' div
-  //     ReactDOM.render(DateitemsComponent, document.querySelector('.added-dates'));
-  //   } else {
-  //     console.log('Message not fetched. Cannot display Dateitems.');
-  //   }
-  // };
-
   const deleteDayAvailability = async () => {
     return await fetch(SERVER_ROOT_PATH + "/counsellor/deleteDayAvailability", {
       method: "POST",
@@ -121,7 +110,7 @@ const Availability = () => {
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };
-  const deleteDateAvailability = async () => {
+  const deleteDateAvailability = async (date_slot) => {
     return await fetch(
       SERVER_ROOT_PATH + "/counsellor/deleteDateAvailability",
       {
@@ -131,7 +120,7 @@ const Availability = () => {
         },
         body: JSON.stringify({
           counsellor_user_id: localStorage.getItem("userMongoId"),
-          date_slot: inputDate.date_slot,
+          date_slot: date_slot,
         }),
       }
     )
@@ -139,14 +128,14 @@ const Availability = () => {
       .then((data) => setMessage(data.message));
   };
   function isValidDate(dateString) {
-    const dateParts = dateString.split("-");
+    const dateParts = dateString.split("/");
     let isValid = true;
     let err = "";
 
     // Check if the date string has three parts
     if (dateParts.length !== 3) {
       isValid = false;
-      err = "Invalid date format. Please use DD-MM-YYYY format.";
+      err = "Invalid date format. Please use DD/MM/YYYY format.";
       return { isValid, err };
     }
     const day = parseInt(dateParts[0]);
@@ -214,20 +203,17 @@ const Availability = () => {
     }
 
     // Split the date into day, month, and year
-    const parts = dateString.split("-");
+    const parts = dateString.split("/");
 
     // Rearrange the parts to form the new date format (mm/dd/yyyy)
-    const invertedDateString = `${parts[1]}/${parts[0]}/${parts[2]}`;
+    const invertedDateString = `${parts[1]}-${parts[0]}-${parts[2]}`;
 
-    const inputDate = new Date(invertedDateString);
+    const thisDate = new Date(invertedDateString);
     const currentDate = new Date();
-
-    const timeDifference = inputDate.getTime() - currentDate.getTime();
-    const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24)); // Calculate days difference
-
-    if (dayDifference > 0) {
-      daysInFuture = dayDifference; // Number of days in the future
-    }
+    // console.log(thisDate);
+    
+    const timeDifference = thisDate.getTime() - currentDate.getTime();
+    daysInFuture = Math.ceil(timeDifference / (1000 * 3600 * 24)); // Calculate days difference
 
     return { daysInFuture, err };
   }
@@ -315,6 +301,7 @@ const Availability = () => {
         ...prev,
         day_vector: "At least one day must be selected.",
       }));
+      return;
     }
     if (
       !(
@@ -327,6 +314,7 @@ const Availability = () => {
         ...prev,
         hour_vector: "At least one time slot must be selected.",
       }));
+      return;
     }
 
     //delete the entries with non-zero day vector
@@ -403,6 +391,8 @@ const Availability = () => {
       return;
     }
     const out2 = DaysInFuture(inputDate.date_slot);
+    console.log(inputDate.date_slot);
+    console.log(out2);
     if (out2.daysInFuture > 31) {
       alert("The input date must be at most 30 days from today");
       return;
@@ -412,7 +402,7 @@ const Availability = () => {
       return;
     }
     //delete date availabilty
-    deleteDateAvailability().then(() => {
+    deleteDateAvailability(inputDate.date_slot).then(() => {
       console.log("Availability for date Deleted!");
       // console.log(message.length)
     });
@@ -437,23 +427,7 @@ const Availability = () => {
       console.log(err);
     }
   };
-  // {message && message.length > 0 && (
-  //   message.map((msg, index) => (
-  //     <Dateitems
-  //       // key={index}
-  //       isDay={!msg.day_vector.every(element => element === 0)}
-  //       dateOrDay={msg.day_vector.every(element => element === 0) ? msg.date_slot : getDaysOfWeek(msg.day_vector)}
-  //       timeSlots={msg.day_vector.every(element => element === 0) ? msg.date_slot_time_vector
-  //         .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //         .filter((str) => str !== "")
-  //         .join(", ") : msg.date_slot_time_vector
-  //         .map((element, index) => (element === 1 ? getTimeSlot(index) : ""))
-  //         .filter((str) => str !== "")
-  //         .join(", ")}
-  //     />
-  //   ))
-  // )}
-  // {(!message || message.length === 0) && <div>No messages available</div>}
+
   return (
     <div className="counsellor-availability">
       <div className="notify start">
@@ -547,7 +521,7 @@ const Availability = () => {
           <input
             type="text"
             className="date"
-            placeholder="DD-MM-YYYY"
+            placeholder="DD/MM/YYYY"
             name="date_slot"
             value={inputDate.date_slot}
             onChange={onInputChange}

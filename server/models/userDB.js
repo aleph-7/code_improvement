@@ -3,13 +3,13 @@ mongoose.pluralize(null);
 const { connectUserDB } = require("../databases/userDB");
 
 const userSchema = mongoose.Schema({
-  _id: mongoose.ObjectId,
   username: String,
   email_id: String,
   user_category: Number,
   password: String,
   profile_pic: String,
   type_of_sport: String,
+  validity: String,
 });
 
 const recordSchema = mongoose.Schema({

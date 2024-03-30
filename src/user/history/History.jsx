@@ -12,15 +12,11 @@ const History = () => {
   const [message, setMessage] = useState("");
   console.log(localStorage.getItem("userMongoId"));
   const fetchInfo = async () => {
-    return await fetch(SERVER_ROOT_PATH + "user/get_booking_history", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: localStorage.getItem("userMongoId"),
-      }),
-    })
+    return await fetch(
+      SERVER_ROOT_PATH +
+        "/user/get_booking_history/?user_id=" +
+        localStorage.getItem("userMongoId")
+    )
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   };
@@ -29,6 +25,7 @@ const History = () => {
   useEffect(() => {
     fetchInfo();
   }, []);
+
   return (
     <div>
       <Header />

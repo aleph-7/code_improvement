@@ -39,7 +39,7 @@ import ProtectedRoute_Admin from "./protected_routes_admin.jsx";
 import Attendance from "./admin/attendance.jsx";
 
 //Yoga Instructor
-import Yoga_Instructor from "./Dashboard/Yoga_Instructor/Yoga_Instructor.jsx";
+import Yoga_Instructor from "./Dashboard/yoga_instructor/Yoga_Instructor.jsx";
 import ProtectedRoute_Yoga from "./protected_routes_yoga.jsx";
 
 //Gym/Swimiming Instructor
@@ -52,7 +52,13 @@ import ProtectedRoute_Swimming from "./protected_routes_swim.jsx";
 import ProtectedRoute_Counsellor from "./protected_routes_counsellor.jsx";
 import Counsellor_Dashboard from "./Dashboard/Counsellor/Counsellor_Dashboard.jsx";
 
+//Superadmin Pages
+import Superadmin from "./Dashboard/Super_admin/superadmin.jsx";
+
+import Redirect from "./redirect.jsx";
+
 import Error from "./error/Error.jsx";
+import ProtectedRoute_SuperAdmin from "./protected_routes_super.jsx";
 
 function App() {
   useEffect(() => {
@@ -63,10 +69,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<Login />} />
+          <Route index element={<Redirect />} />
           <Route path="*" element={<Error />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+
           <Route element={<ProtectedRoute_User />}>
             <Route path="/history" element={<History />} />
             <Route path="/home" element={<Landing_Page />} />
@@ -110,6 +117,10 @@ function App() {
               path="/admin/counsellor"
               element={<Counsellor_Dashboard />}
             />
+          </Route>
+
+          <Route element={<ProtectedRoute_SuperAdmin />}>
+            <Route path="/admin/dashboard" element={<Superadmin />} />
           </Route>
 
           <Route element={<ProtectedRoute_Admin />}>

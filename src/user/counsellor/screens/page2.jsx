@@ -5,7 +5,7 @@ import Button from "./button";
 import SERVER_ROOT_PATH from "../../../../config";
 
 function page2() {
-  let user_id = "65f75df31fb4f194727baada";
+  let user_id = localStorage.getItem("userMongoId");
   let [counsellorUsername, setCounsellorUsername] = useState("");
   let [counsellorOptions, setCounsellorOptions] = useState([]);
   let [selectedDate, setSelectedDate] = useState("");

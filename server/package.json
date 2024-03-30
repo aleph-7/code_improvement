@@ -24,6 +24,7 @@
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",
     "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.13",
     "request": "^2.88.2"
   },
   "devDependencies": {

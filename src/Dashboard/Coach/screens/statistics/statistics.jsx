@@ -50,7 +50,7 @@ function Statistics() {
                     },
                     {
                       id: 1,
-                      value: message[1].length ? message[2][i] : 0,
+                      value: message[1].length ? message[3][i] : 0,
                       label: "participants",
                     },
                   ],

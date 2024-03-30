@@ -6,7 +6,7 @@ import "./page3.css";
 import SERVER_ROOT_PATH from "../../../../config";
 
 const page3 = () => {
-  let user_id = "65f75df31fb4f194727baada";
+  let user_id = localStorage.getItem("userMongoId");
   const [message, setMessage] = useState("");
   const fetchInfo = async () => {
     try {
