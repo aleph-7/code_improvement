@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./attendance.css";
 import { Link } from "react-router-dom";
 import SERVER_ROOT_PATH from "../../config";
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("category");
+  localStorage.removeItem("user_email");
+  localStorage.removeItem("userMongoId");
+  localStorage.removeItem("type_of_sport");
+  window.location.pathname = "/";
+}
 
 const Attendance = (type_of_sport) => {
   let userone = "username";
@@ -148,7 +157,7 @@ const Attendance = (type_of_sport) => {
   };
 
   const sendCourtNameToServer = async () => {
-    if(input.court_name === ""){
+    if (input.court_name === "") {
       return;
     }
     console.log(input.court_name);
@@ -322,12 +331,16 @@ const Attendance = (type_of_sport) => {
     }
     position_min = Math.min(...valid_positions);
     position_max = Math.max(...valid_positions);
-    if(position_min != 1){
+    if (position_min != 1) {
       alert("positions should start from 1");
-      setError(prev => ({ ...prev, position_1: "", position_2: "", position_3: "", position_4: "" }));
-    }
-    else if (no_present != position_max) 
-    {
+      setError((prev) => ({
+        ...prev,
+        position_1: "",
+        position_2: "",
+        position_3: "",
+        position_4: "",
+      }));
+    } else if (no_present != position_max) {
       alert("positions should be continuous");
       setError((prev) => ({
         ...prev,
@@ -336,9 +349,7 @@ const Attendance = (type_of_sport) => {
         position_3: "",
         position_4: "",
       }));
-    } 
-    else if (no_present === 2) 
-    {
+    } else if (no_present === 2) {
       try {
         const response = await fetch(
           SERVER_ROOT_PATH + "/match_metric_marking",
@@ -407,9 +418,7 @@ const Attendance = (type_of_sport) => {
       } catch (error) {
         console.error("Error during signup:", error);
       }
-    } 
-    else 
-    {
+    } else {
       try {
         const response = await fetch(SERVER_ROOT_PATH + "/mark_attendance", {
           method: "POST",
@@ -463,7 +472,7 @@ const Attendance = (type_of_sport) => {
                   onChange={onInputChange}
                   onBlur={validateInput}
                   readOnly={true}
-                  style={{height:"40px"}}
+                  style={{ height: "40px" }}
                 />
                 {error.time_slot && (
                   <span className="err_ad">{error.time_slot}</span>
@@ -689,6 +698,9 @@ const Attendance = (type_of_sport) => {
           <div className="submit-container_ad">
             <button className="submit_ad" onClick={onClickSubmit}>
               submit
+            </button>
+            <button className="submit_ad" onClick={logout}>
+              log out
             </button>
           </div>
         </div>

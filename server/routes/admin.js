@@ -100,12 +100,14 @@ router.post("/fill_entries", async (req, res) => {
     doc = await TennisCourt.findOne({ court_name: court_name });
   }
   court_id = doc._id;
+  console.log(court_id);
   const currentTime = new Date().getHours();
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);
   const currentYear = currentDate.slice(0, 4);
   const TodayDate = currentDay + "/" + currentMonth + "/" + currentYear;
+  console.log(TodayDate);
   let booking_doc;
   try {
     booking_doc = await SportsBookings.find({
@@ -114,6 +116,7 @@ router.post("/fill_entries", async (req, res) => {
       date_slot: TodayDate,
       booking_status: 1,
     });
+    console.log(booking_doc);
     if (booking_doc.length == 0) {
       res.status(400).json({ user_1: "", user_2: "", user_3: "", user_4: "" });
     } else {
