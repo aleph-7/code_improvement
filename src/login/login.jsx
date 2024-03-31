@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import "./login.css";
 import { Link } from "react-router-dom";
 import SERVER_ROOT_PATH from "../../config";
+import MyLottieAnimation from "./animation";
+import { set } from "mongoose";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     username: "",
     password: "",
@@ -64,6 +67,7 @@ const Login = () => {
           " is already logged in. Logout first to login with another account."
       );
     } else {
+      setLoading(true);
       try {
         const response = await fetch(SERVER_ROOT_PATH + "/login", {
           method: "POST",
@@ -117,19 +121,26 @@ const Login = () => {
             } else {
               window.location.href = "/home";
             }
+            setLoading(false);
           })
           .catch((error) => {
+            setLoading(false);
             // Handle errors (401, 400, 500, network errors, etc.)
             console.error("Login error:", error);
             // Display appropriate error message to the user
           });
       } catch (error) {
+        setLoading(false);
         console.error("Error during Login:", error);
       }
     }
   };
 
-  return (
+  return loading ? (
+    <div>
+      <MyLottieAnimation />
+    </div>
+  ) : (
     <div className="login-container-master-div">
       <div className="login-container">
         <div className="login-content">
