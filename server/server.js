@@ -134,7 +134,7 @@ const session = require("express-session");
 const endpointUrl = "http://localhost:6300/booking/sport_booking";
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "11 00 * * *",
+  "30 21 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
