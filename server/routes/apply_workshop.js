@@ -42,11 +42,7 @@ router.post("/badminton", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "badminton",
         session_id: req.body.workshopId,
@@ -105,11 +101,7 @@ router.post("/basketball", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "basketball",
         session_id: req.body.workshopId,
@@ -169,11 +161,7 @@ router.post("/cricket", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "cricket",
         session_id: req.body.workshopId,
@@ -233,11 +221,7 @@ router.post("/volleyball", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "volleyball",
         session_id: req.body.workshopId,
@@ -297,11 +281,7 @@ router.post("/tennis", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "tennis",
         session_id: req.body.workshopId,
@@ -361,11 +341,7 @@ router.post("/table_tennis", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "table_tennis",
         session_id: req.body.workshopId,
@@ -425,11 +401,7 @@ router.post("/squash", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "squash",
         session_id: req.body.workshopId,
@@ -489,11 +461,7 @@ router.post("/football", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "football",
         session_id: req.body.workshopId,
@@ -553,11 +521,7 @@ router.post("/hockey", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date(),
         booking_status: 1,
         type_of_sport: "hockey",
         session_id: req.body.workshopId,
@@ -617,11 +581,7 @@ router.post("/yoga", async (req, res) => {
     if (updatedWorkshop) {
       const apply = new yoga_sports_workshops({
         user_id: req.body.userId,
-        time_of_booking: new Date().toLocaleString("en-US", {
-          timeZone: "Asia/Kolkata",
-          hour: "numeric",
-          hour12: false,
-        }),
+        time_of_booking: new Date().toLocaleString("en-US"),
         booking_status: 1,
         type_of_sport: "yoga",
         session_id: req.body.workshopId,

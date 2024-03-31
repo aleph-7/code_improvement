@@ -277,12 +277,7 @@ router.post("/fill_entries", async (req, res) => {
     doc = await TennisCourt.findOne({ court_name: court_name });
   }
   court_id = doc._id;
-  const kolkataTime = new Date().toLocaleString("en-US", {
-    timeZone: "Asia/Kolkata",
-    hour: "numeric",
-    hour12: false,
-  });
-  const currentTime = parseInt(kolkataTime);
+  const currentTime = new Date().getHours();
   const currentDate = new Date().toISOString().slice(0, 10);
   const currentDay = currentDate.slice(8, 10);
   const currentMonth = currentDate.slice(5, 7);

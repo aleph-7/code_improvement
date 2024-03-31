@@ -15,9 +15,10 @@ router.post("/postBlog", async (req, res) => {
       title: req.body.title,
       counsellor_username: req.body.counsellor_username,
     });
-    console.log(new_blog);
+    console.log("New Blog Request by ", req.body.counsellor_username);
     const doc = await new_blog.save();
     //Sending the response to the frontend
+    console.log("Blog Posted Sucessfully");
     res.status(200).json({ message: "Blog posted successful" });
   } catch (err) {
     console.log(err);
@@ -33,7 +34,7 @@ router.post("/availability", async (req, res) => {
       date_slot_time_vector: req.body.date_slot_time_vector,
       counsellor_user_id: req.body.counsellor_user_id,
     });
-    console.log(new_availabilty);
+    console.log("Avaliability for counsellor", new_availabilty);
     const doc = await new_availabilty.save();
     //Sending the response to the frontend
     res.status(200).json({ message: "Availability updated successful" });
@@ -46,7 +47,6 @@ router.post("/availability", async (req, res) => {
 router.post("/deleteDayAvailability", async (req, res) => {
   try {
     const counsellor_user_id = req.body.counsellor_user_id;
-    // console.log(counsellor_user_id);
     try {
       const deletedRecord = await Availability.findOneAndDelete({
         day_vector: { $elemMatch: { $ne: 0 } },
@@ -71,13 +71,12 @@ router.post("/deleteDateAvailability", async (req, res) => {
   try {
     const counsellor_user_id = req.body.counsellor_user_id;
     const date_slot = req.body.date_slot;
-    // console.log(date_slot);
+
     try {
       const deletedRecord = await Availability.findOneAndDelete({
         date_slot: date_slot,
         counsellor_user_id: counsellor_user_id,
       });
-      // console.log("why is this called");
       if (deletedRecord) {
         console.log("Deleted record:", deletedRecord);
       } else {
@@ -94,14 +93,11 @@ router.post("/deleteDateAvailability", async (req, res) => {
 });
 
 router.post("/acceptAppointments", async (req, res) => {
-  console.log(req.body);
   const booking_status = req.body.isAccept;
   const appointment_id = req.body.appointment_id;
-  console.log("fml");
+  console.log("Accepting Appointemnt, ", appointment_id);
   try {
     const appointment = await Counsellor_Appointments.findById(appointment_id);
-    //  .then(console.log(appointment));
-
     if (!appointment) {
       console.log("Appointment not found");
       return res
@@ -140,8 +136,6 @@ router.post("/getAppointments", async (req, res) => {
   var finalattributeList = [];
   const counsellor_user_id = req.body.counsellor_user_id;
   try {
-    // console.log("boo");
-    // const records = await Appointment.find({counsellor_user_id : '65f449fd23c3a6138c0daca3'});
     const records = await Counsellor_Appointments.find({
       counsellor_user_id: counsellor_user_id,
     }).then((results) => {
@@ -181,8 +175,6 @@ router.post("/getAppointments", async (req, res) => {
         console.log(err);
       }
     }
-
-    // console.log(attributeList);
     res.status(200).json({ message: finalattributeList });
   } catch (err) {
     console.log(err);
@@ -215,13 +207,11 @@ router.post("/deleteOldDateAvailability", async (req, res) => {
   try {
     const counsellor_user_id = req.body.counsellor_user_id;
     const curr_date = req.body.curr_date;
-    // console.log(date_slot);
     try {
       const deletedRecord = await Availability.deleteMany({
         $where: `new Date(dateString.split('/').reverse().join('-')); < ${curr_date}')`,
         counsellor_user_id: counsellor_user_id,
       });
-      // console.log("why is this called");
       if (deletedRecord) {
         console.log("Deleted record:", deletedRecord);
       } else {
@@ -236,6 +226,5 @@ router.post("/deleteOldDateAvailability", async (req, res) => {
     res.status(500).json({ error: "Availabilty updating failed" });
   }
 });
-
 
 module.exports = router;

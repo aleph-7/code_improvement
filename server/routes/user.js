@@ -358,11 +358,7 @@ router.post("/book_counsellor_appointment", async (req, res) => {
   const counsellor_user_id = (
     await User.findOne({ username: counsellor_username })
   )._id;
-  const time_of_booking = new Date().toLocaleString("en-US", {
-    timeZone: "Asia/Kolkata",
-    hour: "numeric",
-    hour12: false,
-  });
+  const time_of_booking = new Date();
   const booking_status = 0;
   const doc = new Counsellor_Appointments({
     user_id: user_id,
