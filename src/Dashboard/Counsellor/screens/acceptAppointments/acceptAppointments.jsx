@@ -39,8 +39,14 @@ const AcceptAppointments = () => {
         );
         const data = await response.json();
         setMessage(data.message);
+
+        const today = new Date();
         SetUpcomingAppointments(
-          data.message.filter((msg) => msg.booking_status === 1)
+          data.message.filter(msg => {
+            const [day, month, year] = msg.date_slot.split('/');
+            const appointmentDate = new Date(year, month - 1, day); // month - 1 because months are zero-based in JavaScript
+            return appointmentDate > today && msg.booking_status === 1;
+        })
         );
         SetPendingAppointments(
           data.message.filter((msg) => msg.booking_status === 0)
