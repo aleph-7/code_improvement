@@ -108,8 +108,10 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      let no_show_a = 0, no_show_b = 0;
-      let total_bookings_a = 0, total_bookings_b = 0;
+      let no_show_a = 0,
+        no_show_b = 0;
+      let total_bookings_a = 0,
+        total_bookings_b = 0;
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
@@ -380,8 +382,10 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      let no_show_a = 0, no_show_b = 0;
-      let total_bookings_a = 0, total_bookings_b = 0;
+      let no_show_a = 0,
+        no_show_b = 0;
+      let total_bookings_a = 0,
+        total_bookings_b = 0;
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
@@ -652,8 +656,10 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      let no_show_a = 0, no_show_b = 0;
-      let total_bookings_a = 0, total_bookings_b = 0;
+      let no_show_a = 0,
+        no_show_b = 0;
+      let total_bookings_a = 0,
+        total_bookings_b = 0;
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
@@ -926,8 +932,10 @@ router.get("/sport_booking", async (req, res) => {
 
     //sort bookings to decide priority
     temp_rest.sort((a, b) => {
-      let no_show_a = 0, no_show_b = 0;
-      let total_bookings_a = 0, total_bookings_b = 0;
+      let no_show_a = 0,
+        no_show_b = 0;
+      let total_bookings_a = 0,
+        total_bookings_b = 0;
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {

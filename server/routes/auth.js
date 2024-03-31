@@ -147,8 +147,8 @@ router.post("/login", async (req, res) => {
   console.log("Login Request for " + req.body.username);
   try {
     user = await User.findOne({ username: req.body.username });
-    email = user.email_id;
     if (user) {
+      email = user.email_id;
       const passwordMatch = await bcrypt.compare(
         req.body.password,
         user.password

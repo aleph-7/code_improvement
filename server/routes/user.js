@@ -91,25 +91,30 @@ router.get("/counsellor_page_user", async (req, res) => {
     let available_time_slots_12hour = "";
     if (attributeList[i][3] !== "none") {
       available_day_or_date = attributeList[i][3];
-      let no_of_slots=0;
-      for (let j = 0; j < 24; j++) 
-      {
-        if (attributeList[i][4][j] === 1) 
-        {
+      let no_of_slots = 0;
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][4][j] === 1) {
           no_of_slots++;
         }
       }
-      let ite=1;
-      for (let j = 0; j < 24; j++) 
-      {
-        if (attributeList[i][4][j] === 1 && ite<no_of_slots)
-        {
-          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + ", ";
+      let ite = 1;
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][4][j] === 1 && ite < no_of_slots) {
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() +
+            (j < 12 ? "am" : "pm") +
+            "-" +
+            (j + 1 < 12 ? j + 1 : (j + 1) % 12).toString() +
+            (j + 1 < 12 || j + 1 == 24 ? "am" : "pm") +
+            ", ";
           ite++;
-        }
-        else if(attributeList[i][4][j] === 1 && ite==no_of_slots)
-        {
-          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm");
+        } else if (attributeList[i][4][j] === 1 && ite == no_of_slots) {
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() +
+            (j < 12 ? "am" : "pm") +
+            "-" +
+            (j + 1 < 12 ? j + 1 : (j + 1) % 12).toString() +
+            (j + 1 < 12 || j + 1 == 24 ? "am" : "pm");
           ite++;
         }
       }
@@ -121,25 +126,31 @@ router.get("/counsellor_page_user", async (req, res) => {
       available_day_or_date += attributeList[i][0][4] === 1 ? "F" : "";
       available_day_or_date += attributeList[i][0][5] === 1 ? "Sa" : "";
       available_day_or_date += attributeList[i][0][6] === 1 ? "Su" : "";
-      let no_of_slots=0;
-      for (let j = 0; j < 24; j++)
-      {
-        if (attributeList[i][1][j] === 1)
-        {
+      let no_of_slots = 0;
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][1][j] === 1) {
           no_of_slots++;
         }
       }
-      let ite=1;
-      for (let j = 0; j < 24; j++) 
-      {
-        if (attributeList[i][1][j] === 1 && ite<no_of_slots)
-        {
-          available_time_slots_12hour += (j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + ", ";
+      let ite = 1;
+      for (let j = 0; j < 24; j++) {
+        if (attributeList[i][1][j] === 1 && ite < no_of_slots) {
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() +
+            (j < 12 ? "am" : "pm") +
+            "-" +
+            (j + 1 < 12 ? j + 1 : (j + 1) % 12).toString() +
+            (j + 1 < 12 || j + 1 == 24 ? "am" : "pm") +
+            ", ";
           ite++;
-        } 
-        else if(attributeList[i][1][j] === 1 && ite==no_of_slots) 
-        {
-          available_time_slots_12hour +=(j < 12 ? j : j % 12).toString() + (j < 12 ? "am" : "pm") + "-" + (j+1 < 12 ? j + 1 : (j + 1) % 12).toString() + (j+1 < 12 || j+1==24 ? "am" : "pm") + "   ";
+        } else if (attributeList[i][1][j] === 1 && ite == no_of_slots) {
+          available_time_slots_12hour +=
+            (j < 12 ? j : j % 12).toString() +
+            (j < 12 ? "am" : "pm") +
+            "-" +
+            (j + 1 < 12 ? j + 1 : (j + 1) % 12).toString() +
+            (j + 1 < 12 || j + 1 == 24 ? "am" : "pm") +
+            "   ";
           ite++;
         }
       }
@@ -343,7 +354,11 @@ router.post("/book_counsellor_appointment", async (req, res) => {
   const counsellor_user_id = (
     await User.findOne({ username: counsellor_username })
   )._id;
-  const time_of_booking = new Date();
+  const time_of_booking = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    hour: "numeric",
+    hour12: false,
+  });
   const booking_status = 0;
   const doc = new Counsellor_Appointments({
     user_id: user_id,
