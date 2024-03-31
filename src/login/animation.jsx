@@ -1,5 +1,5 @@
 import Lottie from "react-lottie";
-import animationData from "../assets/Animation_Loading.json"; // Replace with the actual path
+import animationData from "../assets/Animation.json"; // Replace with the actual path
 import "./animation.css"; // Add this line
 const MyLottieAnimation = () => {
   const defaultOptions = {
@@ -13,7 +13,7 @@ const MyLottieAnimation = () => {
 
   return (
     <div className="animation">
-      <Lottie options={defaultOptions} height={600} width={600} />
+      <Lottie options={defaultOptions} height={150} width={150} />
     </div>
   );
 };

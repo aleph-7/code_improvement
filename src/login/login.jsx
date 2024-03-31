@@ -136,7 +136,7 @@ const Login = () => {
     }
   };
 
-  return loading ? (
+  return !loading ? (
     <div>
       <MyLottieAnimation />
     </div>
