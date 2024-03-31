@@ -46,8 +46,10 @@ router.post("/signup", async (req, res) => {
     // Hashing the passwords before saving them to the database
     const hashed_password = await bcrypt.hash(req.body.password, 10);
     // Creating a new user
+    let new_user = null;
+    let doc = null;
     if (req.body.user_category == 1) {
-      const new_user = new User({
+      new_user = new User({
         username: req.body.username,
         email_id: req.body.email_id,
         user_category: req.body.user_category,
@@ -56,8 +58,9 @@ router.post("/signup", async (req, res) => {
         type_of_sport: req.body.sport,
         validity: "false",
       });
+      doc = await new_user.save();
     } else {
-      const new_user = new User({
+      new_user = new User({
         username: req.body.username,
         email_id: req.body.email_id,
         user_category: req.body.user_category,
@@ -66,9 +69,10 @@ router.post("/signup", async (req, res) => {
         type_of_sport: "",
         validity: "true",
       });
+      doc = await new_user.save();
     }
     // Saving the user to the database
-    const doc = await new_user.save();
+
     if (req.body.user_category == 1) {
       //Send Mail
       const token = jsw.sign(
