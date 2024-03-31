@@ -21,9 +21,14 @@ router.get("/sport_booking", async (req, res) => {
   let attributeList;
   let workshopslist;
   //get bookings of a specific day!!! TO DO!!!
-  let currentDate = new Date().toLocaleDateString("en-GB");
-  console.log(currentDate);
-  let formattedDate = currentDate;
+  // let currentDate = new Date().toLocaleDateString("en-GB");
+  // console.log(currentDate);
+  // let formattedDate = currentDate;
+  // console.log(formattedDate);
+
+  let currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + 1);
+  let formattedDate = currentDate.toLocaleDateString("en-GB");
   console.log(formattedDate);
 
   await sportBooking
