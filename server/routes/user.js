@@ -1,7 +1,13 @@
+const { ObjectId } = require("bson");
 const express = require("express");
 const router = express.Router();
 
+const Badmintion_Court = require("../models/courtDB").badmintonCourtsSchema;
+const Squash_Court = require("../models/courtDB").squashCourtsSchema;
+const TableTennis_Court = require("../models/courtDB").tabletennisCourtsSchema;
+const Tennis_Court = require("../models/courtDB").tennisCourtsSchema;
 const SportsBookings = require("../models/bookingsDB").sportBookingsSchema;
+const Workshop = require("../models/contentDB").sport_workshopSchema;
 const WorkshopsBookings =
   require("../models/bookingsDB").yogaSessionsSportsWorkshops;
 const Counsellor_availability =
@@ -32,13 +38,22 @@ router.get("/get_booking_history", async (req, res) => {
       doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
       doc.date_slot,
       doc.booking_status,
+      doc.time_slot,
+      doc.court_id,
+      doc.partners_id,
+      0,
     ]);
   });
+
   await WorkshopsBookings.find({ user_id: user_id }).then((results) => {
     attributeList2 = results.map((doc) => [
       doc.type_of_sport == "table_tennis" ? "table tennis" : doc.type_of_sport,
       doc.session_id,
       doc.booking_status,
+      doc.session_id,
+      null,
+      0,
+      doc.session_id,
     ]);
   });
 
@@ -52,6 +67,75 @@ router.get("/get_booking_history", async (req, res) => {
       attributeList2[i][0] = attributeList2[i][0] + " workshop";
       let session = await SportsWorkshops.findOne({ _id: session_id });
       if (session != null) attributeList2[i][1] = session.date_slot;
+    }
+  }
+
+  for (let i = 0; i < attributeList.length; i++) {
+    let court_id = attributeList[i][4];
+    console.log(attributeList[i][0] + " " + court_id);
+    if (attributeList[i][0] == "badminton") {
+      let court = await Badmintion_Court.findOne({ _id: court_id });
+      if (court != null) attributeList[i][4] = court.court_name;
+      else attributeList[i][4] = "Null";
+    } else if (attributeList[i][0] == "squash") {
+      let court = await Squash_Court.findOne({ _id: court_id });
+      if (court != null) attributeList[i][4] = court.court_name;
+      else attributeList[i][4] = "Null";
+    } else if (attributeList[i][0] == "table tennis") {
+      let court = await TableTennis_Court.findOne({ _id: court_id });
+      if (court != null) attributeList[i][4] = court.court_name;
+      else attributeList[i][4] = "Null";
+    } else if (attributeList[i][0] == "tennis") {
+      let court = await Tennis_Court.findOne({ _id: court_id });
+      if (court != null) attributeList[i][4] = court.court_name;
+      else attributeList[i][4] = "Null";
+    }
+  }
+
+  for (let i = 0; i < attributeList.length; i++) {
+    if (attributeList[i][5].length > 0) {
+      let partners = [];
+      for (let j = 0; j < attributeList[i][5].length; j++) {
+        if (
+          attributeList[i][5][j] != null &&
+          attributeList[i][5][j] != "000000000000000000000000"
+        ) {
+          let partner = await User.findOne({ _id: attributeList[i][5][j] });
+          partners.push(partner.username);
+        }
+      }
+      attributeList[i][5] = partners;
+      attributeList[i][6] = partners.length;
+    } else {
+      attributeList[i][5] = [];
+    }
+  }
+
+  for (let i = 0; i < attributeList2.length; i++) {
+    let workshopid = attributeList2[i][6];
+    console.log("Workshop ID", workshopid);
+    if (attributeList2[i][0] === "yoga session") {
+      console.log("yoga session");
+      if (workshopid == null) continue;
+      try {
+        let session = await Yoga_Sessions.findOne({ _id: workshopid });
+        if (session == null) continue;
+        attributeList2[i][4] = session.content;
+        attributeList2[i][3] = session.time_slot_start;
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("workshop");
+      if (workshopid == null) continue;
+      try {
+        let session = await SportsWorkshops.findOne({ _id: workshopid });
+        if (session == null) continue;
+        attributeList2[i][4] = session.content;
+        attributeList2[i][3] = session.time_slot_start;
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
   attributeList = attributeList.concat(attributeList2);
