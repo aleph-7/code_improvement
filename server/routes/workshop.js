@@ -10,7 +10,7 @@ router.get("/badminton", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch Workshop for badminton.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "badminton" });
@@ -41,6 +41,7 @@ router.get("/badminton", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -54,7 +55,7 @@ router.get("/basketball", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for basketball.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "basketball" });
@@ -85,6 +86,7 @@ router.get("/basketball", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -98,7 +100,7 @@ router.get("/cricket", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for cricket.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "cricket" });
@@ -129,6 +131,7 @@ router.get("/cricket", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -142,7 +145,7 @@ router.get("/football", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for football.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "football" });
@@ -173,6 +176,7 @@ router.get("/football", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -186,7 +190,7 @@ router.get("/hockey", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for hockey.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "hockey" });
@@ -217,6 +221,7 @@ router.get("/hockey", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -230,7 +235,7 @@ router.get("/squash", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for squash.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "squash" });
@@ -261,6 +266,7 @@ router.get("/squash", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -274,7 +280,7 @@ router.get("/table_tennis", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for table tennis.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "table_tennis" });
@@ -305,6 +311,7 @@ router.get("/table_tennis", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -318,7 +325,7 @@ router.get("/tennis", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for tennis.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "tennis" });
@@ -349,6 +356,7 @@ router.get("/tennis", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -362,7 +370,7 @@ router.get("/volleyball", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for volleyball.");
 
   try {
     const results = await Workshop.find({ type_of_sport: "volleyball" });
@@ -393,6 +401,7 @@ router.get("/volleyball", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -406,7 +415,7 @@ router.get("/yoga", async (req, res) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const year = currentDate.getFullYear();
   const formattedDate = `${day}-${month}-${year}`;
-  console.log(formattedDate);
+  console.log("Request raised to fetch workshop for yoga.");
 
   try {
     const results = await Yoga_Sessions.find();
@@ -437,6 +446,7 @@ router.get("/yoga", async (req, res) => {
       }
     }
     res.status(200).json({ message: finalAttributeList });
+    console.log("Workshops Fetched.");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

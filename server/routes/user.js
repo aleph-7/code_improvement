@@ -13,7 +13,6 @@ const Counsellor_Appointments =
 const User = require("../models/userDB").userSchema;
 
 //GET COUNSELLOR APPOINTMENTS
-// doesnt seem to be called anywhere in front end currently
 router.get("/counsellor_appointments", async (req, res) => {
   let attributeList;
   await Counsellor_Appointments.find({}).then((results) => {
@@ -24,9 +23,9 @@ router.get("/counsellor_appointments", async (req, res) => {
 
 router.get("/get_booking_history", async (req, res) => {
   let user_id = req.query.user_id;
-  console.log(user_id);
   let doc;
   let attributeList = [];
+  console.log("Booking History Fetch Request for user_id: " + user_id);
   doc = await SportsBookings.find({ user_id: user_id });
   await SportsBookings.find({ user_id: user_id }).then((results) => {
     attributeList = results.map((doc) => [
@@ -55,7 +54,6 @@ router.get("/get_booking_history", async (req, res) => {
       if (session != null) attributeList2[i][1] = session.date_slot;
     }
   }
-  console.log(attributeList2);
   attributeList = attributeList.concat(attributeList2);
   res.status(200).json({ message: attributeList });
 });
@@ -65,6 +63,7 @@ router.get("/get_booking_history", async (req, res) => {
 
 router.get("/counsellor_page_user", async (req, res) => {
   let attributeList;
+  console.log("Fetching List of Counsellors");
   await Counsellor_availability.find({}).then((results) => {
     attributeList = results.map((doc) => [
       doc.day_vector,
@@ -184,7 +183,7 @@ router.get("/institute_counsellors", async (req, res) => {
 
 router.post("/get_available_days", async (req, res) => {
   counsellor_username = req.body.counsellor_username;
-  console.log(counsellor_username);
+  console.log("Fetching availability for counsellor : ", counsellor_username);
   counsellor_user_id = (await User.findOne({ username: counsellor_username }))
     ._id;
   let attributeList;
@@ -192,7 +191,7 @@ router.post("/get_available_days", async (req, res) => {
     .then((results) => {
       attributeList = results.map((doc) => [doc.day_vector, doc.date_slot]);
     })
-    .then(() => console.log(attributeList));
+    .then(() => console.log("Feched Sucessfully"));
   let messageAttributeList = [];
   for (let i = 0; i < attributeList.length; i++) {
     if (attributeList[i][1] !== "none")
@@ -274,6 +273,7 @@ async function check_booking(
 router.post("/get_available_time_slots", async (req, res) => {
   counsellor_username = req.body.counsellor_username;
   let date = req.body.date;
+  console.log("Get Empty Timeslots for : ", counsellor_username, " on ", date);
   parameter = 0;
   if (date === "Monday") {
     date = 0;
@@ -320,14 +320,19 @@ router.post("/get_available_time_slots", async (req, res) => {
     parameter,
     attributeList
   );
-  console.log(messageAttributeList);
   res.json({ message: messageAttributeList });
+  console.log("Fetched Sucessfully");
 });
 
 router.post("/book_counsellor_appointment", async (req, res) => {
   const user_id = req.body.user_id;
   const counsellor_username = req.body.counsellor_username;
-  console.log(counsellor_username);
+  console.log(
+    "Booking Appointment for : ",
+    counsellor_username,
+    " by ",
+    user_id
+  );
   let date = req.body.date;
   if (date === "Monday") {
     date = getDate(date);
@@ -349,7 +354,6 @@ router.post("/book_counsellor_appointment", async (req, res) => {
   const department = req.body.department;
   const hall = req.body.hall;
   const contact_number = req.body.contact_number;
-  console.log(contact_number);
   const final_contact_number = Number(contact_number);
   const counsellor_user_id = (
     await User.findOne({ username: counsellor_username })
@@ -374,14 +378,15 @@ router.post("/book_counsellor_appointment", async (req, res) => {
   });
   doc.save();
   res.json({ message: "Appointment booked successfully" });
+  console.log("Appointment booked successfully");
 });
 
 // =====================================
 // COUNSELLOR USER PAGES 3
 router.post("/counsellor_page_user_3", async (req, res) => {
   let patient_id = req.body.user_id;
-  console.log(patient_id);
   let attributeList;
+  console.log("Fetching Counsellor Appointments for user_id: ", patient_id);
   await Counsellor_Appointments.find({ user_id: patient_id }).then(
     (results) => {
       attributeList = results.map((doc) => [

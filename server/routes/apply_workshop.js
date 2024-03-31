@@ -6,12 +6,16 @@ const yoga_sports_workshops =
 const yoga_sessions = require("../models/contentDB").yoga_sessionSchema;
 
 router.post("/badminton", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
-
     if (!workshop) {
       console.log("Workshop not found");
       return res
@@ -48,10 +52,7 @@ router.post("/badminton", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log(
-        "Workshop updated successfully and added to the database!!",
-        updatedWorkshop
-      );
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -68,12 +69,16 @@ router.post("/badminton", async (req, res) => {
 });
 
 router.post("/basketball", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
-
     if (!workshop) {
       console.log("Workshop not found");
       return res
@@ -110,7 +115,7 @@ router.post("/basketball", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -127,9 +132,14 @@ router.post("/basketball", async (req, res) => {
 });
 
 router.post("/cricket", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -169,7 +179,7 @@ router.post("/cricket", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -186,9 +196,14 @@ router.post("/cricket", async (req, res) => {
 });
 
 router.post("/volleyball", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -228,7 +243,7 @@ router.post("/volleyball", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -245,9 +260,14 @@ router.post("/volleyball", async (req, res) => {
 });
 
 router.post("/tennis", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -287,7 +307,7 @@ router.post("/tennis", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -304,9 +324,14 @@ router.post("/tennis", async (req, res) => {
 });
 
 router.post("/table_tennis", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -346,7 +371,7 @@ router.post("/table_tennis", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -363,9 +388,14 @@ router.post("/table_tennis", async (req, res) => {
 });
 
 router.post("/squash", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -405,7 +435,7 @@ router.post("/squash", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -422,9 +452,14 @@ router.post("/squash", async (req, res) => {
 });
 
 router.post("/football", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -464,7 +499,7 @@ router.post("/football", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -481,9 +516,14 @@ router.post("/football", async (req, res) => {
 });
 
 router.post("/hockey", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await Workshop.findById(workshopId);
 
@@ -523,7 +563,7 @@ router.post("/hockey", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });
@@ -540,9 +580,14 @@ router.post("/hockey", async (req, res) => {
 });
 
 router.post("/yoga", async (req, res) => {
-  console.log(req.body);
   const workshopId = req.body.workshopId;
   const userId = req.body.userId;
+  console.log(
+    "Request to apply for badminton workshop: ",
+    workshopId,
+    " by user ",
+    userId
+  );
   try {
     const workshop = await yoga_sessions.findById(workshopId);
 
@@ -582,7 +627,7 @@ router.post("/yoga", async (req, res) => {
         session_id: req.body.workshopId,
       });
       const doc = await apply.save();
-      console.log("Workshop updated successfully:", updatedWorkshop);
+      console.log("Workshop updated successfully and added to the database!");
       res
         .status(200)
         .json({ success: true, message: "Workshop updated successfully" });

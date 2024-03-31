@@ -13,6 +13,7 @@ const router = express.Router();
 router.get("/badminton", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
+  console.log("Request raised to fetch leaderboard for badminton.");
   await Leaderboard_Badminton.find({ position: { $lte: 10 } }).then(
     (results) => {
       attributeList = results.map((doc) => [doc.user_id, doc.position]);
@@ -20,14 +21,11 @@ router.get("/badminton", async (req, res) => {
   );
   for (let i = 0; i < attributeList.length; i++) {
     let user_id = attributeList[i][0];
-    console.log(user_id);
     try {
       let user_name = await user.findOne({ _id: user_id });
       if (!user_name) {
-        console.log("Anonymous");
         finalattributeList.push(["Anonymous", attributeList[i][1]]);
       } else {
-        console.log(user_name.username);
         finalattributeList.push([user_name.username, attributeList[i][1]]);
       }
     } catch (err) {
@@ -35,25 +33,24 @@ router.get("/badminton", async (req, res) => {
     }
   }
   finalattributeList.sort((a, b) => a[1] - b[1]);
+  console.log(finalattributeList);
   res.json({ message: finalattributeList });
 });
 
 router.get("/tennis", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
+  console.log("Request raised to fetch leaderboard for tennis.");
   await Leaderboard_Tennis.find({ position: { $lte: 10 } }).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
     let user_id = attributeList[i][0];
-    console.log(user_id);
     try {
       let user_name = await user.findOne({ _id: user_id });
       if (!user_name) {
-        console.log("Anonymous");
         finalattributeList.push(["Anonymous", attributeList[i][1]]);
       } else {
-        console.log(user_name.username);
         finalattributeList.push([user_name.username, attributeList[i][1]]);
       }
     } catch (err) {
@@ -61,25 +58,24 @@ router.get("/tennis", async (req, res) => {
     }
   }
   finalattributeList.sort((a, b) => a[1] - b[1]);
+  console.log(finalattributeList);
   res.json({ message: finalattributeList });
 });
 
 router.get("/squash", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
+  console.log("Request raised to fetch leaderboard for squash.");
   await Leaderboard_Squash.find({ position: { $lte: 10 } }).then((results) => {
     attributeList = results.map((doc) => [doc.user_id, doc.position]);
   });
   for (let i = 0; i < attributeList.length; i++) {
     let user_id = attributeList[i][0];
-    console.log(user_id);
     try {
       let user_name = await user.findOne({ _id: user_id });
       if (!user_name) {
-        console.log("Anonymous");
         finalattributeList.push(["Anonymous", attributeList[i][1]]);
       } else {
-        console.log(user_name.username);
         finalattributeList.push([user_name.username, attributeList[i][1]]);
       }
     } catch (err) {
@@ -87,12 +83,14 @@ router.get("/squash", async (req, res) => {
     }
   }
   finalattributeList.sort((a, b) => a[1] - b[1]);
+  console.log(finalattributeList);
   res.json({ message: finalattributeList });
 });
 
 router.get("/table_tennis", async (req, res) => {
   let attributeList;
   var finalattributeList = [];
+  console.log("Request raised to fetch leaderboard for table tennis.");
   await Leaderboard_TableTennis.find({ position: { $lte: 10 } }).then(
     (results) => {
       attributeList = results.map((doc) => [doc.user_id, doc.position]);
@@ -100,14 +98,11 @@ router.get("/table_tennis", async (req, res) => {
   );
   for (let i = 0; i < attributeList.length; i++) {
     let user_id = attributeList[i][0];
-    console.log(user_id);
     try {
       let user_name = await user.findOne({ _id: user_id });
       if (!user_name) {
-        console.log("Anonymous");
         finalattributeList.push(["Anonymous", attributeList[i][1]]);
       } else {
-        console.log(user_name.username);
         finalattributeList.push([user_name.username, attributeList[i][1]]);
       }
     } catch (err) {
@@ -115,15 +110,16 @@ router.get("/table_tennis", async (req, res) => {
     }
   }
   finalattributeList.sort((a, b) => a[1] - b[1]);
+  console.log(finalattributeList);
   res.json({ message: finalattributeList });
 });
 
 // LEADERBOARD SEARCH
-
 router.post("/tennis/selected", async (req, res) => {
   let user_id;
   let attributeList = [];
   let username = req.body.username;
+  console.log("Leaderboard Search for User: " + username);
   try {
     await user.findOne({ username: username }).then((results) => {
       user_id = results._id;
@@ -132,11 +128,8 @@ router.post("/tennis/selected", async (req, res) => {
       attributeList = results.map((doc) => [doc.user_id, doc.position]);
     });
     attributeList[0][0] = username;
-    console.log(attributeList);
-    console.log(attributeList);
     res.json({ message: attributeList });
   } catch (err) {
-    console.log(attributeList);
     res.json({ message: attributeList });
   }
 });
@@ -145,6 +138,7 @@ router.post("/badminton/selected", async (req, res) => {
   let user_id;
   let attributeList = [];
   let username = req.body.username;
+  console.log("Leaderboard Search for User: " + username);
   try {
     await user.findOne({ username: username }).then((results) => {
       user_id = results._id;
@@ -153,11 +147,8 @@ router.post("/badminton/selected", async (req, res) => {
       attributeList = results.map((doc) => [doc.user_id, doc.position]);
     });
     attributeList[0][0] = username;
-    console.log(attributeList);
-    console.log(attributeList);
     res.json({ message: attributeList });
   } catch (err) {
-    console.log(attributeList);
     res.json({ message: attributeList });
   }
 });
@@ -205,7 +196,6 @@ router.post("/table_tennis/selected", async (req, res) => {
 });
 
 //LEADER BOARD IMPLEMENTATION
-
 router.get("/badminton/attendance", async (req, res) => {
   let attributeList;
   await BadmintonCourt.find({}).then((results) => {

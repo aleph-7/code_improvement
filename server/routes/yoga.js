@@ -12,6 +12,7 @@ router.post("/post_yoga_session", async (req, res) => {
   const date = req.body.date;
   const startTime = req.body.start_time;
   const endTime = req.body.end_time;
+  console.log("Request to post yoga session received");
 
   let attributeList = [];
   //dont allow to post session if already a session is posted on the same date and time
@@ -42,6 +43,10 @@ router.post("/post_yoga_session", async (req, res) => {
 router.post("/yoga_sessions_yoga_dashboard", async (req, res) => {
   yoga_instructor_id = req.body.yoga_instructor_id;
   let attributeList;
+  console.log(
+    "Request to view yoga sessions received for yoga instructor : ",
+    yoga_instructor_id
+  );
   await Yoga_Sessions.find({
     yoga_instructor_user_id: yoga_instructor_id,
   }).then((results) => {
@@ -68,7 +73,14 @@ router.post("/view_enrollment_yoga_dashboard", async (req, res) => {
     yoga_session_day_date.split(" ")[1] +
     " " +
     yoga_session_day_date.split(" ")[2];
-  console.log(date_slot, time);
+  console.log(
+    "Request to view enrollment received for yoga instructor : ",
+    yoga_instructor_id,
+    "on date : ",
+    date_slot,
+    "and time : ",
+    time
+  );
   let time_slot_start;
   if (time == "0 AM") {
     time_slot_start = 0;
@@ -127,14 +139,12 @@ router.post("/view_enrollment_yoga_dashboard", async (req, res) => {
   }).then((results) => {
     attributeList = results.map((doc) => [doc.participants_id]);
   });
-  console.log(attributeList);
   let finalAttributeList = [];
   let templist = [];
   templist.push("name of participant");
   finalAttributeList.push(templist);
   for (let i = 0; i < attributeList[0][0].length; i++) {
     let user_id = attributeList[0][0][i];
-    console.log(user_id);
     let username = await User.findOne({ _id: user_id });
     let templist = [];
     templist.push(username.username);
@@ -144,6 +154,7 @@ router.post("/view_enrollment_yoga_dashboard", async (req, res) => {
 });
 
 router.get("/yoga/getWorkshops", async (req, res) => {
+  console.log("Request to retrieve workshops received");
   try {
     let attributeList;
     // Assuming the coach_user_id is passed as a query parameter
@@ -177,9 +188,9 @@ router.get("/yoga/getWorkshops", async (req, res) => {
       }
       attributeList[i][3] = finalParticipantsList;
     }
-    console.log(attributeList);
     // Sending the retrieved workshops as a response to the frontend
     res.status(200).json({ message: attributeList });
+    console.log("Workshops retrieved successfully");
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to retrieve workshops" });
@@ -192,7 +203,7 @@ router.get("/yoga/statistics", async (req, res) => {
   let totalStrength = [];
   let participants = [];
   let labels = [];
-  let finalAttributeList = [];
+  console.log("Request to retrieve yoga statistics received");
   await Yoga_Sessions.find()
     .then((results) => {
       vacancies = results.map((doc) => doc.max_strength);
@@ -212,8 +223,8 @@ router.get("/yoga/statistics", async (req, res) => {
     { data: participants, label: "participants" },
     { data: totalStrength, label: "totalStrength" },
   ]);
-  console.log(attributeList);
   res.json({ message: attributeList });
+  console.log("Fetched Sucessfully ");
 });
 
 module.exports = router;

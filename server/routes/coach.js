@@ -7,6 +7,7 @@ const User = require("../models/userDB").userSchema;
 
 router.post("/postWorkshop", async (req, res) => {
   try {
+    console.log("Post Workshop request recieved for: ", req.body.coach_user_id);
     const new_workshop = new Workshop({
       time_slot_start: req.body.start_time,
       time_slot_end: req.body.end_time,
@@ -23,8 +24,8 @@ router.post("/postWorkshop", async (req, res) => {
       participant_id: [],
       type_of_sport: req.body.type_of_sport,
     });
-    console.log(new_workshop);
     const doc = await new_workshop.save();
+    console.log("Workshop posted successfully");
     //Sending the response to the frontend
     res.status(200).json({ message: "Post successful" });
   } catch (err) {
@@ -37,6 +38,7 @@ router.get("/getWorkshops", async (req, res) => {
   try {
     let attributeList;
     const sport = req.query.type_of_sport;
+    console.log("Request raised to fetch workshops for ", sport);
     // Assuming the coach_user_id is passed as a query parameter
     // Retrieve workshops associated with the specified coach_user_id
     await Workshop.find({ type_of_sport: sport }).then((results) => {
@@ -65,9 +67,9 @@ router.get("/getWorkshops", async (req, res) => {
       }
       attributeList[i][3] = finalParticipantsList;
     }
-    console.log(attributeList);
     // Sending the retrieved workshops as a response to the frontend
     res.status(200).json({ message: attributeList });
+    console.log("Workshops Fetched");
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to retrieve workshops" });
@@ -80,8 +82,8 @@ router.get("/statistics", async (req, res) => {
   let totalStrength = [];
   let participants = [];
   let labels = [];
-  let finalAttributeList = [];
   const sport = req.query.type_of_sport;
+  console.log("Request raised to fetch statistics for ", sport);
   await Workshop.find({
     type_of_sport: sport,
   })
@@ -103,11 +105,12 @@ router.get("/statistics", async (req, res) => {
     { data: participants, label: "participants" },
     { data: totalStrength, label: "totalStrength" },
   ]);
-  console.log(attributeList);
+  console.log("Statistics Fetched");
   res.json({ message: attributeList });
 });
 
 router.post("/reserveCourt", async (req, res) => {
+  console.log("Reservation request recieved for: ", req.body.user_id);
   try {
     const new_reservation = new SportsBookings({
       time_slot: req.body.time_slot,
@@ -119,10 +122,10 @@ router.post("/reserveCourt", async (req, res) => {
       booking_status: req.body.booking_status,
       user_id: req.body.user_id,
     });
-    console.log(new_reservation);
     const doc = await new_reservation.save();
     //Sending the response to the frontend
     res.status(200).json({ message: "Reservation successful" });
+    console.log("Reservation successful");
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Reservation failed" });

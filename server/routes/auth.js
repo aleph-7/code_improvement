@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
 router.post("/signup", async (req, res) => {
   try {
     // Check if the username or email ID already exists in the database
-    console.log("SignUp Request Recieved for: ", req.body.username);
+    console.log("SignUp request recieved for: ", req.body.username);
     const existingUser = await User.findOne({
       $or: [{ username: req.body.username }, { email_id: req.body.email_id }],
     });
@@ -46,15 +46,27 @@ router.post("/signup", async (req, res) => {
     // Hashing the passwords before saving them to the database
     const hashed_password = await bcrypt.hash(req.body.password, 10);
     // Creating a new user
-    const new_user = new User({
-      username: req.body.username,
-      email_id: req.body.email_id,
-      user_category: req.body.user_category,
-      password: hashed_password,
-      profile_pic: "",
-      type_of_sport: req.body.sport,
-      validity: "false",
-    });
+    if (req.body.user_category == 1) {
+      const new_user = new User({
+        username: req.body.username,
+        email_id: req.body.email_id,
+        user_category: req.body.user_category,
+        password: hashed_password,
+        profile_pic: "",
+        type_of_sport: req.body.sport,
+        validity: "false",
+      });
+    } else {
+      const new_user = new User({
+        username: req.body.username,
+        email_id: req.body.email_id,
+        user_category: req.body.user_category,
+        password: hashed_password,
+        profile_pic: "",
+        type_of_sport: "",
+        validity: "true",
+      });
+    }
     // Saving the user to the database
     const doc = await new_user.save();
     if (req.body.user_category == 1) {

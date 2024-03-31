@@ -11,6 +11,7 @@ const User = require("../models/userDB").userSchema;
 
 router.get("/swim_gym_instructor_dashboard", async (req, res) => {
   let attributeList;
+  console.log("Request raised to fetch data for swim/gym instructor dashboard");
   await Swim_Gym_Memberships.find({}).then((results) => {
     attributeList = results.map((doc) => [
       doc.user_id,
@@ -27,8 +28,7 @@ router.get("/check_gym_enrollment", async (req, res) => {
   let attributeList = [];
   let year = req.query.year;
   let month = req.query.month;
-  console.log(year);
-  console.log(month);
+  console.log("Request raised to check gym enrollment for ", year, " ", month);
   await Swim_Gym_Memberships.find({
     type: 0,
     booking_status: 1,
@@ -68,14 +68,16 @@ router.get("/check_gym_enrollment", async (req, res) => {
     else if (attributeList[i][2] == 12) month = "december";
     attributeList[i][2] = month;
   }
-  console.log(attributeList);
   res.json({ message: attributeList });
+  console.log("Gym Enrollment Checked");
 });
+
 router.get("/gym_statistics", async (req, res) => {
   let attributeList = [];
   let finalAttributeList = [];
   let year = new Date().getFullYear();
   if (req.query.year) year = req.query.year;
+  console.log("Request raised to fetch gym statistics for ", year);
   await Swim_Gym_Memberships.find({
     type: 0,
     booking_status: 1,
@@ -114,16 +116,20 @@ router.get("/gym_statistics", async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-  console.log(finalAttributeList);
   res.json({ message: finalAttributeList });
+  console.log("Gym Statistics Fetched");
 });
 
 router.get("/check_swimming_enrollment", async (req, res) => {
   let attributeList = [];
   let year = req.query.year;
   let month = req.query.month;
-  console.log(year);
-  console.log(month);
+  console.log(
+    "Request raised to check swimming enrollment for ",
+    year,
+    " ",
+    month
+  );
   await Swim_Gym_Memberships.find({
     type: 1,
     booking_status: 1,
@@ -163,14 +169,15 @@ router.get("/check_swimming_enrollment", async (req, res) => {
     else if (attributeList[i][2] == 12) month = "december";
     attributeList[i][2] = month;
   }
-  console.log(attributeList);
   res.json({ message: attributeList });
+  console.log("Swimming Enrollment Checked");
 });
 router.get("/swim_statistics", async (req, res) => {
   let attributeList = [];
   let finalAttributeList = [];
   let year = new Date().getFullYear();
   if (req.query.year) year = req.query.year;
+  console.log("Request raised to fetch swim statistics for ", year);
   await Swim_Gym_Memberships.find({
     type: 1,
     booking_status: 1,
@@ -209,11 +216,12 @@ router.get("/swim_statistics", async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-  console.log(finalAttributeList);
   res.json({ message: finalAttributeList });
+  console.log("Swim Statistics Fetched");
 });
 
 router.get("/get_statistics", async (req, res) => {
+  console.log("Request raised to fetch statistics for swim/gym instructor");
   let attributeList = [];
   let bookingJanuary = 0;
   let bookingFebruary = 0;

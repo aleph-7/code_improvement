@@ -132,10 +132,9 @@ const session = require("express-session");
 
 // Define the URL of your endpoint
 const endpointUrl = "http://localhost:6300/booking/sport_booking";
-
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "01 00 * * *",
+  "11 00 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
@@ -374,11 +373,9 @@ app.post("/pre_booking", async (req, res) => {
       ],
     });
     if (isavailable) {
-      res
-        .status(500)
-        .json({
-          error: "You have applied for some other booking at this time.",
-        });
+      res.status(500).json({
+        error: "You have applied for some other booking at this time.",
+      });
     } else {
       const players = await User.find(
         { username: { $in: req.body.players } },
