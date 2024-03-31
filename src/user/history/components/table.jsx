@@ -1,11 +1,20 @@
 import React from "react";
 import "./table.css";
 import Info from "./info";
+import Popup from "reactjs-popup";
 
 let accepted = 0;
 let rejected = 0;
 
 const Table_History = ({ noOfRows, noOfColumns, rowEntries }) => {
+  const getPlayerList = (players) => {
+    let h3_list = [];
+    for (let i = 0; i < players.length; i++) {
+      h3_list.push(<h3>{`player ${i + 1} : ${players[i]}`}</h3>);
+    }
+    return h3_list;
+  };
+
   const generateTableHeader = () => {
     const rows = [];
     for (let i = 0; i < 1; i++) {
@@ -65,7 +74,24 @@ const Table_History = ({ noOfRows, noOfColumns, rowEntries }) => {
         {rowEntries[rowIndex] &&
         (rowEntries[rowIndex][2] == 0 || rowEntries[rowIndex][2]) ? (
           rowEntries[rowIndex][2] == 1 ? (
-            <button id="accepted">accepted</button>
+            <Popup
+              trigger={<button id="accepted">accepted</button>}
+              position="right center"
+            >
+              <div className="popup">
+                {rowEntries[rowIndex][4] ? (
+                  <h3>{rowEntries[rowIndex][4]}</h3>
+                ) : null}
+                {rowEntries[rowIndex][3] ? (
+                  <h3> time : {rowEntries[rowIndex][3]}:00 hrs</h3>
+                ) : null}
+                <div>
+                  {rowEntries[rowIndex][6] > 0
+                    ? getPlayerList(rowEntries[rowIndex][5])
+                    : null}
+                </div>
+              </div>
+            </Popup>
           ) : rowEntries[rowIndex][2] == 0 ? (
             <button id="pending">pending</button>
           ) : rowEntries[rowIndex][2] == "status" ? (
