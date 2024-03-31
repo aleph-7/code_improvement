@@ -130,11 +130,20 @@ const request = require("request");
 const { date } = require("joi");
 const session = require("express-session");
 
+// Print the time every five minutes
+setInterval(() => {
+  const currentTime = new Date();
+  const strings = currentTime.toLocaleDateString("en-GB");
+  const hours = currentTime.getHours();
+  console.log(`Current time: ${currentTime}`);
+  console.log(`Current date: ${strings}`);
+  console.log(`Current hours: ${hours}`);
+}, 1 * 60 * 1000);
 // Define the URL of your endpoint
 const endpointUrl = "http://localhost:6300/booking/sport_booking";
 // Define the cron schedule (runs every day at 12:01 AM)
 cron.schedule(
-  "30 21 * * *",
+  "01 00 * * *",
   () => {
     // Make an HTTP GET request to your endpoint
     request.get(endpointUrl, (error, response, body) => {
