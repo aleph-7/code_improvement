@@ -209,7 +209,7 @@ function PostSession() {
           <input
             type="text"
             className="Yoga_Session_Date"
-            placeholder="start date"
+            placeholder="start date (DD/MM/YYYY)"
             name="startDate"
             onChange={(e) => setDate(e.target.value)}
           />

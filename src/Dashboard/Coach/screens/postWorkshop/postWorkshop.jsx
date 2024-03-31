@@ -232,7 +232,7 @@ const PostWorkshop = () => {
         {error.description && <span className="errs">{error.description}</span>}
         <input
           type="text"
-          placeholder="date of workshop"
+          placeholder="date of workshop (DD/MM/YYYY)"
           className="coach_input_large"
           name="date"
           value={input.date}
