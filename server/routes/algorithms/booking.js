@@ -241,7 +241,7 @@ router.get("/sport_booking", async (req, res) => {
         temp_rest[i][2] = courts[size - i - 1 + counter][0];
         if (temp_rest[i][11] === 0) {
           //newly paired user
-          temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
+          temp_rest[I][10][0] = temp_pairing[dict[temp_rest[i][0]] + 1][3];
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][2] =
@@ -515,7 +515,7 @@ router.get("/sport_booking", async (req, res) => {
         temp_rest[i][2] = courts[size - i - 1 + counter][0];
         if (temp_rest[i][11] === 0) {
           //newly paired user
-          temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
+          temp_rest[I][10][0] = temp_pairing[dict[temp_rest[i][0]] + 1][3];
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][2] =
@@ -789,7 +789,7 @@ router.get("/sport_booking", async (req, res) => {
         temp_rest[i][2] = courts[size - i - 1 + counter][0];
         if (temp_rest[i][11] === 0) {
           //newly paired user
-          temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
+          temp_rest[I][10][0] = temp_pairing[dict[temp_rest[i][0]] + 1][3];
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][2] =
@@ -1065,7 +1065,7 @@ router.get("/sport_booking", async (req, res) => {
         temp_rest[i][2] = courts[size - i - 1 + counter][0];
         if (temp_rest[i][11] === 0) {
           //newly paired user
-          temp_rest[i][10].push(temp_pairing[dict[temp_rest[i][0]] + 1][0]);
+          temp_rest[I][10][0] = temp_pairing[dict[temp_rest[i][0]] + 1][3];
           temp_rest[i][11] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][7] = 1;
           temp_pairing[dict[temp_rest[i][0]] + 1][2] =
