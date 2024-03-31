@@ -11,7 +11,10 @@ const tabletennisLeaderboard =
   require("../../models/leaderboardDB").tabletennisLeaderboardSchema;
 const tennisLeaderboard =
   require("../../models/leaderboardDB").tennisLeaderboardSchema;
-const Courts = require("../../models/courtDB").badmintonCourtsSchema;
+const badmintonCourts = require("../../models/courtDB").badmintonCourtsSchema;
+const tennisCourts = require("../../models/courtDB").tennisCourtsSchema;
+const squashCourts = require("../../models/courtDB").squashCourtsSchema;
+const tabletennisCourts = require("../../models/courtDB").tabletennisCourtsSchema;
 const Workshops = require("../../models/contentDB").sport_workshopSchema;
 
 router.get("/sport_booking", async (req, res) => {
@@ -159,7 +162,7 @@ router.get("/sport_booking", async (req, res) => {
 
     //list of courts
     let courts;
-    await Courts.find({}).then((results) => {
+    await badmintonCourts.find({}).then((results) => {
       courts = results.map((doc) => [
         doc._id,
         doc.occupancy_status,
@@ -433,7 +436,7 @@ router.get("/sport_booking", async (req, res) => {
 
     //list of courts
     let courts;
-    await Courts.find({}).then((results) => {
+    await tennisCourts.find({}).then((results) => {
       courts = results.map((doc) => [
         doc._id,
         doc.occupancy_status,
@@ -707,7 +710,7 @@ router.get("/sport_booking", async (req, res) => {
 
     //list of courts
     let courts;
-    await Courts.find({}).then((results) => {
+    await squashCourts.find({}).then((results) => {
       courts = results.map((doc) => [
         doc._id,
         doc.occupancy_status,
@@ -983,7 +986,7 @@ router.get("/sport_booking", async (req, res) => {
 
     //list of courts
     let courts;
-    await Courts.find({}).then((results) => {
+    await tabletennisCourts.find({}).then((results) => {
       courts = results.map((doc) => [
         doc._id,
         doc.occupancy_status,
