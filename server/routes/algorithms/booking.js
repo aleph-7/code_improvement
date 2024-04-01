@@ -27,7 +27,7 @@ router.get("/sport_booking", async (req, res) => {
   // console.log(formattedDate);
 
   let currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + 1);
+  currentDate.setDate(currentDate.getDate());
   let formattedDate = currentDate.toLocaleDateString("en-GB");
   console.log(formattedDate);
 
@@ -376,6 +376,7 @@ router.get("/sport_booking", async (req, res) => {
         });
       });
     });
+    console.log(temp_pairing);
 
     //to refer to indices of unpaired users later in temp_pairing
     var dict = {};
@@ -418,6 +419,7 @@ router.get("/sport_booking", async (req, res) => {
       //record/history of rejections
       return a[12] - showup_record_a - b[12] + showup_record_b;
     });
+    console.log(temp_rest);
 
     //list of workshops
     await Workshops.find({
@@ -449,6 +451,8 @@ router.get("/sport_booking", async (req, res) => {
     let num_courts = courts.length;
     let counter = 0;
 
+    console.log(courts);
+
     //assigning courts to workshops
     while (counter < num_courts && counter < workshopslist.length) {
       const conditions = {
@@ -475,7 +479,7 @@ router.get("/sport_booking", async (req, res) => {
         });
       counter++;
     }
-
+    
     //assigning null courts for workshops that could not be assigned
     for (let k = counter; k < workshopslist.length; k++) {
       const conditions = {
@@ -503,6 +507,12 @@ router.get("/sport_booking", async (req, res) => {
     }
 
     let size = temp_rest.length;
+    console.log("temp_rest=");
+    console.log(size);
+    console.log("counter=");
+    console.log(counter);
+    console.log("threshold=");
+    console.log(size - courts.length + counter);
 
     //changing attributes of temp_rest list and adding other bookings to the list
     for (let i = 0; i < size; i++) {
