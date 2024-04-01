@@ -98,10 +98,12 @@ router.get("/get_booking_history", async (req, res) => {
       for (let j = 0; j < attributeList[i][5].length; j++) {
         if (
           attributeList[i][5][j] != null &&
-          attributeList[i][5][j] != "000000000000000000000000"
+          attributeList[i][5][j] != "000000000000000000000000" &&
+          attributeList[i][5][j] != new ObjectId("000000000000000000000000")
         ) {
           let partner = await User.findOne({ _id: attributeList[i][5][j] });
-          partners.push(partner.username);
+          if (partner != null) partners.push(partner.username);
+          if (partner != null) console.log("Partner Name", partner.username);
         }
       }
       attributeList[i][5] = partners;
