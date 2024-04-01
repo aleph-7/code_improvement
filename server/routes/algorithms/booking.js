@@ -301,7 +301,7 @@ router.get("/sport_booking", async (req, res) => {
     for (let i = 0; i < size; i++) {
       if (temp_rest[i][7] === 1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { acceptances: 1 },
@@ -323,7 +323,7 @@ router.get("/sport_booking", async (req, res) => {
       }
       if (temp_rest[i][7] === -1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { rejections: 1 },
@@ -585,7 +585,7 @@ router.get("/sport_booking", async (req, res) => {
     for (let i = 0; i < size; i++) {
       if (temp_rest[i][7] === 1) {
         const conditions = {
-          _id: temp_rest[i][0],
+         user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { acceptances: 1 },
@@ -607,7 +607,7 @@ router.get("/sport_booking", async (req, res) => {
       }
       if (temp_rest[i][7] === -1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { rejections: 1 },
@@ -859,7 +859,7 @@ router.get("/sport_booking", async (req, res) => {
     for (let i = 0; i < size; i++) {
       if (temp_rest[i][7] === 1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { acceptances: 1 },
@@ -881,7 +881,7 @@ router.get("/sport_booking", async (req, res) => {
       }
       if (temp_rest[i][7] === -1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { rejections: 1 },
@@ -1135,7 +1135,7 @@ router.get("/sport_booking", async (req, res) => {
     for (let i = 0; i < size; i++) {
       if (temp_rest[i][7] === 1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { acceptances: 1 },
@@ -1157,7 +1157,7 @@ router.get("/sport_booking", async (req, res) => {
       }
       if (temp_rest[i][7] === -1) {
         const conditions = {
-          _id: temp_rest[i][0],
+          user_id: temp_rest[i][3],
         };
         const update = {
           $inc: { rejections: 1 },
