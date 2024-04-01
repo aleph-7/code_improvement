@@ -120,13 +120,13 @@ router.get("/sport_booking", async (req, res) => {
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_a++;
           }
           total_bookings_a++;
         }
         if (attributeList[j][3] === b[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_b++;
           }
           total_bookings_b++;
@@ -395,13 +395,13 @@ router.get("/sport_booking", async (req, res) => {
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_a++;
           }
           total_bookings_a++;
         }
         if (attributeList[j][3] === b[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_b++;
           }
           total_bookings_b++;
@@ -678,13 +678,13 @@ router.get("/sport_booking", async (req, res) => {
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_a++;
           }
           total_bookings_a++;
         }
         if (attributeList[j][3] === b[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_b++;
           }
           total_bookings_b++;
@@ -954,13 +954,13 @@ router.get("/sport_booking", async (req, res) => {
 
       for (let j = 0; j < attributeList.length; j++) {
         if (attributeList[j][3] === a[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_a++;
           }
           total_bookings_a++;
         }
         if (attributeList[j][3] === b[3]) {
-          if (attributeList[j][1] === -1) {
+          if (attributeList[j][1] === 0) {
             no_show_b++;
           }
           total_bookings_b++;
