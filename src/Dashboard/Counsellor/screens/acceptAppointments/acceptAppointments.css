@@ -2,6 +2,10 @@
   max-height: 30vh;
   overflow-y: scroll;
 }
+.Acceptappointments .table2 {
+  max-height: 40vh;
+  overflow-y: scroll;
+}
 
 .Acceptappointments {
   margin: 30px;
