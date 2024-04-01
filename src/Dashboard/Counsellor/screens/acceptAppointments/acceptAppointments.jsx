@@ -44,20 +44,14 @@ const AcceptAppointments = () => {
         SetUpcomingAppointments(
           data.message.filter(msg => {
             const [day, month, year] = msg.date_slot.split('/');
-            const appointmentDate = new Date(year, month - 1, day , 23, 59, 59); // month - 1 because months are zero-based in JavaScript
-            console.log("dates for upcoming appointment");
-            console.log(appointmentDate);
-            console.log(today);
+            const appointmentDate = new Date(year, month - 1, day , 23, 59, 59); // month - 1 because months are zero-based in JavaScript. 23 59 59 to ensure it is displayed till EOD
             return appointmentDate >= today && msg.booking_status === 1;
           })
         );
         SetPendingAppointments(
           data.message.filter(msg => {
           const [day, month, year] = msg.date_slot.split('/');
-          const appointmentDate = new Date(year, month - 1, day , 23, 59, 59); // month - 1 because months are zero-based in JavaScript. +1 to ensure it is displayed till EOD
-          console.log("dates for pending appointment");
-          console.log(appointmentDate);
-          console.log(today);
+          const appointmentDate = new Date(year, month - 1, day , 23, 59, 59); // month - 1 because months are zero-based in JavaScript. 23 59 59 to ensure it is displayed till EOD
           return appointmentDate >= today && msg.booking_status === 0;
           })
         );
