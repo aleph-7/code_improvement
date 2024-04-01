@@ -361,40 +361,20 @@ router.get("/sport_booking", async (req, res) => {
       }
     }
 
-    // //sorting based on leaderboard position
-    // temp_pairing.sort(async (a, b) => {
-    //   await tennisLeaderboard.findOne({ user_id: a[3] }).then(async (A) => {
-    //     console.log(A);
-    //     await tennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
-    //       console.log(B);
-
-    //       if (A === null) a_pos = 1000000;
-    //       else a_pos = A.position;
-    //       if (B === null) b_pos = 1000000;
-    //       else b_pos = B.position;
-    //       return a_pos - b_pos;
-    //     });
-    //   });
-    // });
-    // Define a function to get the position asynchronously
-    const getPosition = async (userId) => {
-      const user = await tennisLeaderboard.findOne({ user_id: userId });
-      return user ? user.position : 1000000;
-    };
-    
-    // Sort the array asynchronously using `async/await`
+    //sorting based on leaderboard position
     temp_pairing.sort(async (a, b) => {
-      const [A, B] = await Promise.all([
-        getPosition(a[3]),
-        getPosition(b[3])
-      ]);
-    
-      // Outputting A and B for demonstration purposes
-      console.log(A);
-      console.log(B);
-    
-      // Compare positions
-      return A - B;
+      await tennisLeaderboard.findOne({ user_id: a[3] }).then(async (A) => {
+        console.log(A);
+        await tennisLeaderboard.findOne({ user_id: b[3] }).then((B) => {
+          console.log(B);
+
+          if (A === null) a_pos = 1000000;
+          else a_pos = A.position;
+          if (B === null) b_pos = 1000000;
+          else b_pos = B.position;
+          return a_pos - b_pos;
+        });
+      });
     });
     console.log(temp_pairing);
 
