@@ -27,6 +27,7 @@ router.get("/badminton", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -37,7 +38,17 @@ router.get("/badminton", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -72,6 +83,7 @@ router.get("/basketball", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -82,7 +94,17 @@ router.get("/basketball", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -117,6 +139,7 @@ router.get("/cricket", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -127,7 +150,17 @@ router.get("/cricket", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -162,6 +195,7 @@ router.get("/football", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -172,7 +206,17 @@ router.get("/football", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -207,6 +251,7 @@ router.get("/hockey", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -217,7 +262,17 @@ router.get("/hockey", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -252,6 +307,7 @@ router.get("/squash", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -262,7 +318,17 @@ router.get("/squash", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -297,6 +363,7 @@ router.get("/table_tennis", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -307,7 +374,17 @@ router.get("/table_tennis", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -342,6 +419,7 @@ router.get("/tennis", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -352,7 +430,17 @@ router.get("/tennis", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -387,6 +475,7 @@ router.get("/volleyball", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -397,7 +486,17 @@ router.get("/volleyball", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
@@ -432,6 +531,7 @@ router.get("/yoga", async (req, res) => {
         doc.id,
         doc.participants_id,
         doc.max_strength,
+        doc.time_slot_start,
       ];
     });
     for (let i = 0; i < attributeList.length; i++) {
@@ -442,7 +542,17 @@ router.get("/yoga", async (req, res) => {
             currentDate.getDate()) ||
         Number(attributeList[i][0].substring(3, 5)) > currentDate.getMonth() + 1
       ) {
-        finalAttributeList.push(attributeList[i]);
+        if (
+          !(
+            Number(attributeList[i][6]) < currentDate.getHours() &&
+            Number(attributeList[i][0].substring(0, 2)) ===
+              currentDate.getDate() &&
+            Number(attributeList[i][0].substring(3, 5)) ===
+              currentDate.getMonth() + 1
+          )
+        ) {
+          finalAttributeList.push(attributeList[i]);
+        }
       }
     }
     res.status(200).json({ message: finalAttributeList });
